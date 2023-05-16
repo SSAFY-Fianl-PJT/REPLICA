@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import MainView from '@/views/MainView'
 import ArticleView from '@/views/ArticleView'
 import CreateView from '@/views/CreateView'
 import DetailView from '@/views/DetailView'
@@ -12,6 +13,11 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name: 'MainView',
+    component: MainView 
+  },
+  {
+    path: '/article',
     name: 'ArticleView',
     component: ArticleView
   },
