@@ -5,7 +5,7 @@ import ArticleView from '@/views/ArticleView'
 import CreateView from '@/views/CreateView'
 import DetailView from '@/views/DetailView'
 import SignUpView from '@/views/SignUpView'
-import LogInView from '@/views/LogInView'
+import SignInView from '@/views/SignInView'
 
 
 Vue.use(VueRouter)
@@ -35,9 +35,9 @@ const routes = [
   },
 
   {
-    path: '/login',
-    name: 'LogInView',
-    component: LogInView
+    path: '/signin',
+    name: 'SignInView',
+    component: SignInView
   },
 
   {
@@ -53,5 +53,13 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.path === from.path) {
+    next(false); // 중복 경로 이동을 취소합니다.
+  } else {
+    next(); // 다른 경로로의 이동을 허용합니다.
+  }
+});
 
 export default router

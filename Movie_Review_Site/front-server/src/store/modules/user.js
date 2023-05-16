@@ -18,14 +18,13 @@ export default {
     mutations:{
         SAVE_TOKEN(state, token) {
             state.token = token
-        }
+        },
     },
     actions:{
         signUp(context, payload) {
             const username = payload.username
             const password1 = payload.password1
             const password2 = payload.password2
-      
             fetchSignup({username, password1, password2})
             .then((res) => {
                 context.commit('SAVE_TOKEN', res.data.key )
@@ -52,6 +51,7 @@ export default {
             fetchLogout()
             .then(() => {
                 context.commit('SAVE_TOKEN', null)
+                localStorage.removeItem('user.token')
             })
             .catch((err) => console.log(err))
         }
