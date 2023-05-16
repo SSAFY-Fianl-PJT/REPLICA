@@ -2,8 +2,8 @@
   <div>
     <h1>Sign Up Page</h1>
     <form @submit.prevent="signUp">
-      <label for="username">username : </label>
-      <input type="text" id="username" v-model="username"><br>
+      <label for="username_signup">username : </label>
+      <input type="text" id="username_signup" v-model="username"><br>
 
       <label for="password1"> password : </label>
       <input type="password" id="password1" v-model="password1"><br>
