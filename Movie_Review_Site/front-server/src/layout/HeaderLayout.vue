@@ -1,9 +1,7 @@
 <template>
-  <div id="header">
-    <div>
-      <after-login v-if="false"/>
+  <div id="header nav-bar">
+      <after-login v-if="is_login"/>
       <before-login v-else/>
-    </div>
   </div>
 </template>
 
@@ -17,10 +15,15 @@ export default {
   components:{
     AfterLogin,
     BeforeLogin
+  },
+  computed:{
+    is_login(){
+      return this.$store.getters.isLogin
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
