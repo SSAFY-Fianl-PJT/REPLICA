@@ -16,7 +16,6 @@ export default {
         
         await fetchMovies()
           .then((res) => {
-            console.log("이거",res)
             context.commit('GET_MOVIES', res.data)
           })
           .catch((err) => {
