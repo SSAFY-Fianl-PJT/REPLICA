@@ -1,7 +1,7 @@
 <template>
   <div class="movie-poster">
     <div class="image-container" >
-      <img class="poster" :src=TestPoster alt="">
+      <img class="poster" :src="TestPoster" alt="">
     </div>
   </div>
 </template>

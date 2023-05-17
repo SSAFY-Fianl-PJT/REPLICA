@@ -1,10 +1,6 @@
 <template>
-<<<<<<< HEAD
-  <div id="main-page" >
-=======
   <div>
     <ModalForm :Comps="items">
->>>>>>> 07369a20b2ed196863493c2d859a8027e73bdc1b
 
       <template v-slot:Sign-Up>
         <SignUpView/>
