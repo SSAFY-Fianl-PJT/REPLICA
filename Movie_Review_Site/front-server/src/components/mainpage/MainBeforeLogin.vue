@@ -1,5 +1,5 @@
 <template>
-  <div id="main-page" :style="{backgroundImageStyle}">
+  <div id="main-page" >
 
     <ModalButton target="Sign-Up"/>
     <ModalDialog target="Sign-Up">
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import MainImg from '@/assets/Main_.png'
+import Main_ from '@/assets/Main_.png'
 import ModalButton from '@/components/modal/ModalButton'
 import ModalDialog from '@/components/modal/ModalDialog'
 import SignInView from '@/views/SignInView'
@@ -35,7 +35,7 @@ export default {
       name1 : "Sign-In",
       name2 : "Sign-Up",
 
-      MainImg : MainImg
+      MainImg : Main_
     }
   },
   methods:{
@@ -54,12 +54,5 @@ export default {
 
 <style scoped>
 
-  .main-page {
-    width: 100%;
-    height: 100vh;
-    background-image: url('@/img/Main_img_large.jpg'),
-    url('@/img/Main_img_large.jpg');
-    background-size: cover;
-    background-position: center;
-  }
+
 </style>
