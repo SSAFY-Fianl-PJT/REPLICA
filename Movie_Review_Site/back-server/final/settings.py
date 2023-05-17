@@ -67,6 +67,12 @@ REST_AUTH = { # 회원가입시 토큰 발급
     'SESSION_LOGIN': False,
 }
 
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
+}
+
+
+
 SITE_ID = 1
 # 하나의 컨텐츠로 여러 개의 도메인에 등록하고 싶을 때 사용
 
@@ -190,3 +196,4 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
+
