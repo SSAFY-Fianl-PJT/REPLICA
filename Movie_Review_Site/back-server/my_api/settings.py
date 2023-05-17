@@ -33,7 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # Django Apps
     'accounts',
-    'articles',
+    'movies',
+    'community',
 
     'rest_framework',
 
