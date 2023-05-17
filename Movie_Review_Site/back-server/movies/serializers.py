@@ -1,33 +1,44 @@
 from rest_framework import serializers
-from .models import Article, Comment
+from .models import Movie, Genre
 
 
-class ArticleListSerializer(serializers.ModelSerializer):
-    # username = serializers.CharField(source='user.username', read_only=True)
-
-    class Meta:
-        model = Article
-        fields = ('id', 'title', 'content')
-        # fields = ('id', 'title', 'content', 'user', 'username')
-
-
-class CommentSerializer(serializers.ModelSerializer):
+class GenreSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Comment
+        model = Genre
         fields = '__all__'
-        read_only_fields = ('article',)
 
 
-class ArticleSerializer(serializers.ModelSerializer):
-    comment_set = CommentSerializer(many=True, read_only=True)
-    comment_count = serializers.IntegerField(source='comment_set.count', read_only=True)
-    # username = serializers.CharField(source='user.username', read_only=True)
+class MovieSerializer(serializers.ModelSerializer):
+    genres = GenreSerializer(many=True)
 
     class Meta:
-        model = Article
+        model = Movie
         fields = '__all__'
-        # read_only_fields = ('user', )
+
+    # movie_id = models.IntegerField(unique=True)
+    # title = models.CharField(max_length=100)
+    # overview = models.TextField(null=True)
+    # poster_path = models.CharField(max_length=200, blank=True, null=True)
+    # video_path = models.CharField(max_length=200, blank=True, null=True)
+    # popularity = models.FloatField()
+    # actors = models.JSONField(null=True)
+    # director = models.CharField(max_length=100, null=True)
+    # score_average = models.FloatField()
+    # release_date = models.DateField()
+    # genres = models.ManyToManyField(Genre, related_name='movies', blank=True)
+    # like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
+
+
+# class ArticleSerializer(serializers.ModelSerializer):
+#     comment_set = CommentSerializer(many=True, read_only=True)
+#     comment_count = serializers.IntegerField(source='comment_set.count', read_only=True)
+#     # username = serializers.CharField(source='user.username', read_only=True)
+
+#     class Meta:
+#         model = Article
+#         fields = '__all__'
+#         # read_only_fields = ('user', )
 
 
 
