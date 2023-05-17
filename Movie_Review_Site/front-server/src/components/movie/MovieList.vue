@@ -1,31 +1,36 @@
 <template>
   <div>
-    <p>무비 리스트를 보여줍니다.</p>
+    <p>무비 리스트를 보여줍니다...</p>
     <p>임의로 정렬했음 - [알고리즘이 현재 없습니다.]</p>
-    
-    <modal-form>
+    <MovieContent :items="rankedMovies"/>
 
-    </modal-form>
-    
+
   </div>
 </template>
 
+
 <script>
-import ModalForm from '@/components/modal/ModalForm.vue';
+import MovieContent from '@/components/movie/MovieContent.vue';
 
 export default {
   name:"MovieList",
   components:{
-    ModalForm
+    MovieContent
   },
   methods:{
-
+      handler(){
+          console.log("하위",this.rankedMovies)
+      }
   },
-  created(){
-
+  async created(){
+    await this.$store.dispatch('getMovies')
+    console.log("무비랭킹",this.rankedMovies) // 영화에 대한 정보 
   },
   computed:{
-    
+    rankedMovies(){
+      let total_movies = this.$store.state.movie.movies
+      return total_movies.slice(0,10)
+    },
   }
 }
 </script>

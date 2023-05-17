@@ -25,7 +25,7 @@ export default {
   async created(){
     await this.$store.dispatch('getMovies')
     this.randMovie = this.randomMovie
-    console.log("이게뭐야",this.randMovie)
+    console.log("이게뭐야",this.randMovie) // 영화에 대한 정보 
     this.TestPoster = this.moviePoster
   },
   computed:{
