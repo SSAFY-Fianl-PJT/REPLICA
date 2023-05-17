@@ -1,15 +1,27 @@
-import { getImg } from '@/api/movie'
+import { fetchMovies /*, getMovie_Detail*/ } from '@/api/movie'
+// import _ from 'lodash'
+
 export default {
-    state : {
-
-    },
-    mutations:{
-
-    },
-    actions:{
-        async getImage() {
-
-          return await getImg('/75aHn1NOYXh4M7L5shoeQ6NGykP.jpg')
-        },
-    }
+  state : {
+      movies: [],
+      random_movie : null
+  },
+  mutations:{
+      GET_MOVIES(state, movies) {
+          state.movies = movies
+      },
+  },
+  actions:{
+      async getMovies(context) {
+        
+        await fetchMovies()
+          .then((res) => {
+            console.log("이거",res)
+            context.commit('GET_MOVIES', res.data)
+          })
+          .catch((err) => {
+          console.log(err)
+          })
+      },
+  }
 }

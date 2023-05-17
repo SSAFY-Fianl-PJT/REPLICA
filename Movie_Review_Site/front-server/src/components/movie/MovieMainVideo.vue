@@ -7,20 +7,35 @@
 </template>
 
 <script>
-import TestPoster from '@/assets/TestPoster.png'
-// https://image.tmdb.org/t/p/w500/75aHn1NOYXh4M7L5shoeQ6NGykP.jpg
+// import TestPoster from '@/assets/TestPoster.png'
+// https://image.tmdb.org/t/p/w500
+// const MOVIE_URL = process.env.VUE_APP_IMG_URL
+const MOVIE_URL = 'https://image.tmdb.org/t/p/w500'
 export default {
   name:'MainVideo',
   data(){
     return {
-      TestPoster:TestPoster
+      TestPoster : null,
+      randMovie : null
     }
   },
   methods:{
 
   },
+  async created(){
+    await this.$store.dispatch('getMovies')
+    this.randMovie = this.randomMovie
+    console.log("이게뭐야",this.randMovie)
+    this.TestPoster = this.moviePoster
+  },
   computed:{
+    randomMovie(){
+      return this.$store.state.movie.movies
+    },
 
+    moviePoster(){
+      return MOVIE_URL + this.randomMovie[0].poster_path
+    }
   }
 }
 </script>
