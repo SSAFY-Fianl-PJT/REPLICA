@@ -7,29 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_http_methods
 from django.http import JsonResponse
 
-<<<<<<< HEAD
-@require_http_methods(['GET', 'POST'])
-def signup(request):
-    if request.user.is_authenticated:
-        return redirect('community:index')
-
-    if request.method == 'POST':
-        
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            auth_login(request, user)
-            return redirect('community:index')
-    else:
-        form = CustomUserCreationForm()
-    context = {
-        'form': form,
-    }
-    return render(request, 'accounts/signup.html', context)
-=======
 from dj_rest_auth.registration.views import RegisterView
 from .serializers import CustomRegisterSerializer
->>>>>>> feature/accounts
 
 
 class CustomRegisterView(RegisterView):
