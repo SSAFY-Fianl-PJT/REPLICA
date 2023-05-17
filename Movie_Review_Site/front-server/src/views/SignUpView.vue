@@ -46,11 +46,15 @@ export default {
     signUp() {
       // console.log('signup')
       const username = this.username
+      const nickname = this.nickname
       const password1 = this.password1
       const password2 = this.password2
 
       const payload = {
-        username, password1, password2
+        username,
+        nickname,
+        password1, 
+        password2
       }
 
       this.$store.dispatch('signUp', payload).then(()=>{
