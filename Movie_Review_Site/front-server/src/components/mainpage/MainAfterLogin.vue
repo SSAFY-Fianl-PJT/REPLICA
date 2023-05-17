@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>main after Login</p>
     <MovieMain/>
   </div>
 </template>
