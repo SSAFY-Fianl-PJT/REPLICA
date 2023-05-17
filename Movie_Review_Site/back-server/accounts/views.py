@@ -14,6 +14,7 @@ def signup(request):
         return redirect('community:index')
 
     if request.method == 'POST':
+        
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()

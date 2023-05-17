@@ -1,6 +1,6 @@
 <template>
 
-  <div id="main-page" :style="{backgroundImageStyle}">
+  <div id="main-page" >
     <div class="accountactions">
       <div class="ModalGroup" v-for="(item, idx) in get_Components" :key=idx>
         
