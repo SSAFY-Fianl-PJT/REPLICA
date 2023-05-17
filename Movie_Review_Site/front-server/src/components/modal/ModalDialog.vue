@@ -21,18 +21,33 @@
 </template>
 
 <script>
-    export default {
-        name: "ModalDialog",
-        props:{
-            target : String
-        },
-        computed:{
-            set_target(){
-                return `${this.target}`
-            }
+export default {
+    name : 'ModalBtn',
+    props:{
+        target : String
+    },
+    data(){
+        return{
+            item : null
         }
+    },
+    created(){
+        this.item = this.set_target
+        console.log(this.item)
+    },
+    methods:{
+        handleclick(){
+            console.log(true)
+            return true
+        }
+    },
+    computed:{
+        set_target(){
+            return `${this.target}`
+        },
     }
+}
 </script>
-<style>
+<style scoped>
 
 </style>

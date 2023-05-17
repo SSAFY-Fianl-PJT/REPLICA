@@ -1,41 +1,43 @@
 <template>
+<<<<<<< HEAD
   <div id="main-page" >
+=======
+  <div>
+    <ModalForm :Comps="items">
+>>>>>>> 07369a20b2ed196863493c2d859a8027e73bdc1b
 
-    <ModalButton target="Sign-Up"/>
-    <ModalDialog target="Sign-Up">
-      <SignUpView/>
-    </ModalDialog>
+      <template v-slot:Sign-Up>
+        <SignUpView/>
+      </template>
+      <template v-slot:Sign-In>
+        <SignInView/>
+      </template>
 
-    <ModalButton target="Sign-In"/>
-    <ModalDialog target="Sign-In">
-      <SignInView/>
-    </ModalDialog>
+    </ModalForm>
 
-    <img :src="MainImg" alt="이미지">
   </div>
 </template>
 
 <script>
-import Main_ from '@/assets/Main_.png'
-import ModalButton from '@/components/modal/ModalButton'
-import ModalDialog from '@/components/modal/ModalDialog'
+import MainImg_ from '@/assets/Main_.png'
+import ModalForm from '@/components/modal/ModalForm.vue'
+
 import SignInView from '@/views/SignInView'
 import SignUpView from '@/views/SignUpView'
 
 export default {
   name : 'MainPage_B',
   components:{
-    ModalDialog,
-    ModalButton,
-    SignInView,
-    SignUpView
+    ModalForm,
+    SignUpView,
+    SignInView
   },
   data(){
     return{
-      name1 : "Sign-In",
-      name2 : "Sign-Up",
+      name1 : "Sign-Up",
+      name2 : "Sign-In",
 
-      MainImg : Main_
+      MainImg : MainImg_
     }
   },
   methods:{
@@ -47,12 +49,13 @@ export default {
     backgroundImageStyle() {
       console.log(this.MainImg)
       return `background-image: url(${this.MainImg});`
+    },
+    items(){
+      return [this.name1, this.name2]
     }
   }
 }
 </script>
 
 <style scoped>
-
-
 </style>
