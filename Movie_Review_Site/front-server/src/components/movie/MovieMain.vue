@@ -1,17 +1,19 @@
 <template>
   <div>
-    <p>무비 메인페이지 입니다.</p>
     <movie-main-video></movie-main-video>
+    <movie-list></movie-list>
   </div>
 </template>
 
 <script>
 import MovieMainVideo from '@/components/movie/MovieMainVideo.vue'
+import MovieList from '@/components/movie/MovieList.vue';
 
 export default {
   name:'MovieMainPage',
   components:{
-    MovieMainVideo
+    MovieMainVideo,
+    MovieList
   }
 }
 </script>

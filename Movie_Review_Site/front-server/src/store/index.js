@@ -9,6 +9,7 @@ import createPersistedState from 'vuex-persistedstate'
 
 import userModule from '@/store/modules/user'
 import articleModule from '@/store/modules/article'
+import movieModule from '@/store/modules/movie'
 
 Vue.use(Vuex)
 
@@ -21,6 +22,7 @@ export default new Vuex.Store({
   ],
   modules: {
     user: userModule,
-    article : articleModule
+    article : articleModule,
+    movie : movieModule
   }
 })
