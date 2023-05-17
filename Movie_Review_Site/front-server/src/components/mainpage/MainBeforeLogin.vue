@@ -1,10 +1,11 @@
 <template>
   <div>
-    <ModalForm :Comps="items">
+    <ModalForm :Comps="items" :useSlots="true">
 
       <template v-slot:Sign-Up>
         <SignUpView/>
       </template>
+      
       <template v-slot:Sign-In>
         <SignInView/>
       </template>
@@ -47,7 +48,7 @@ export default {
       return `background-image: url(${this.MainImg});`
     },
     items(){
-      return [this.name1, this.name2]
+      return [{id: 1, name : this.name1}, {id: 2, name : this.name2}]
     }
   }
 }

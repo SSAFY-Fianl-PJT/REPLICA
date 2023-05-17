@@ -3,18 +3,19 @@
   <div id="main-page" >
     <div class="accountactions">
       <div class="ModalGroup" v-for="(item, idx) in get_Components" :key=idx>
-        
         <figure>
-          <ModalButton :target="item"/>
+          <ModalButton :target="item.title"/>
         </figure>
   
-        <ModalDialog :target="item">
-          <slot :name="item"></slot>
+        <ModalDialog :target="item.title">
+          <slot v-if="useSlots" :name="item.name"></slot>
+          <slot v-else :name="targetSlot"></slot>
         </ModalDialog>
   
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -25,7 +26,12 @@ import ModalDialog from '@/components/modal/ModalDialog'
 export default {
   name : 'ModalForm',
   props:{
-    Comps : Array
+    Comps : Array,
+    useSlots: {
+      type: Boolean,
+      default: false
+    },
+    targetSlot:String,
   },
   components:{
     ModalButton,
@@ -33,6 +39,7 @@ export default {
   },
   computed:{
     get_Components(){
+      console.log("겟 콤프",this.Comps)
       return this.Comps
     }
   }
