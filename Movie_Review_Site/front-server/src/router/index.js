@@ -53,13 +53,4 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-
-router.beforeEach((to, from, next) => {
-  if (to.path === from.path) {
-    next(false); // 중복 경로 이동을 취소합니다.
-  } else {
-    next(); // 다른 경로로의 이동을 허용합니다.
-  }
-});
-
 export default router

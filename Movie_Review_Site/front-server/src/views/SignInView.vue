@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>LogIn Page</h1>
+    <h1>Sign In Page</h1>
     <form @submit.prevent="login">
       <label for="username_signin">username : </label>
       <input type="text" id="username_signin" v-model="username"><br>
@@ -22,6 +22,11 @@ export default {
       password: null,
     }
   },
+  computed:{
+    isLogin() {
+      return this.$store.getters.isLogin // 로그인 여부
+    }
+  },
   methods: {
     login() {
       const username = this.username
@@ -32,7 +37,14 @@ export default {
       }
 
       this.$store.dispatch('login', payload).then(()=>{
-        this.$router.push({ name: 'MainView' });
+
+        if (this.isLogin) {
+          window.location.reload();
+        }else{
+          alert('아이디 혹은 비밀번호를 다시 입력하세요');
+        }
+        
+        // this.$router.push({ name: 'MainView' });
       })
 
     }

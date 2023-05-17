@@ -14,7 +14,7 @@
             <router-link :to="{ name: 'MainView' }">Home </router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'SignInView' }">Sign In</router-link>
+            <router-link :to="{ name: 'ArticleView' }">아티클</router-link>
           </li>
         </ul>
       </div>
