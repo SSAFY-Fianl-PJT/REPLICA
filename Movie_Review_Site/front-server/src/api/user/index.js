@@ -17,12 +17,12 @@ const fetchLogout = async ()=>{
     })
 }
 
-const fetchSignup = async ({username, password1, password2})=>{
+const fetchSignup = async ({username, nickname, password1, password2})=>{
     return api({
         method: 'post',
         url: `/accounts/signup/`,
         data: {
-            username, password1, password2
+            username, nickname, password1, password2
         }
     })
 }

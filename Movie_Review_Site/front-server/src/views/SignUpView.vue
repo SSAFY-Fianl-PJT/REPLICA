@@ -5,6 +5,9 @@
       <label for="username_signup">username : </label>
       <input type="text" id="username_signup" v-model="username" ><br>
 
+      <label for="nickName">nickname : </label>
+      <input type="text" id="nickName" v-model="nickname" ><br>
+
       <label for="password1"> password : </label>
       <input type="password" id="password1" v-model="password1" @input="checkPassword"><br>
 
@@ -26,6 +29,7 @@ export default {
   data() {
     return {
       username: null,
+      nickname: null,
       password1: null,
       password2: null,
       isPasswordMatch: false

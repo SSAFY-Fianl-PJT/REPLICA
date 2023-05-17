@@ -10,14 +10,14 @@ from rest_framework.permissions import IsAuthenticated
 
 from rest_framework import status
 from django.shortcuts import get_object_or_404, get_list_or_404
-from .serializers import MovieListSerializer, MovieSerializer
+from .serializers import MovieListSerializer, MovieDetailSerializer
 from .models import Movie
 
 
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
-def article_list(request):
+def movie_list(request):
     if request.method == 'GET':
         # articles = Article.objects.all()
         movies = get_list_or_404(Movie)
@@ -25,7 +25,7 @@ def article_list(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = MovieSerializer(data=request.data)
+        serializer = MovieDetailSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             # serializer.save(user=request.user)
@@ -33,12 +33,12 @@ def article_list(request):
 
 
 @api_view(['GET', 'DELETE', 'PUT'])
-def article_detail(request, movie_id):
+def movie_detail(request, movie_id):
     # article = Article.objects.get(pk=article_pk)
     movie = get_object_or_404(Movie, pk=movie_id)
 
     if request.method == 'GET':
-        serializer = MovieSerializer(movie)
+        serializer = MovieDetailSerializer(movie)
         print(serializer.data)
         return Response(serializer.data)
     
@@ -47,7 +47,7 @@ def article_detail(request, movie_id):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     elif request.method == 'PUT':
-        serializer = MovieSerializer(movie, data=request.data)
+        serializer = MovieDetailSerializer(movie, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)

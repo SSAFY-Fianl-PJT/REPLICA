@@ -23,9 +23,10 @@ export default {
     actions:{
         async signUp(context, payload) {
             const username = payload.username
+            const nickname = payload.nickname
             const password1 = payload.password1
             const password2 = payload.password2
-            await fetchSignup({username, password1, password2})
+            await fetchSignup({username, nickname, password1, password2})
             .then((res) => {
                 context.commit('SAVE_TOKEN', res.data.key )
             })
