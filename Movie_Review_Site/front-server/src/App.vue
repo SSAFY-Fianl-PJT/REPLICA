@@ -1,10 +1,5 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link :to="{ name: 'ArticleView' }">Articles</router-link> | 
-      <router-link :to="{ name: 'SignUpView' }">SignUpPage</router-link> | 
-      <router-link :to="{ name: 'LogInView' }">LogInPage</router-link>
-    </nav>
     <header-layout/>
     <router-view/>
     <footer-layout/>
@@ -43,6 +38,6 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #85ade6;
 }
 </style>
