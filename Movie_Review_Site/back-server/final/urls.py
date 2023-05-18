@@ -24,4 +24,5 @@ urlpatterns = [
     # path('accounts/signup/', include('dj_rest_auth.registration.urls')),
     path('accounts/signup/', CustomRegisterView.as_view(), name='custom_register'),
     path('movies/', include('movies.urls')),
+    path('community/', include('community.urls')),
 ]

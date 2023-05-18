@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Movie, Genre
+from community.models import Review
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -23,6 +24,11 @@ class MovieDetailSerializer(serializers.ModelSerializer):
         model = Movie
         fields = '__all__'
 
+class MovieReviewSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Review
+        fields = '__all__'
 
 
     # movie_id = models.IntegerField(unique=True)
