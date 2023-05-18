@@ -4,7 +4,9 @@
     <div class="accountactions">
       <div class="ModalGroup" v-for="(item, idx) in get_Components" :key=idx>
         <figure>
-          <ModalButton :target="squeeze(item.title)"/>
+          <ModalButton 
+          :target="squeeze(item.title)"
+          :movie="item"/>
         </figure>
   
         <ModalDialog :target="squeeze(item.title)">
@@ -63,12 +65,16 @@ export default {
   justify-content: space-around;
   align-items: center;
   width: 75%;
-
 }
+
+.ModalGroup{
+  flex: 0 0 25%;
+  aspect-ratio: 16/9;
+}
+
 .accountactions > .ModalGroup > figure{
   transition: transform 0.3s ease-in-out;
   width: 100%; height: 100%;
-  border: 3px solid black;
 }
 
 .accountactions > .ModalGroup:hover > figure{

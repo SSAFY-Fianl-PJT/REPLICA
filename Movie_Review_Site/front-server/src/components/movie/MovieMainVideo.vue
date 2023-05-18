@@ -40,7 +40,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .movie-poster{
   width: 100%;
 }
