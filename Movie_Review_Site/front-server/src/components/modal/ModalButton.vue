@@ -49,19 +49,21 @@ export default {
 <style scoped>
 .modal-buttontag{
     margin: 0 0 25%;
+    height: auto;
+    object-fit: contain;
 }
 .SignPageBtn {
-
-    max-height:auto;
+    
     display: flex;
     justify-content: center;
-    align-items: center;
+    
     flex-direction: column;
     position: relative; 
+    object-fit: contain;
 }
 
 .movieimgthumbnail{
-    max-height: 600px;
+    max-height: 100%
 }
 
 .text-center {
@@ -72,7 +74,7 @@ export default {
   justify-content: center;
   align-items: center;
   position: absolute;
-  bottom: 0;
+  bottom: 5px;
   background-color: white;
   color: black;
   border-radius: 3px;

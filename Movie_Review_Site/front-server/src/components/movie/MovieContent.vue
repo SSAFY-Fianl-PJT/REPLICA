@@ -14,9 +14,9 @@
 
         <div class="handle right-handle" @click="handleClick('right')">ㅂㅅ;</div>
     </div>
-  </template>
+</template>
   
-  <script>
+<script>
 import ModalForm from '@/components/modal/ModalForm'
 import MovieItem from '@/components/movie/MovieItem'
 
@@ -56,24 +56,26 @@ import MovieItem from '@/components/movie/MovieItem'
   <style scoped>
   .give-movie {
     width: 100%;
+    max-height: 400px;
     display: flex;
     justify-content: space-between;
+  
+    overflow: hidden;
     
-    min-height: 25%;
   }
   
     
   .slider {
     display: flex;
-    
     flex: 1;
+    height: 50%;
+    box-sizing: border-box;
   }
   
   .handle {
     width: 50px;
-    height: auto;
     background-color: #ddd; /* Temporary background color to visualize the handle */
-    cursor: pointer;
+    
     z-index: 10;
   }
   

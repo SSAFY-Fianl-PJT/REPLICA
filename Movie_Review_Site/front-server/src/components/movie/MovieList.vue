@@ -38,7 +38,6 @@ export default {
 <style scoped>
 .movie-list{
   width: 100%;
-  display:flex;
-  flex-direction: column;
+  
 }
 </style>

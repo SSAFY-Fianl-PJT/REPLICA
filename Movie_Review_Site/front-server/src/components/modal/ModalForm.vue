@@ -1,6 +1,6 @@
 <template>
 
-  <div id="main-page">
+
     <div class="accountactions">
       <div class="ModalGroup" v-for="(item, idx) in get_Components" :key=idx>
         <figure>
@@ -15,7 +15,7 @@
   
       </div>
     </div>
-  </div>
+
 
 </template>
 
@@ -54,32 +54,29 @@ export default {
 </script>
 
 <style scoped>
-#main-page{
-  height: 100px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
+
 .accountactions{
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  align-items:center;
   width: 75%;
+  height: 75%;
 }
 
 .ModalGroup{
   flex: 0 0 25%;
-  margin: 2rem;
-  aspect-ratio: 16/9;
+  margin: 1.5rem;
+  height: 75%;
+  object-fit: cover;
 }
 
 .accountactions > .ModalGroup > figure{
   
   transition: transform 0.3s ease-in-out;
-  width: 100%; height: 100%;
+  width: 100%; height: 75%;
 }
 
 .accountactions > .ModalGroup:hover > figure{
-  transform: scale(1.5);
+  transform: scale(1.1);
 }
 </style>
