@@ -15,16 +15,29 @@ from .serializers import MovieListSerializer, MovieDetailSerializer, MovieReview
 from .models import Movie
 from community.models import Review
 from django_filters import rest_framework as filters
-
+from django.utils import timezone
 
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def movie_list(request):
     if request.method == 'GET':
-        movies = Movie.objects.order_by('-popularity')[:15]  # 상위 15개의 인기 영화 조회
+        movies = Movie.objects.order_by('-popularity')[:10]  # 상위 10개의 인기 영화 조회
         serializer = MovieListSerializer(movies, many=True)
-        return Response(serializer.data)
+        user = request.user
+        # 찜한 영화 목록
+        wishlist_movies = user.wishlist.all()
+        wishlist_serializer = MovieDetailSerializer(wishlist_movies, many=True)
+        # 개봉 예정 영화 목록
+        upcoming_movies = Movie.objects.filter(release_date__gte=timezone.now()).order_by('release_date')[:10]
+        upcoming_serializer = MovieListSerializer(upcoming_movies, many=True)
+
+        data = {
+            'popular_movies': serializer.data,
+            'upcoming_movies': upcoming_serializer.data,
+            'wishlist': wishlist_serializer.data
+        }
+        return Response(data)
 
     elif request.method == 'POST':
         serializer = MovieDetailSerializer(data=request.data)
