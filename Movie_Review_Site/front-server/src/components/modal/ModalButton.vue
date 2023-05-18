@@ -47,9 +47,11 @@ export default {
 </script>
 
 <style scoped>
-
+.modal-buttontag{
+    margin: 0 0 25%;
+}
 .SignPageBtn {
-    max-width: 140px;
+
     max-height:auto;
     display: flex;
     justify-content: center;
@@ -59,12 +61,13 @@ export default {
 }
 
 .movieimgthumbnail{
-    max-height: 200px;
+    max-height: 600px;
 }
 
 .text-center {
   width: 100%;
   min-height: 70px;
+  
   display: flex;
   justify-content: center;
   align-items: center;

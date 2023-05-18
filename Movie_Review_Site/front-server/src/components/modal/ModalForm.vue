@@ -69,10 +69,12 @@ export default {
 
 .ModalGroup{
   flex: 0 0 25%;
+  margin: 2rem;
   aspect-ratio: 16/9;
 }
 
 .accountactions > .ModalGroup > figure{
+  
   transition: transform 0.3s ease-in-out;
   width: 100%; height: 100%;
 }
