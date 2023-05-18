@@ -1,20 +1,24 @@
 <template>
     <div>
-        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="set_target">
-            테스팅 중 {{ target }}
-        </button>
-     -->
-        <div @click="handleclick()" data-bs-toggle="modal" :data-bs-target="item">
-            {{ item }}
+        <div class="modal-buttontag">            
+            <div class="SignPageBtn" @click="handleclick()" data-bs-toggle="modal" :data-bs-target="item">
+                <img class="movieimgthumbnail img-thumbnail" :src="movie_url" alt="" style = "border: 3px solid white">>
+                <div class="text-center">
+                    {{ item }}
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
+
 <script>
+const MOVIE_URL = 'https://image.tmdb.org/t/p/w500'
 export default {
     name : 'ModalBtn',
     props:{
-        target : String
+        target : String,
+        movie : Object
     },
     data(){
         return{
@@ -35,10 +39,42 @@ export default {
         set_target(){
             return `#${this.target}`
         },
+        movie_url(){
+            return MOVIE_URL + this.movie.poster_path
+        }
     }
 }
 </script>
 
-<style>
+<style scoped>
+
+.SignPageBtn {
+    max-width: 140px;
+    max-height:auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative; 
+}
+
+.movieimgthumbnail{
+    max-height: 200px;
+}
+
+.text-center {
+  width: 100%;
+  min-height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+  color: black;
+  border-radius: 3px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
 
 </style>
