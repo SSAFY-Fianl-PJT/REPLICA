@@ -20,6 +20,13 @@ export default new Vuex.Store({
       paths:['user.token']
     }),
   ],
+  getters:{
+    getData(state){
+      return (key) =>{
+        return state[key]
+      }
+    }
+  },
   modules: {
     user: userModule,
     article : articleModule,

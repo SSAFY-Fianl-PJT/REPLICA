@@ -3,6 +3,7 @@
     <movie-main-video></movie-main-video>
     <movie-list></movie-list>
   </div>
+
 </template>
 
 <script>

@@ -4,11 +4,12 @@
     <div class="accountactions">
       <div class="ModalGroup" v-for="(item, idx) in get_Components" :key=idx>
         <figure>
-          <ModalButton :target="squeeze(item.title)"/>
+          <ModalButton :target="item.title"/>
         </figure>
   
-        <ModalDialog :target="squeeze(item.title)">
-          <slot :item="item" ></slot>
+        <ModalDialog :target="item.title">
+          <slot v-if="useSlots" :name="item.name"></slot>
+          <slot v-else :name="targetSlot"></slot>
         </ModalDialog>
   
       </div>
@@ -38,7 +39,7 @@ export default {
   },
   methods:{
     squeeze(data){
-      let squeezed_data = data.replace(/\s/g, "")
+      squeezed_data = data.replace(/\s/g, "")
       return squeezed_data
     }
   },

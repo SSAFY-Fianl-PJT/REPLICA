@@ -1,7 +1,7 @@
 <template>
   <div class="movie-poster">
     <div class="image-container" >
-      <img class="poster" :src=TestPoster alt="">
+      <img class="poster" :src="TestPoster" alt="">
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
   async created(){
     await this.$store.dispatch('getMovies')
     this.randMovie = this.randomMovie
-    console.log("이게뭐야",this.randMovie)
+    console.log("이게뭐야",this.randMovie) // 영화에 대한 정보 
     this.TestPoster = this.moviePoster
   },
   computed:{
@@ -59,6 +59,5 @@ export default {
   height: 100%;
   object-fit: cover; /* 이미지가 요소를 완전히 덮도록 크기 조절 */
   object-position: 50% 15%; /* 이미지를 요소의 중앙에 위치 */
-  
 }
 </style>

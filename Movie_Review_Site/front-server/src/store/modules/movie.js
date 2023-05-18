@@ -4,11 +4,15 @@ import { fetchMovies /*, getMovie_Detail*/ } from '@/api/movie'
 export default {
   state : {
       movies: [],
-      random_movie : null
+      test_movie : null
+  },
+  getters:{
+
   },
   mutations:{
       GET_MOVIES(state, movies) {
           state.movies = movies
+          state.test_movie = movies[0]
       },
   },
   actions:{
@@ -16,7 +20,6 @@ export default {
         
         await fetchMovies()
           .then((res) => {
-            console.log("이거",res)
             context.commit('GET_MOVIES', res.data)
           })
           .catch((err) => {
