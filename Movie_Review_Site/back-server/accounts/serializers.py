@@ -4,6 +4,7 @@ from movies.serializers import MovieDetailSerializer
 from .models import User
 from django.contrib.auth import get_user_model
 
+# 회원가입 폼
 class CustomRegisterSerializer(RegisterSerializer):
     nickname = serializers.CharField(required=True)
 
@@ -11,6 +12,7 @@ class CustomRegisterSerializer(RegisterSerializer):
         user.nickname = self.validated_data.get('nickname', '')
         user.save()
 
+# 프로필
 class ProfileSerializer(serializers.ModelSerializer):
     followings_count = serializers.SerializerMethodField()
     followers_count = serializers.SerializerMethodField()
@@ -26,6 +28,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_followers_count(self, obj):
         return obj.followers.count()
     
+# 팔로우
 class FollowSerializer(serializers.Serializer):
     follower = serializers.SlugRelatedField(slug_field='username', queryset=get_user_model().objects.all())
     following = serializers.SlugRelatedField(slug_field='username', queryset=get_user_model().objects.all())
@@ -36,7 +39,7 @@ class FollowSerializer(serializers.Serializer):
         follower.followings.add(following)
         return follower
 
-
+# 위시리스트
 class WishSerializer(serializers.ModelSerializer):
 
     class Meta:

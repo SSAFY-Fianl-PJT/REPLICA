@@ -4,10 +4,7 @@ from . import views
 app_name = 'accounts'
 
 urlpatterns = [
-    # path('signup/', views.signup, name='signup'),
-    # path('login/', views.login, name='login'),
-    # path('logout/', views.logout, name='logout'),
-    path('profile/<username>/', views.profile, name='profile'),
-    path('<username>/follow/', views.follow, name='follow'),
-    path('my_wishlist/<username>/', views.wishlist, name='wishlist'),
+    path('profile/<username>/', views.profile, name='profile'), # 프로필
+    path('<username>/follow/', views.follow, name='follow'), # 유저 팔로우
+    path('my_wishlist/<username>/', views.wishlist, name='wishlist'), # 위시리스트
 ]

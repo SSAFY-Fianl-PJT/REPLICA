@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST, require_http_methods
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -18,6 +16,7 @@ class CustomRegisterView(RegisterView):
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
+# 프로필 조회
 def profile(request, username):
     if request.method == 'GET':
         person = get_object_or_404(get_user_model(), username=username)
@@ -27,10 +26,11 @@ def profile(request, username):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
+# 팔로우
 def follow(request, username):
     if request.method == 'POST':
         target_user = User.objects.get(username=username)
-
+        # 자기 자신 팔로우 한 경우
         if request.user == target_user:
             return Response({"error": "자기 자신은 팔로우 할 수 없습니다ㅠ"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -44,11 +44,13 @@ def follow(request, username):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+# 위시리스트
 def wishlist(request, username):
     # 유저가 찜한 영화 목록을 보여준다.
     if request.method == 'GET':
         target_user = User.objects.get(username=username)
         wishlist = target_user.wishlist.all()
+        # 위시리스트에 영화가 있으면 반환
         if wishlist.exists():
             serializer = WishSerializer(wishlist, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
