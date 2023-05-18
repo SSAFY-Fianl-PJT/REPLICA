@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
+from django.db.models import Count
 
 
 
@@ -18,7 +19,8 @@ from rest_framework import status
 def review_list(request):
     # 전체 조회
     if request.method == 'GET':
-        reviews = get_list_or_404(Review)
+        # 좋아요 수 순으로 반환
+        reviews = Review.objects.annotate(likes_count=Count('likes')).order_by('-likes_count')
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     # 리뷰 생성
