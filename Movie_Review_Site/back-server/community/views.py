@@ -77,6 +77,28 @@ def review_detail(request, review_id):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+# 리뷰 좋아요
+def review_like(request, review_id):
+    review = get_object_or_404(Review, pk=review_id)
+    if request.user.is_authenticated:
+        person = request.user
+
+        if person in review.likes.all():
+            review.likes.remove(person)
+            message = '좋아요 취소'
+        else:
+            review.likes.add(person)
+            message = '좋아요'
+        
+        review.likes_count = review.likes.count()
+        serializer = ReviewSerializer(review)
+
+        return Response({'message' : message, 'review' : serializer.data})
+
+
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 # 댓글 조회/ 생성
