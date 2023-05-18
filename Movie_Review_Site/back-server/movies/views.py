@@ -42,8 +42,12 @@ def movie_detail(request, movie_id):
 
     if request.method == 'GET':
         serializer = MovieDetailSerializer(movie)
-        print(serializer.data)
-        return Response(serializer.data)
+        related_movies = Movie.objects.filter(genres__in=movie.genres.all()).exclude(pk=movie_id).order_by('-popularity')[:5]
+        # 비슷한 장르 중 인기도 상위 5개 (현재 영화 제외)
+        related_serializer = MovieListSerializer(related_movies, many=True)
+        data = serializer.data
+        data['related_movies'] = related_serializer.data
+        return Response(data)
 
 
 @api_view(['GET'])
