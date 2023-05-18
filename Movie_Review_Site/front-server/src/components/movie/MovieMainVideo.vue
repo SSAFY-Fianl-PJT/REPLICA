@@ -59,6 +59,5 @@ export default {
   height: 100%;
   object-fit: cover; /* 이미지가 요소를 완전히 덮도록 크기 조절 */
   object-position: 50% 15%; /* 이미지를 요소의 중앙에 위치 */
-  
 }
 </style>

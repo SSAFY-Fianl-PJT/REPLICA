@@ -4,11 +4,15 @@ import { fetchMovies /*, getMovie_Detail*/ } from '@/api/movie'
 export default {
   state : {
       movies: [],
-      random_movie : null
+      test_movie : null
+  },
+  getters:{
+
   },
   mutations:{
       GET_MOVIES(state, movies) {
           state.movies = movies
+          state.test_movie = movies[0]
       },
   },
   actions:{

@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <nav class="navbar navbar-expand-lg" >
     <div class="container-fluid">
       <router-link :to="{ name: 'MainView' }">
         <img class="logo" :src="LogoImg" alt="Logo">
@@ -16,7 +16,7 @@
             <router-link :to="{ name: 'ArticleView' }">영화</router-link>
           </li>
           <li class="nav-item drop-down">
-            <router-link :to="{ name: 'ArticleView' }">내가 찜한 영화</router-link>
+            <router-link :to="{ name: 'MovieViewTest' }">영화모달 테스트페이지</router-link>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

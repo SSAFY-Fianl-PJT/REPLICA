@@ -3,10 +3,9 @@
 
         <modal-form v-if="items" :Comps="getItems" targetSlot="Movie-Item">
 
-            <template v-slot:Movie-Item>
-                <MovieItem/>
+            <template v-slot:default="slotProps">
+                <MovieItem :item="slotProps.item"/>
             </template>
-
         </modal-form>
         
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <div id="header nav-bar">
+  <div class="header nav-bar">
       <after-login v-if="is_login"/>
       <before-login v-else/>
   </div>
@@ -24,6 +24,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
+.header{
+  background: linear-gradient( 
+  to bottom, 
+  rgba(255,255,255,0), 
+  rgba(255,255,255,0.4), 
+  rgba(255,255,255,1), 
+  blue );
 
+}
 </style>
