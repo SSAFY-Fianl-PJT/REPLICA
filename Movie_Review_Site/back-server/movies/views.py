@@ -86,3 +86,23 @@ def movie_search(request):
         return Response(serializer.data)
     else:
         return Response({'message': '해당 조건을 만족하는 영화가 없습니다.'})
+    
+
+@api_view(['POST'])
+def movie_wishlist(request, movie_id):
+    movie = get_object_or_404(Movie, movie_id=movie_id)
+
+    if movie in request.user.wishlist.all():
+        request.user.wishlist.remove(movie)
+        message = f'{movie.title}을(를) 찜 목록에서 제거했습니다.'
+    else:
+        request.user.wishlist.add(movie)
+        message = f'{movie.title}을(를) 찜 목록에 추가했습니다.'
+
+    serializer = MovieDetailSerializer(movie)
+    response_data = {
+        'message': message,
+        'profile': serializer.data
+    }
+
+    return Response(response_data, status=status.HTTP_200_OK)

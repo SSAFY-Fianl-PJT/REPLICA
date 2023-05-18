@@ -1,5 +1,6 @@
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
+from movies.serializers import MovieDetailSerializer
 from .models import User
 from django.contrib.auth import get_user_model
 
@@ -13,19 +14,31 @@ class CustomRegisterSerializer(RegisterSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     followings_count = serializers.SerializerMethodField()
     followers_count = serializers.SerializerMethodField()
+    wishlist = MovieDetailSerializer(many=True)
 
     class Meta:
         model = get_user_model()
-        fields = ('id', 'username', 'nickname', 'wishlist', 'date_joined', 'following_count', 'followers_count', )
+        fields = ('id', 'username', 'nickname', 'wishlist', 'date_joined', 'followings_count', 'followers_count', )
+
     def get_followings_count(self, obj):
         return obj.followings.count()
 
     def get_followers_count(self, obj):
         return obj.followers.count()
     
+class FollowSerializer(serializers.Serializer):
+    follower = serializers.SlugRelatedField(slug_field='username', queryset=get_user_model().objects.all())
+    following = serializers.SlugRelatedField(slug_field='username', queryset=get_user_model().objects.all())
+
+    def create(self, validated_data):
+        follower = validated_data['follower']
+        following = validated_data['following']
+        follower.followings.add(following)
+        return follower
+
 
 class WishSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = '__all__'
+        fields = ('wishlist', )
