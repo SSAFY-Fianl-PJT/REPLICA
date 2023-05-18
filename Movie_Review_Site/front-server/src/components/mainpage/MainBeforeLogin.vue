@@ -1,11 +1,11 @@
 <template>
 
-<div id="SignPage">
+<div id="SignPage"  :style="backgroundImageStyle">
 
   <div class="accountactions">
     <div class="ModalGroup">
 
-      <figure>
+      <figure class="SignPageBtn">
         <ModalButton target="Sign-up"/>
       </figure>
 
@@ -17,7 +17,7 @@
 
     <div class="ModalGroup">
 
-      <figure>
+      <figure class="SignPageBtn">
         <ModalButton target="Sign-In"/>
       </figure>
 
@@ -62,9 +62,20 @@ export default {
     },
   },
   computed: {
-    backgroundImageStyle() {
-      console.log(this.MainImg)
-      return `background-image: url(${this.MainImg});`
+    backgroundImageStyle(){
+      return {
+        background: `linear-gradient(
+          to bottom,
+          rgba(255,255,255,0) 10%,
+          rgba(0,0,0,0.1) 25%,
+          rgba(0,0,0,0.2) 40%,
+          rgba(0,0,0,0.4) 50%,
+          rgba(0,0,0,0.6) 70%
+        ), url(${require('@/assets/Main_.png')})`,
+        backgroundSize: `auto`,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+      }
     },
     items(){
       return [{id: 1, name : this.name1}, {id: 2, name : this.name2}]
@@ -76,24 +87,37 @@ export default {
 <style scoped>
 
 #SignPage{
-  height: 100px;
+  min-height: 1000px;
+  height:auto;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
 
+.ModalGroup{
+  width: 200px;
+  height: 300px;
+}
+
+.SignPageBtn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
 
 .accountactions{
   display: flex;
   justify-content: space-around;
   align-items: center;
   width: 75%;
-
 }
 .accountactions > .ModalGroup > figure{
   transition: transform 0.3s ease-in-out;
   width: 100%; height: 100%;
+  background-color: rgba(60, 48, 228, 0.671);
   border: 3px solid black;
+  border-radius: 50px;
 }
 
 .accountactions > .ModalGroup:hover > figure{
