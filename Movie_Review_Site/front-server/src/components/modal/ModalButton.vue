@@ -2,10 +2,16 @@
     <div>
         <div class="modal-buttontag">            
             <div class="SignPageBtn" @click="handleclick()" data-bs-toggle="modal" :data-bs-target="item">
-                <img class="movieimgthumbnail img-thumbnail" :src="movie_url" alt="" style = "border: 3px solid white">>
-                <div class="text-center">
-                    {{ item }}
+                <div v-if="movie">
+                    <img class="movieimgthumbnail img-thumbnail" :src="movie_url" alt="" style = "border: 3px solid white">>
+                    <div class="text-center">
+                        <span>{{ item }}</span>
+                    </div>
                 </div>
+                <div v-else>
+                    <span>{{ item }}</span>
+                </div>
+
             </div>
         </div>
     </div>
@@ -47,29 +53,34 @@ export default {
 </script>
 
 <style scoped>
-
+.modal-buttontag{
+    margin: 0 0 25%;
+    height: auto;
+    object-fit: contain;
+}
 .SignPageBtn {
-    max-width: 140px;
-    max-height:auto;
+    
     display: flex;
     justify-content: center;
-    align-items: center;
+    
     flex-direction: column;
     position: relative; 
+    object-fit: contain;
 }
 
 .movieimgthumbnail{
-    max-height: 200px;
+    max-height: 100%
 }
 
 .text-center {
   width: 100%;
   min-height: 70px;
+  
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  bottom: 0;
+  bottom: 5px;
   background-color: white;
   color: black;
   border-radius: 3px;

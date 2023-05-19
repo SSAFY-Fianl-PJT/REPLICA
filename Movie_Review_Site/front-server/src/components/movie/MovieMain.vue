@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="SSAFILX-MainPage">
     <movie-main-video></movie-main-video>
     <movie-list></movie-list>
   </div>
