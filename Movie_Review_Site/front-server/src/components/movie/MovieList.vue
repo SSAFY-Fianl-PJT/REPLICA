@@ -2,7 +2,7 @@
   <div class="movie-list">
     <p>무비 리스트를 보여줍니다...</p>
     <p>임의로 정렬했음 - [알고리즘이 현재 없습니다.]</p>
-    <MovieContent  v-if="rankedMovies  && rankedMovies.length > 0" :items="rankedMovies"/>
+    <MovieContent  v-if="popularmovies  && popularmovies.length > 0" :items="popularmovies"/>
 
 
   </div>
@@ -19,16 +19,17 @@ export default {
   },
   methods:{
       handler(){
-          console.log("하위",this.rankedMovies)
+          console.log("하위",this.popularmovies)
       }
   },
   async created(){
     await this.$store.dispatch('getMovies')
-    console.log("무비랭킹",this.rankedMovies) // 영화에 대한 정보 
+    // console.log("무비랭킹",this.popularmovies) // 영화에 대한 정보 
   },
   computed:{
-    rankedMovies(){
-      let total_movies = this.$store.state.movie.movies
+    popularmovies(){
+      // console.log("값",this.$store.state)
+      let total_movies = this.$store.state.movie.popular_movies
       return total_movies.slice(0,10)
     },
   }
@@ -37,7 +38,7 @@ export default {
 
 <style scoped>
 .movie-list{
-  width: 100%;
+  width: auto;
   
 }
 </style>

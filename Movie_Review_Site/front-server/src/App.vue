@@ -21,6 +21,7 @@ export default{
 
 <style>
 #app {
+  position: relative;
   background-color: rgb(0, 0, 0, 0.95);
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

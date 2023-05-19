@@ -1,16 +1,20 @@
 <template>
-  <div>
     <div class="movie-poster-container">
-      
-      <div class="image-container" :style="backgroundImageStyle" ref="imageContainer">
-        <div class="movie-box" >
-          ㅇㅇ?
-        </div>
-        <div class="movie-title">
-          {{ item.title }}
-        </div>
+      <hr>
+      <hr>
+      <div class="image-container"  ref="imageContainer">
+        <img :src="MoviePoster" alt="영화포스터">
 
         <div class="information-block">
+          <div class="movie-title-reldate">
+            <div class="movie-title">
+              {{ item.title }}
+            </div>
+            <div >
+              {{ item.release_date }}
+            </div>
+          </div>
+
           <div class="movie-summary">
               <div class="summary">
                 <span>
@@ -18,10 +22,8 @@
                 </span>
               </div>
               <div class="release_date">
-                <span>개봉날짜 : </span>
-                <span>
-                  {{ item.release_date }}
-                </span>
+                
+
               </div>
               <div>
                
@@ -59,15 +61,22 @@
           </div>
         </div>
       </div>
+    <div class="Movie-Review-Page" v-if="Movie_Review_set">
+      {{ item.id }} {{ item.title }}
+      <review-view :movie_id="movie_item.id"/>
+      <create-view :movie_title="movie_item.title"/>
+    </div>
 
     </div>
 
 
 
-  </div>
 </template>
 
 <script>
+import ReviewView from '@/views/ReviewView.vue'
+import CreateView from '@/views/CreateView.vue'
+
 const MOVIE_URL = 'https://image.tmdb.org/t/p/w500'
 
 export default {
@@ -77,18 +86,28 @@ export default {
   },
   data(){
     return {
-      // MoviePoster : null,
+      MoviePoster : null,
+      Mv_id : null,
+      movie_item : null
     }
+  },
+  components:{
+    ReviewView,
+    CreateView
   },
   methods: {
   },
   async created(){
-    console.log("짜잔",this.item)
+    console.log(this.item.title)
+    this.MoviePoster = this.getPoster
+    this.Mv_id = this.item.id,
+    this.movie_item = this.item
   },
   computed:{
-    randomMovie(){
-      return this.$store.movie.state.movies
+    getPoster(){
+      return MOVIE_URL + this.item.poster_path
     },
+
 
     backgroundImageStyle(){
       return {
@@ -103,6 +122,11 @@ export default {
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
       }
+    },
+    Movie_Review_set(){
+      // console.log("흠",this.movie_item)
+      // console.log(this.movie_item.id === this.item.id)
+      return this.movie_item.id === this.item.id
     }
   }
 }
@@ -110,19 +134,20 @@ export default {
 
 <style scoped>
 .movie-poster-container{
-  width: 100%;
+
   display: flex;
   flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.541);
 }
 .image-container {
 
-  width: 100%; /*원하는 이미지 컨테이너의 너비 설정*/
+
   min-height: 700px;
   height: auto;
    
 
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: start;
   align-items: center;
   overflow: hidden;  
@@ -132,16 +157,19 @@ export default {
 .information-block {
 
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  width: 100%;
-}
 
-.movie-title {
+}
+.movie-title-reldate{
   margin-left: 10px;
-  width: 100%;
+
   text-align: left;
-  font-weight: bold;
+
+}
+.movie-title-reldate > .movie-title {
   font-size: 1.5em; /* 원하는 사이즈로 조정하세요 */
+  font-weight: bold;
 }
 
 .summary{
@@ -156,8 +184,8 @@ export default {
 }
 
 .movie-box{
-  background-color: rgba(255, 235, 205, 0.541);
-  width: 100%;
+
+
   height: 350px;
 }
 .table-text{

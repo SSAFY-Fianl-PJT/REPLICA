@@ -62,9 +62,16 @@ export default {
     searchMovies() {
       // 검색 기능 구현을 위한 로직을 작성합니다.
       // 검색어는 this.searchQuery를 사용하여 접근할 수 있습니다.
-      this.$store.dispatch('searchMovies', this.searchQuery).then(()=>{
-        
-      })
+      if (this.searchQuery){
+        this.$store.dispatch('searchMovies', this.searchQuery).then(()=>{
+          this.$router.push({ name: 'SearchView'})
+          .catch((err) => {
+            console.warn(err)
+          });
+        })
+      }else{
+        alert('검색해주세요ㅕ')
+      }
       this.searchQuery = ''
 
     }

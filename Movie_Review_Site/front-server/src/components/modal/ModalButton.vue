@@ -1,18 +1,14 @@
 <template>
-    <div>
-        <div class="modal-buttontag">            
-            <div class="SignPageBtn" @click="handleclick()" data-bs-toggle="modal" :data-bs-target="item">
-                <div v-if="movie">
-                    <img class="movieimgthumbnail img-thumbnail" :src="movie_url" alt="" style = "border: 3px solid white">>
-                    <div class="text-center">
-                        <span>{{ item }}</span>
-                    </div>
-                </div>
-                <div v-else>
-                    <span>{{ item }}</span>
-                </div>
+    <div id="inform-movie-modal">          
+        <div class="SignPageBtn" @click="handleclick()" data-bs-toggle="modal" :data-bs-target="item">
+            <div id="movie-carrier" v-if="movie">
+                <img class="movieimgthumbnail img-thumbnail" :src="movie_url" alt="" style = "border: 3px solid white">
 
             </div>
+            <div v-else>
+                <span>{{ item }}</span>
+            </div>
+
         </div>
     </div>
 </template>
@@ -33,11 +29,10 @@ export default {
     },
     created(){
         this.item = this.set_target
-        console.log(this.item)
+        // console.log(this.item)
     },
     methods:{
         handleclick(){
-            console.log(true)
             return true
         }
     },
@@ -52,12 +47,21 @@ export default {
 }
 </script>
 
+
 <style scoped>
-.modal-buttontag{
-    margin: 0 0 25%;
+#inform-movie-modal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#movie-carrier{
+    flex: 1;
+    margin: 0 0 10px;
     height: auto;
     object-fit: contain;
 }
+
 .SignPageBtn {
     
     display: flex;
@@ -68,24 +72,31 @@ export default {
     object-fit: contain;
 }
 
-.movieimgthumbnail{
-    max-height: 100%
-}
+.movieimgthumbnail {
+        width: 100%; /* Change this to make the image take the full width of its parent element */
+        height: auto; /* This will maintain the aspect ratio of the image */
+    }
 
-.text-center {
-  width: 100%;
-  min-height: 70px;
-  
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  bottom: 5px;
-  background-color: white;
-  color: black;
-  border-radius: 3px;
-  font-weight: bold;
-  font-size: 1.2rem;
-}
+    /* For devices with width less than or equal to 600px */
+    @media (max-width: 100px) {
+        .movieimgthumbnail {
+            max-height: 200px;
+        }
+    }
+
+    /* For devices with width between 601px and 900px */
+    @media (min-width: 101px) and (max-width: 247px) {
+        .movieimgthumbnail {
+            max-height: 350px;
+        }
+    }
+
+    /* For devices with width more than 900px */
+    @media (min-width: 248px) {
+        .movieimgthumbnail {
+            max-height: 500px;
+        }
+    }
+
 
 </style>

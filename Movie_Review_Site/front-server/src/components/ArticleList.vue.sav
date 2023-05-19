@@ -1,8 +1,8 @@
 <template>
   <div class="article-list">
-    {{ articles }}
+    <h3>Article List</h3>
     <ArticleListItem 
-    v-for="(article) in articles" :key="article.created_at" :article="article"
+    v-for="(article, idx) in articles" :key="idx" :article="article"
     />
   </div>
 </template>
@@ -16,9 +16,13 @@ export default {
     ArticleListItem,
   },
   props:{
-    articles : Array
+
   },
   computed: {
+    articles() {
+      console.log(reviews)
+      return this.$store.state.article.articles
+    }
   }
 }
 </script>

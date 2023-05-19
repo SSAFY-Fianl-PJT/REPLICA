@@ -9,6 +9,7 @@
                         <MovieItem :item="slotProps.item"/>
                     </template>
                 </modal-form>
+
             </div>
 
 
@@ -46,7 +47,7 @@ import MovieItem from '@/components/movie/MovieItem'
     },
     computed: {
         getItems(){
-            console.log("이건 무비리스트", this.items)
+            // console.log("이건 무비리스트", this.items)
             return this.items
         }
     }
@@ -55,7 +56,7 @@ import MovieItem from '@/components/movie/MovieItem'
   
   <style scoped>
   .give-movie {
-    width: 100%;
+
     max-height: 400px;
     display: flex;
     justify-content: space-between;
@@ -68,7 +69,7 @@ import MovieItem from '@/components/movie/MovieItem'
   .slider {
     display: flex;
     flex: 1;
-    height: 50%;
+
     box-sizing: border-box;
   }
   

@@ -2,7 +2,7 @@
   <div>
     <h1>Article Page</h1>
     <router-link :to="{ name: 'CreateView' }">[CREATE]</router-link>
-    <ArticleList />
+    <ArticleList :articles="getartic"/>
     <hr>
   </div>
 </template>
@@ -15,9 +15,18 @@ export default {
   components: {
     ArticleList,
   },
+  props:{
+    movie_id: {
+    type: Number, 
+    required: true 
+    }
+  },
   computed:{
     isLogin() {
       return this.$store.getters.isLogin // 로그인 여부
+    },
+    getartic(){
+      return this.getArticles()
     }
   },
   created() {
@@ -31,13 +40,12 @@ export default {
         alert('로그인이 필요한 페이지입니다...')
         this.$router.push({ name: 'MainView' })
       }
-
-
       // 로그인이 되어 있으면 getArticles action 실행
       // 로그인 X라면 login 페이지로 이동
-
     }
-  }
+  },
+
+
 }
 </script>
 

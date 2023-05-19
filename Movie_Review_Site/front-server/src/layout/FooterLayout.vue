@@ -12,14 +12,14 @@ export default {
 
 <style>
 .footer {
-  background-color: black;
+  /* background-color: black;
   height: 50px;
   position: fixed;
   bottom: 0;
   width: 100%;
   box-sizing: border-box;
   margin: 0;
-  z-index: 20;
+  z-index: 20; */
 }
 
 </style>

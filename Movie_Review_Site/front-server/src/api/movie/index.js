@@ -4,11 +4,14 @@ const fetchMovies = async ()=>{
     return api.get('/movies/')
 }
 
-const fetchSearchMovies = async ({title, genres, year})=>{
+const fetchSearchMovies = async ({title})=>{
+
     return api({
         method:'get',
-        url:'/movies/search',
-        params:{title, genres, year}
+        url:'/movies/search/',
+        params:{
+            title : title, 
+        }
     })
 }
 

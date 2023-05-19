@@ -33,7 +33,14 @@ const routes = [
   {
     path: '/search',
     name: 'SearchView',
-    component: SearchView
+    component: SearchView,
+    beforeEnter: (to, from, next) => {
+      if (to.path === '/search') {
+        next();
+      } else {
+        next({ name: 'SearchView' });
+      }
+    }
   },
 
   {

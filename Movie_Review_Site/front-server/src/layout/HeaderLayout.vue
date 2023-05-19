@@ -26,15 +26,15 @@ export default {
 
 <style >
 .header{
-  position: absolute;
+
   width: 100%;
   background-color: rgb(0, 0, 0, 0.95);
   background: linear-gradient( 
   to bottom, 
-  rgba(0,0,0,1) 0%, 
-  rgba(0,0,0,0.95) 15%, 
-  rgba(0,0,0,0.85) 50%, 
-  rgba(0,0,0,0) 100%);
+  rgb(81, 145, 219, 0.7) 0%, 
+  rgba(81, 145, 219, 0.55) 15%, 
+  rgba(81, 145, 219,0.35) 50%, 
+  rgba(81, 145, 219,0) 100%);
 
 }
 </style>

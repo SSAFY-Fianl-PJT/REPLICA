@@ -3,17 +3,31 @@ import { fetchMovies, fetchSearchMovies /*, getMovie_Detail*/ } from '@/api/movi
 
 export default {
   state : {
-      movies: [],
-      test_movie : null
+    popular_movies: [],
+    upcomming_movies: [],
+    wishlist: [],
+    test_movie : null,
+    search_results : [],
+    search_target : null,
   },
   getters:{
 
   },
   mutations:{
       GET_MOVIES(state, movies) {
-          state.movies = movies
+          const {popular_movies, upcoming_movies, wishlist} = movies
+          state.popular_movies = popular_movies
+          state.upcoming_movies = upcoming_movies
+          state.wishlist = wishlist
           state.test_movie = movies[0]
       },
+      SEATCH_RESULT(state, results){
+        console.log("검색결과 ", results)
+        state.search_results = results
+      },
+      SEATCHING(state, name){
+        state.search_target = name
+      }
   },
   actions:{
       async getMovies(context) {
@@ -26,14 +40,10 @@ export default {
           })
       },
       async searchMovies(context, items){
-        const data = {
-          title : items,
-          geners : items,
-          year : items
-        }
-        const search_results =  await fetchSearchMovies(data)
-        
-        console.log("영화 찾는중", search_results)
+        console.log("찾는중 슈댕..",items)
+        const search_results =  await fetchSearchMovies({title: items})
+        context.commit('SEATCH_RESULT', search_results)
+        context.commit('SEATCHING', items)
       }
   }
 }
