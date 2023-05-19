@@ -1,12 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import MainView from '@/views/MainView'
+
 import ArticleView from '@/views/ArticleView'
 import CreateView from '@/views/CreateView'
 import DetailView from '@/views/DetailView'
+
+
+import MainView from '@/views/MainView'
 import SignUpView from '@/views/SignUpView'
 import SignInView from '@/views/SignInView'
 import MovieViewTest from '@/views/MovieViewTest'
+import SearchView from '@/views/SearchView'
 
 Vue.use(VueRouter)
 
@@ -26,6 +30,12 @@ const routes = [
     name: 'SignInView',
     component: SignInView
   },
+  {
+    path: '/search',
+    name: 'SearchView',
+    component: SearchView
+  },
+
   {
     path: '/test',
     name: 'MovieViewTest',

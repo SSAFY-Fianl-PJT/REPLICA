@@ -5,7 +5,11 @@ const fetchMovies = async ()=>{
 }
 
 const fetchSearchMovies = async ({title, genres, year})=>{
-    return api.get('/movies/search', { title, genres, year })
+    return api({
+        method:'get',
+        url:'/movies/search',
+        params:{title, genres, year}
+    })
 }
 
 const getMovie_Detail = async(params_id)=>{
