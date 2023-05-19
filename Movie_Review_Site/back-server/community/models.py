@@ -11,7 +11,7 @@ class Review(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_reviews')
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_reviews', null=True)
 
 
 class Comment(models.Model):

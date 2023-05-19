@@ -16,7 +16,10 @@ from .models import Movie
 from community.models import Review
 # from django_filters import rest_framework as filters
 from django.utils import timezone
-from django.db.models import Q
+
+import numpy as np
+from .recommend import find_sim_movie, movies, movies_df, features_sim_sorted_ind
+from django.contrib.auth import get_user_model
 
 
 @api_view(['GET', 'POST'])
@@ -141,3 +144,32 @@ def movie_wishlist(request, movie_id):
     }
 
     return Response(response_data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+# 위시리스트 기반 영화 추천
+def movie_recommendation(request, username):
+
+    person = get_object_or_404(get_user_model(), username=username)
+    
+    wishlist_movies = person.wishlist.movies.all()
+    # 위시리스트 있으면 위시리스트 기반 추천
+    if wishlist_movies.exists():
+        wishlist_titles = [movie.title for movie in wishlist_movies]
+        movies_df['features_sim'] = np.nan # features_sim 열 초기화
+        similar_movies = find_sim_movie(movies_df, features_sim_sorted_ind, wishlist_titles, 10)
+
+        serializer = MovieListSerializer(similar_movies, many=True)
+        return Response(serializer.data)
+    # 없으면 인기도 상위 영화 추천
+    else:
+        movies = Movie.objects.order_by('-popularity')[:10]
+        serializer = MovieListSerializer(movies, many=True)
+        message = '위시리스트가 없습니다. 인기도 상위 영화를 추천합니다'
+        
+        response_data = {
+        'message': message,
+        'movies': serializer.data
+        }
+        return Response(response_data)
