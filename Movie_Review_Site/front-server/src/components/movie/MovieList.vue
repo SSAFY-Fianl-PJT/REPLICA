@@ -2,7 +2,7 @@
   <div class="movie-list">
     <p>무비 리스트를 보여줍니다...</p>
     <p>임의로 정렬했음 - [알고리즘이 현재 없습니다.]</p>
-    <MovieContent :items="rankedMovies"/>
+    <MovieContent  v-if="rankedMovies  && rankedMovies.length > 0" :items="rankedMovies"/>
 
 
   </div>

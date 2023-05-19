@@ -13,6 +13,7 @@
         <SignUpView/>
       </ModalDialog>
 
+
     </div>
 
     <div class="ModalGroup">

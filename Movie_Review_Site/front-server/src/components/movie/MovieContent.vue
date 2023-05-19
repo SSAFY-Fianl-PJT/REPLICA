@@ -1,5 +1,5 @@
 <template>
-    <div class="give-movie" v-if="items" >
+    <div class="give-movie">
         <div class="handle left-handle" @click="handleClick('left')">ㅅㅂ;</div>
 
             <div class="slider">

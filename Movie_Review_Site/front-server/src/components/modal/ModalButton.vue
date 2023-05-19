@@ -2,10 +2,16 @@
     <div>
         <div class="modal-buttontag">            
             <div class="SignPageBtn" @click="handleclick()" data-bs-toggle="modal" :data-bs-target="item">
-                <img class="movieimgthumbnail img-thumbnail" :src="movie_url" alt="" style = "border: 3px solid white">>
-                <div class="text-center">
-                    {{ item }}
+                <div v-if="movie">
+                    <img class="movieimgthumbnail img-thumbnail" :src="movie_url" alt="" style = "border: 3px solid white">>
+                    <div class="text-center">
+                        <span>{{ item }}</span>
+                    </div>
                 </div>
+                <div v-else>
+                    <span>{{ item }}</span>
+                </div>
+
             </div>
         </div>
     </div>
