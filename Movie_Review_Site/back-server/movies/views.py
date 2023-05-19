@@ -22,7 +22,7 @@ from .recommend import find_sim_movie, movies, movies_df, features_sim_sorted_in
 from django.contrib.auth import get_user_model
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 @permission_classes([IsAuthenticated])
 # 메인 영화 조회
 def movie_list(request):
@@ -44,14 +44,6 @@ def movie_list(request):
             'wishlist': wishlist_serializer.data
         }
         return Response(data)
-
-    elif request.method == 'POST':
-        serializer = MovieDetailSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            # serializer.save(user=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -152,24 +144,38 @@ def movie_wishlist(request, movie_id):
 def movie_recommendation(request, username):
 
     person = get_object_or_404(get_user_model(), username=username)
-    
-    wishlist_movies = person.wishlist.movies.all()
+    wishlist_movies = person.wishlist.all()
+
     # 위시리스트 있으면 위시리스트 기반 추천
     if wishlist_movies.exists():
-        wishlist_titles = [movie.title for movie in wishlist_movies]
-        movies_df['features_sim'] = np.nan # features_sim 열 초기화
-        similar_movies = find_sim_movie(movies_df, features_sim_sorted_ind, wishlist_titles, 10)
-
+        wishlist_movie_ids = [movie.movie_id for movie in wishlist_movies]
+        similar_movies = find_sim_movie(wishlist_movie_ids[0], features_sim_sorted_ind, 10)
+        print(similar_movies)
+        
         serializer = MovieListSerializer(similar_movies, many=True)
         return Response(serializer.data)
+        # wishlist_titles = [movie.title for movie in wishlist_movies]
+        # movies_df['features_sim'] = np.nan # features_sim 열 초기화
+        # similar_movies = find_sim_movie(movies_df, features_sim_sorted_ind, wishlist_titles, 10)
+        # serializer = MovieListSerializer(similar_movies, many=True)
+        # return Response(serializer.data)
     # 없으면 인기도 상위 영화 추천
     else:
-        movies = Movie.objects.order_by('-popularity')[:10]
-        serializer = MovieListSerializer(movies, many=True)
+        popular_movies = Movie.objects.order_by('-popularity')[:10]
+        serializer = MovieListSerializer(popular_movies, many=True)
         message = '위시리스트가 없습니다. 인기도 상위 영화를 추천합니다'
         
         response_data = {
-        'message': message,
-        'movies': serializer.data
+            'message': message,
+            'movies': serializer.data
         }
         return Response(response_data)
+        # movies = Movie.objects.order_by('-popularity')[:10]
+        # serializer = MovieListSerializer(movies, many=True)
+        # message = '위시리스트가 없습니다. 인기도 상위 영화를 추천합니다'
+        
+        # response_data = {
+        # 'message': message,
+        # 'movies': serializer.data
+        # }
+        # return Response(response_data)

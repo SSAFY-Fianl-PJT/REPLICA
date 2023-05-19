@@ -15,7 +15,7 @@ class CustomRegisterView(RegisterView):
     serializer_class = CustomRegisterSerializer
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 @permission_classes([IsAuthenticated])
 # 프로필 조회
 def profile(request, username):
@@ -65,7 +65,7 @@ def user_wishlist(request, username):
         print(wishlist)
         # 위시리스트에 영화가 있으면 반환
         if wishlist.exists():
-            serializer = WishSerializer(Movie, many=True)
+            serializer = WishSerializer(wishlist, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response({'message' : '아직 위시리스트가 없습니다. 영화를 찜해보세요!'})

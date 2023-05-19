@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import warnings; warnings.filterwarnings('ignore')
-
+from .models import Movie
 from ast import literal_eval
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -56,26 +56,39 @@ print(features_sim[:1])
 features_sim_sorted_ind = features_sim.argsort()[:, ::-1]
 print(features_sim_sorted_ind[:1])
 
-def find_sim_movie(df, sorted_ind, title_names, top_n=10):
-    similar_movies = pd.DataFrame()
-    
-    for title_name in title_names:
-        movie = df[df['title'] == title_name]
-        movie_index = movie.index.values
-        # top_n의 2배에 해당하는 장르 유사성이 높은 인덱스 추출
-        similar_indexes = sorted_ind[movie_index, :(top_n*2)]
-        # reshape(-1) 1차열 배열 반환
-        similar_indexes = similar_indexes.reshape(-1)
-        # 기준 영화 인덱스는 제외
-        similar_indexes = similar_indexes[similar_indexes != movie_index]
+# def find_sim_movie(df, sorted_ind, title_names, top_n=10):
+def find_sim_movie(movie_id, sorted_ind, top_n=10):
+    # movie_id에 해당하는 인덱스 추출
+    movie_index = movies_df[movies_df['movie_id'] == movie_id].index.values
+    # top_n의 2배에 해당하는 장르 유사성이 높은 인덱스 추출
+    similar_indexes = sorted_ind[movie_index, :(top_n*2)]
+    # reshape(-1) 1차원 배열로 변환
+    similar_indexes = similar_indexes.reshape(-1)
+    # 기준 영화 인덱스는 제외
+    similar_indexes = similar_indexes[similar_indexes != movie_index]
 
-        similar_movies = similar_movies.append(df.iloc[similar_indexes])
+    similar_movies = Movie.objects.filter(movie_id__in=movies_df.iloc[similar_indexes]['movie_id'])
 
-    # 코사인 유사도 점수가 높은 순으로 정렬
-    similar_movies = similar_movies.drop_duplicates()  # 중복 영화 제거
-    similar_movies = similar_movies.sort_values('features_sim', ascending=False)[:top_n]
-    
     return similar_movies
+    # similar_movies = pd.DataFrame()
+    
+    # for title_name in title_names:
+    #     movie = df[df['title'] == title_name]
+    #     movie_index = movie.index.values
+    #     # top_n의 2배에 해당하는 장르 유사성이 높은 인덱스 추출
+    #     similar_indexes = sorted_ind[movie_index, :(top_n*2)]
+    #     # reshape(-1) 1차열 배열 반환
+    #     similar_indexes = similar_indexes.reshape(-1)
+    #     # 기준 영화 인덱스는 제외
+    #     similar_indexes = similar_indexes[similar_indexes != movie_index]
+
+    #     similar_movies = pd.concat([similar_movies, df.iloc[similar_indexes]])
+
+    # # 코사인 유사도 점수가 높은 순으로 정렬
+    # similar_movies = similar_movies.drop_duplicates()  # 중복 영화 제거
+    # similar_movies = similar_movies.sort_values('features_sim', ascending=False)[:top_n]
+    
+    # return similar_movies
 
 # movies_df['features_sim'] = np.nan  # features_sim 열 초기화
 # similar_movies = find_sim_movie(movies_df, features_sim_sorted_ind, user_wishlist, 10)

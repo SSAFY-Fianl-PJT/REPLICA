@@ -108,7 +108,7 @@ def comments(request, review_id):
     review = get_object_or_404(Review, pk=review_id)
     # 댓글 조회
     if request.method == 'GET':
-        comments = review.comment_set.all()
+        comments = review.comments.all()
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     # 댓글 생성
