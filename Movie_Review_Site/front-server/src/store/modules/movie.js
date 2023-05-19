@@ -31,7 +31,7 @@ export default {
           geners : items,
           year : items
         }
-        const search_results =  fetchSearchMovies(data)
+        const search_results =  await fetchSearchMovies(data)
         
         console.log("영화 찾는중", search_results)
       }
