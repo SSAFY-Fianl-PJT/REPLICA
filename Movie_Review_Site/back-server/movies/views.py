@@ -98,7 +98,7 @@ def movie_review(request, movie_id):
 # 영화 검색
 def movie_search(request):
     title = request.GET.get('title')
-    genre = request.GET.get('genre', '')
+    genre = request.GET.get('genre')
     year = request.GET.get('year')
 
     movies = Movie.objects.all()
