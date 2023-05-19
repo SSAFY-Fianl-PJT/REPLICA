@@ -14,8 +14,9 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from .serializers import MovieListSerializer, MovieDetailSerializer, MovieReviewSerializer
 from .models import Movie
 from community.models import Review
-from django_filters import rest_framework as filters
+# from django_filters import rest_framework as filters
 from django.utils import timezone
+from django.db.models import Q
 
 
 @api_view(['GET', 'POST'])
@@ -81,32 +82,42 @@ def movie_review(request, movie_id):
             return Response({'message': '아직 리뷰가 없습니다. 리뷰를 남겨보세요!'})
 
 
-# 검색 조건
-class MovieFilter(filters.FilterSet):
-    title = filters.CharFilter(lookup_expr='icontains')
-    genre = filters.CharFilter(lookup_expr='icontains')
-    year = filters.NumberFilter(field_name='release_date', lookup_expr='year')
+# # 검색 조건
+# class MovieFilter(filters.FilterSet):
+#     title = filters.CharFilter(lookup_expr='icontains')
+#     genres = filters.CharFilter(field_name='genres__name', lookup_expr='icontains')
+#     year = filters.NumberFilter(field_name='release_date', lookup_expr='year')
 
-    class Meta:
-        model = Movie
-        fields = ['title', 'genre', 'year']
+#     class Meta:
+#         model = Movie
+#         fields = ['title', 'genres', 'year']
 
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 # 영화 검색
 def movie_search(request):
-    movies = Movie.objects.all()
-    filter = MovieFilter(request.GET, queryset=movies)
-    filtered_movies = filter.qs
+    title = request.GET.get('title')
+    genre = request.GET.get('genre', '')
+    year = request.GET.get('year')
 
-    if filtered_movies.exists():
-        serializer = MovieListSerializer(filtered_movies, many=True)
+    movies = Movie.objects.all()
+
+    if title:
+        movies = movies.filter(title__icontains=title)
+
+    if genre:
+        movies = movies.filter(genres__genre_name__icontains=genre)
+
+    if year:
+        movies = movies.filter(release_date__year=year)
+
+    if movies.exists():
+        movies = movies[:50]
+        serializer = MovieListSerializer(movies, many=True)
         return Response(serializer.data)
-    # 검색 결과 없는 경우
     else:
         return Response({'message': '해당 조건을 만족하는 영화가 없습니다.'})
-    
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
