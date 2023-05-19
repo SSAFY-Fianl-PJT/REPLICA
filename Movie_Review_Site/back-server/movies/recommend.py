@@ -9,6 +9,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 #     data = json.load(file)
 
 
+import os
+dir, file = os.path.split(os.path.abspath(__file__))
 # movies = data  # JSON 데이터에서 영화 리스트 추출
 # movie_data = []
 
@@ -31,7 +33,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 # df = pd.DataFrame(movie_data, columns=columns)
 # df.to_csv('movies.csv',encoding='utf-8', index=False)
 
-movies=pd.read_csv("C:/SSAFY/1학기 최종/Movie_Review_Site/back-server/movies/movies.csv")
+movies=pd.read_csv(dir + "/movies.csv")
 # print(movies.shape) # (4992, 10)
 # movies.head(1)
 
