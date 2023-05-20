@@ -1,7 +1,8 @@
 <template>
   <div>
-    <h1>Article Page</h1>
-    <router-link :to="{ name: 'CreateView' }">[CREATE]</router-link>
+    <h1>커뮤니티 페이지</h1>
+    <!-- <router-link :to="{ name: 'CreateView' }">리뷰 작성해줄 페이지</router-link> -->
+    <!-- <router-link :to="{ name: 'CreateView' }">추천 페이지</router-link> -->
     <ArticleList :articles="getartic"/>
     <hr>
   </div>
@@ -16,17 +17,14 @@ export default {
     ArticleList,
   },
   props:{
-    movie_id: {
-    type: Number, 
-    required: true 
-    }
+
   },
   computed:{
     isLogin() {
       return this.$store.getters.isLogin // 로그인 여부
     },
     getartic(){
-      return this.getArticles()
+      return this.$store.state.article.articles
     }
   },
   created() {

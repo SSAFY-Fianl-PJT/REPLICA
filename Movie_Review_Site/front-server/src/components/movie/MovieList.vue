@@ -4,6 +4,8 @@
     <p>임의로 정렬했음 - [알고리즘이 현재 없습니다.]</p>
     <MovieContent  v-if="popularmovies  && popularmovies.length > 0" :items="popularmovies"/>
 
+    <MovieContent  v-if="upcomingmovies  && upcomingmovies.length > 0" :items="upcomingmovies"/>
+
 
   </div>
 </template>
@@ -28,9 +30,11 @@ export default {
   },
   computed:{
     popularmovies(){
-      // console.log("값",this.$store.state)
-      let total_movies = this.$store.state.movie.popular_movies
-      return total_movies.slice(0,10)
+
+      return this.$store.state.movie.popular_movies.slice(0,5)
+    },
+    upcomingmovies(){
+      return this.$store.state.movie.upcoming_movies.slice(0,5)
     },
   }
 }

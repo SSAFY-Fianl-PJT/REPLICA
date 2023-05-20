@@ -61,7 +61,8 @@
           </div>
         </div>
       </div>
-    <div class="Movie-Review-Page" v-if="Movie_Review_set">
+
+    <div class="Movie-Review-Page" >
       {{ item.id }} {{ item.title }}
       <review-view :movie_id="movie_item.id"/>
       <create-view :movie_title="movie_item.title"/>
@@ -87,7 +88,6 @@ export default {
   data(){
     return {
       MoviePoster : null,
-      Mv_id : null,
       movie_item : null
     }
   },
@@ -98,9 +98,8 @@ export default {
   methods: {
   },
   async created(){
-    console.log(this.item.title)
+    // console.log(this.item)
     this.MoviePoster = this.getPoster
-    this.Mv_id = this.item.id,
     this.movie_item = this.item
   },
   computed:{
@@ -123,11 +122,6 @@ export default {
         backgroundPosition: 'center',
       }
     },
-    Movie_Review_set(){
-      // console.log("흠",this.movie_item)
-      // console.log(this.movie_item.id === this.item.id)
-      return this.movie_item.id === this.item.id
-    }
   }
 }
 </script>

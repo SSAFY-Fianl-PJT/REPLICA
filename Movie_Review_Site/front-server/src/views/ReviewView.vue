@@ -11,7 +11,7 @@
     </div>
     <div v-else>
       <!-- 리뷰가 없을 때에만 표시되는 내용 -->
-      {{ get_review.message }}
+      {{ reviews.message }}
     </div>
 
   </div>
@@ -50,10 +50,13 @@ export default {
   },
   methods: {
     async getReviews() {
-      console.log(this.get_review)
+
+
       if (this.isLogin) {
-        await this.$store.dispatch('getReviews', this.movie_id)
-        
+        const check = await this.$store.dispatch('getReviews', this.movie_id)
+        this.reviews = check
+        console.log(this.movie_id)
+        console.log("이게 진짜 결과입니다",this.reviews)
 
       } else {
         alert('로그인이 필요한 페이지입니다...')

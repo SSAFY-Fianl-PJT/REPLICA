@@ -49,9 +49,13 @@ export default {
 }
     }
   },
+  async created(){
+    await this.$store.dispatch('getMV_Detail',this.$route.params.id)
+  },
   computed:{
     getitem(){
-      return this.item
+      console.log("테스트",this.$store.state.movie.movie_detail)
+      return this.$store.state.movie.movie_detail || this.item
     }
   }
 }
