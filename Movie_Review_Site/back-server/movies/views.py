@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.response import Response
+from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from django.core.paginator import Paginator
 # Authentication Decorators
@@ -92,7 +93,7 @@ def movie_review(request, movie_id):
 @permission_classes([IsAuthenticated])
 # 영화 검색
 def movie_search(request):
-    title = request.GET.get('title')
+    title = request.GET.get('title', '').strip()
     genre = request.GET.get('genre')
     year = request.GET.get('year')
 
@@ -113,6 +114,24 @@ def movie_search(request):
         return Response(serializer.data)
     else:
         return Response({'message': '해당 조건을 만족하는 영화가 없습니다.'})
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+# 영화제목 자동완성
+def movie_autocomplete(request):
+    word = request.GET.get('word', '').strip()
+    results=[]
+    
+    movies  = Movie.objects.filter(title__icontains = word)
+    if movies:
+        for movie in movies:
+            results.append({
+                'word' : movie.title
+            })
+            
+    return JsonResponse({'results': results})
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
