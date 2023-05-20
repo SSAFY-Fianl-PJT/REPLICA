@@ -17,6 +17,21 @@ class CustomRegisterView(RegisterView):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+# 유저 정보 가져오기
+def get_user_info(request):
+    user = request.user
+    username = user.username
+    nickname = user.nickname
+    data = {
+        'username':username,
+        'nickname':nickname,
+    }    
+
+    return Response(data)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 # 프로필 조회
 def profile(request, username):
     if request.method == 'GET':
