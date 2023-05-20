@@ -1,9 +1,6 @@
-from django.shortcuts import render
 from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
-from django.core.paginator import Paginator
-# Authentication Decorators
 # from rest_framework.decorators import authentication_classes
 
 # permission Decorators
@@ -18,9 +15,9 @@ from community.models import Review
 # from django_filters import rest_framework as filters
 from django.utils import timezone
 
-import numpy as np
 from .recommend import find_sim_movie, movies, movies_df, features_sim_sorted_ind
 from django.contrib.auth import get_user_model
+from .tfidf import calculate_tfidf
 
 
 @api_view(['GET'])
@@ -198,3 +195,18 @@ def movie_recommendation(request, username):
         # 'movies': serializer.data
         # }
         # return Response(response_data)
+        
+        
+@api_view(['GET'])
+def tfidf_recommend(request):
+    keyword = request.GET.get('keyword')
+
+    if not keyword:
+        return Response({'message': '키워드를 입력해주세요.'}, status=400)
+
+    recommendations = calculate_tfidf(keyword)
+    recommendations = recommendations[:10]
+    movie_ids = [recommendation['fields']['movie_id'] for recommendation in recommendations]
+    recommended_movies = Movie.objects.filter(movie_id__in=movie_ids)
+    serializer = MovieListSerializer(recommended_movies, many=True)
+    return Response(serializer.data)
