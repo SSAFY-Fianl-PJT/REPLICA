@@ -1,10 +1,16 @@
 <template>
-  <div class="article-list">
-    {{ articles }}
-    <ArticleListItem 
-    v-for="(article) in articles" :key="article.created_at" :article="article"
-    />
+  <div class="article-list-content">
+    <div class="article-list">
+      <ArticleListItem 
+      v-for="(article) in articles" :key="article.created_at" :article="article"
+      />
+    </div>
+    <div class="movie-list-at-community">
+      하위
+    </div>
+
   </div>
+
 </template>
 
 <script>
@@ -23,8 +29,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.article-list-content{
+  display: flex;
+  
+}
+
 .article-list {
+  display: flex;
+  flex-flow: wrap;
   text-align: start;
 }
 </style>

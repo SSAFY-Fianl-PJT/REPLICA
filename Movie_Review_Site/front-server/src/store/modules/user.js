@@ -4,6 +4,7 @@ import { fetchLogin, fetchLogout, fetchSignup } from '@/api/user'
 export default {
     state : {
         token: null,
+        info : null
     },
     getters: {
         isLogin(state) {
@@ -18,6 +19,9 @@ export default {
     mutations:{
         SAVE_TOKEN(state, token) {
             state.token = token
+        },
+        SAVE_INFO(state, info) {
+            state.info = info
         },
     },
     actions:{
@@ -42,7 +46,8 @@ export default {
             await fetchLogin({ username, password })
             .then((res) => {
                 context.commit('SAVE_TOKEN', res.data.key)
-                console.log(res.data.key)
+                context.commit('SAVE_INFO', res.data.key)
+                console.log(res.data)
             })
             .catch((err) => {
                 console.log(err)})

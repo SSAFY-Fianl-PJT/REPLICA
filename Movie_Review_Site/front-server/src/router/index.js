@@ -42,9 +42,16 @@ const routes = [
       }
     }
   },
+  {
+    path: '/article',
+    name: 'ArticleView',
+    component: ArticleView
+  },
+
+
 
   {
-    path: '/test',
+    path: '/test/:id',
     name: 'MovieViewTest',
     component: MovieViewTest
   },
@@ -55,11 +62,7 @@ const routes = [
     component: DetailView,
   },
   
-  {
-    path: '/article',
-    name: 'ArticleView',
-    component: ArticleView
-  },
+
   
   {
     path: '/create',

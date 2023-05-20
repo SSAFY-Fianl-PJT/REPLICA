@@ -26,18 +26,20 @@ export default {
             console.log(err)
             })
         },
+
         async getReviews(context, mv_number) {
-            console.log("이거 왜 못잡음?", mv_number)
-            fetchReviews(mv_number)
+            let review = null
+            await fetchReviews(mv_number)
             .then((res) => {
-            //   console.log(res)
-              context.commit('GET_REVIEWS', res.data)
-              console.log("이게 결과입니다.",res.data)
-              return res.data
+                //   console.log(res)
+                context.commit('GET_REVIEWS', res.data)
+                // console.log("이게 결과입니다.",res.data)
+                review = res.data
             })
             .catch((err) => {
-            console.log(err)
+                console.log(err)
             })
+            return review
         },
     }
 }

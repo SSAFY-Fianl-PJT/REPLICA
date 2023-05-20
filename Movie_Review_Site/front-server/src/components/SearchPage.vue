@@ -7,17 +7,22 @@
       </div>
   
       <div class="searchresult-container">
-  
-        <div class="SearchedMovieGroup" v-for="(item) in getResult" :key=item.poster_path>
-          <div class="ResultMovieTag">
-            <ModalButton 
-            :target="squeeze(item.title)"
-            :movie="item"/>
+        
+        <div class="search-result-found" v-if="Array.isArray(getResult)">
+          <div class="SearchedMovieGroup" v-for="(item) in getResult" :key=item.poster_path>
+            <div class="ResultMovieTag">
+              <ModalButton 
+              :target="squeeze(item.title)"
+              :movie="item"/>
+            </div>
+      
+            <ModalDialog :target="squeeze(item.title)">
+              <MovieItem :item="item" />
+            </ModalDialog>
           </div>
-    
-          <ModalDialog :target="squeeze(item.title)">
-            <MovieItem :item="item" />
-          </ModalDialog>
+        </div>
+        <div class="search-result-not-found" v-else>
+          <p> 검색결과가 없습니다.</p>
         </div>
       </div>
     </div>
@@ -50,7 +55,11 @@ export default {
   },
   methods:{
     squeeze(data){
-      let squeezed_data = data.replace(/\s/g, "")
+      let squeezed_data = data;
+
+      if (/\s/.test(data)) { // check if data contains any space
+          squeezed_data = data.replace(/\s/g, "");
+      }
       return squeezed_data
     }
   },
