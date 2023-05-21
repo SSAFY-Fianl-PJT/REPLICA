@@ -27,4 +27,12 @@ const fetchSignup = async ({username, nickname, password1, password2})=>{
     })
 }
 
-export { fetchLogin, fetchLogout, fetchSignup }
+const tk2Ur = () =>{
+    return api.get('/accounts/user-info/')
+}
+
+const fetchUsrInfo = ({username}) =>{
+    return api.get(`/accounts/profile/${username}`)
+}
+
+export { fetchLogin, fetchLogout, fetchSignup, fetchUsrInfo, tk2Ur }

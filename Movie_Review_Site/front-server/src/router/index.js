@@ -11,6 +11,7 @@ import SignUpView from '@/views/SignUpView'
 import SignInView from '@/views/SignInView'
 import MovieViewTest from '@/views/MovieViewTest'
 import SearchView from '@/views/SearchView'
+import ProfileView from '@/views/ProfileView'
 
 Vue.use(VueRouter)
 
@@ -47,13 +48,15 @@ const routes = [
     name: 'ArticleView',
     component: ArticleView
   },
-
-
-
   {
-    path: '/test/:id',
+    path: '/movie/:id',
     name: 'MovieViewTest',
     component: MovieViewTest
+  },
+  {
+    path : '/profile/',
+    name: 'ProfileView',
+    component : ProfileView
   },
 
   {

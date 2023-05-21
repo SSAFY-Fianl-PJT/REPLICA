@@ -31,10 +31,10 @@ export default {
   computed:{
     popularmovies(){
 
-      return this.$store.state.movie.popular_movies.slice(0,5)
+      return this.$store.state.movie.popular_movies
     },
     upcomingmovies(){
-      return this.$store.state.movie.upcoming_movies.slice(0,5)
+      return this.$store.state.movie.upcoming_movies
     },
   }
 }

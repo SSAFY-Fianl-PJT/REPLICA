@@ -23,7 +23,10 @@
               YOU
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">프로필</a></li>
+              <li>
+                <router-link class="dropdown-item" 
+                :to="{ name: 'ProfileView' }">프로필</router-link>
+              </li>
               <li><a class="dropdown-item disabled" href="#">설정</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" @click="logOut">로그아웃</a></li>

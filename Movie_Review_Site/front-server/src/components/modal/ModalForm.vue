@@ -58,23 +58,28 @@ export default {
 
 .accountactions{
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  /* aspect-ratio: 16/9; */
   align-items:center;
-  
-
+  max-height: 400px;
 }
 
 .ModalGroup{
   flex: 0 0 25%;
-  margin: 1.5rem;
-
+  margin: 1rem;
+  height: 100%;
+  width: 75%;
+  max-height: 400px;
   object-fit: cover;
 }
 
 .accountactions > .ModalGroup > figure{
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  object-fit: contain;
   transition: transform 0.3s ease-in-out;
-
 }
 
 .accountactions > .ModalGroup:hover > figure{

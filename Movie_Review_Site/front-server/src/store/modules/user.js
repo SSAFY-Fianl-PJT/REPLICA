@@ -1,10 +1,11 @@
 import api from '@/api/base.js'
-import { fetchLogin, fetchLogout, fetchSignup } from '@/api/user'
+import { fetchLogin, fetchLogout, fetchSignup, tk2Ur, fetchUsrInfo } from '@/api/user'
 
 export default {
     state : {
         token: null,
-        info : null
+        info : null,
+        profile : null,
     },
     getters: {
         isLogin(state) {
@@ -15,14 +16,18 @@ export default {
             }
             return state.token ? true : false
         },
+
     },
     mutations:{
         SAVE_TOKEN(state, token) {
             state.token = token
         },
-        SAVE_INFO(state, info) {
+        SAVE_USERINFO(state, info) {
             state.info = info
         },
+        SAVE_USER_Profile(state,prof){
+            state.profile = prof
+        }
     },
     actions:{
         async signUp(context, payload) {
@@ -38,6 +43,18 @@ export default {
                 console.log(err)
             })
         },
+        async get_usr_name(context){
+            tk2Ur().then((res) => { 
+                context.commit('SAVE_USERINFO', res.data )
+            })
+        },
+        async get_profile(context, username) {
+            console.log(username)
+            fetchUsrInfo({username}).then((res) => { 
+              console.log(res);
+              context.commit('SAVE_USER_Profile', res.data);
+            })
+          },
 
         async login(context, payload) {
             const username = payload.username
@@ -46,7 +63,6 @@ export default {
             await fetchLogin({ username, password })
             .then((res) => {
                 context.commit('SAVE_TOKEN', res.data.key)
-                context.commit('SAVE_INFO', res.data.key)
                 console.log(res.data)
             })
             .catch((err) => {
