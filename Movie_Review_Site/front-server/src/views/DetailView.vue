@@ -1,6 +1,6 @@
 <template>
   <div class="review-information">
-    <div class="review-datail-container">
+    <div v-if="article" class="review-datail-container">
       <h1>Detail</h1>
       {{ article.username }}
       <p>글 번호: {{ article?.id }}</p>
@@ -27,7 +27,7 @@
 
 <script>
 import { getDetail, updateArticle, deleteArticle } from '@/api/article';
-import { getMovieDetail } from '@/api/movie';
+import { getMovie_Detail } from '@/api/movie';
 import MovieItem from '@/components/movie/MovieItem.vue';
 
 export default {
@@ -47,10 +47,12 @@ export default {
   async created() {
     await this.getArticleDetail();
     await this.getMovieDetail();
+    console.log("아티클 확인",this.article)
   },
   computed: {
     isReviewAuthor() {
-      const loggedInUser = this.$store.state.user.info.username; // 로그인한 사용자 정보를 가져와야 함
+      // console.log("이거 왜 초장에 안나오냐",this.$store.state.user.info.username)
+      const loggedInUser = this.article.username; // 로그인한 사용자 정보를 가져와야 함
       return this.article.username === loggedInUser;
     },
   },
@@ -69,7 +71,7 @@ export default {
     async getMovieDetail() {
       const movieId = this.article.movie;
       try {
-        const response = await getMovieDetail(movieId);
+        const response = await getMovie_Detail(movieId);
         this.movieDetail = response.data;
       } catch (error) {
         console.error(error);
