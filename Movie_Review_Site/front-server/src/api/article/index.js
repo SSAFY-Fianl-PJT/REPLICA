@@ -28,4 +28,14 @@ const updateArticle = async (params_id, updatedData) => {
 const deleteArticle = async (params_id) => {
     return api.delete(`/community/${params_id}/`);
 }
-export { fetchArticles, fetchCreate, getDetail, fetchReviews, updateArticle, deleteArticle }
+
+const getComments = async (review_id) =>{
+    return api.get(`/community/${review_id}/comments/`)
+}
+
+const createComments = async (review_id, {content}) =>{
+    return api.post(`/community/${review_id}/comments/`,{content})
+}
+
+export { fetchArticles, fetchCreate, getDetail, fetchReviews, updateArticle, deleteArticle, 
+    getComments, createComments }

@@ -24,5 +24,8 @@ const WishList = async({movie_id})=>{
     return api.post(`/movies/${movie_id}/wishlist/`)
 }
 
-
-export { fetchMovies, getMovie_Detail, fetchSearchMovies, WishList}
+const MyWishList = async({user_name}) => {
+    console.log("에효",user_name)
+    return api.get(`/accounts/my_wishlist/${user_name}/`)
+}
+export { fetchMovies, getMovie_Detail, fetchSearchMovies, WishList, MyWishList}

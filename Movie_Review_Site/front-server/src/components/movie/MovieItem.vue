@@ -1,7 +1,6 @@
 <template>
     <div class="movie-poster-container">
       <hr>
-      <hr>
       <div class="image-container"  ref="imageContainer">
         <div class="poster-img">
           <img :src="getPoster" alt="영화포스터">
@@ -75,6 +74,7 @@
     <div class="Movie-Review-Page" >
       {{ item.id }} {{ item.title }}
       <review-view :movie_id="movie_item.id"/>
+      <hr>
       <create-view :movie_title="movie_item.title"/>
     </div>
 
@@ -87,7 +87,7 @@
 <script>
 import ReviewView from '@/views/ReviewView.vue'
 import CreateView from '@/views/CreateView.vue'
-import {WishList} from '@/api/movie'
+import {WishList, MyWishList} from '@/api/movie'
 const MOVIE_URL = 'https://image.tmdb.org/t/p/w500'
 
 export default {
@@ -99,7 +99,8 @@ export default {
     return {
       MoviePoster : null,
       movie_item : null,
-      isLiked : false
+      isLiked : false,
+      my_wish_list : []
     }
   },
   components:{
@@ -107,31 +108,42 @@ export default {
     CreateView
   },
   methods: {
-    async wantThisMovie(){
-      const movie_id = this.item.id
+    async wantThisMovie() {
+      const movie_id = this.item.id;
 
-      await WishList({movie_id}).then(res=>{
-        console.log(res.data.message)
-        if(res.data.message.includes('찜 목록에서 제거했습니다')) {
+      await WishList({ movie_id }).then((res) => {
+        console.log(res.data.message);
+        if (res.data.message.includes('찜 목록에서 제거했습니다')) {
           this.isLiked = false;
         } else {
           this.isLiked = true;
         }
-      })
+      });
+
+      const user_name = this.$store.state.user.info.username;
+      await this.searchMyWishList({ user_name });
     },
-},
+    async searchMyWishList({ user_name }) {
+      const res = await MyWishList({ user_name });
+      this.my_wish_list = res.data;
+      this.check_is_liked();
+    },
+    async check_is_liked() {
+      this.isLiked = this.my_wish_list.some((movie) => movie.movie_id === this.item.id);
+    }
+  },
   async created(){
-
+    const user_name = this.$store.state.user.info.username
     this.movie_item = this.item
-
+    await this.searchMyWishList({user_name})
+    await this.check_is_liked()
   },
   computed:{
     getPoster(){
       return MOVIE_URL + this.item.poster_path
     },
-    isZZIMM(){
-      console.log("이거",this.isLiked)
-      return this.isLiked
+    isZZIMM() {
+      return this.my_wish_list.some((movie) => movie.movie_id === this.item.id);
     },
 
     backgroundImageStyle(){

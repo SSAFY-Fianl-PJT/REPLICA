@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    개봉
+    Footer 여기 잠들다
     <!-- <MovieContent  v-if="upcomingmovies  && upcomingmovies.length > 0" :items="upcomingmovies"/> -->
   </div>
 </template>
