@@ -2,7 +2,9 @@
 node_modules
 /dist
 
-
+accounts/migrations/
+community/migrations/
+movies/migrations/
 # local env files
 .env.local
 .env.*.local
