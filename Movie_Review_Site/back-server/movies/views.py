@@ -13,6 +13,7 @@ from .serializers import MovieListSerializer, MovieDetailSerializer, MovieReview
 from community.serializers import ReviewSerializer
 from .models import Movie
 from community.models import Review
+from community.serializers import ReviewSerializer
 from .recommend import find_sim_movie, movies, movies_df, features_sim_sorted_ind
 from .tfidf import calculate_tfidf
 
