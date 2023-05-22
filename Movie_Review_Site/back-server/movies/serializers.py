@@ -28,6 +28,7 @@ class MovieDetailSerializer(serializers.ModelSerializer):
 # 영화별 리뷰
 class MovieReviewSerializer(serializers.ModelSerializer):
 
+
     class Meta:
         model = Review
         fields = '__all__'

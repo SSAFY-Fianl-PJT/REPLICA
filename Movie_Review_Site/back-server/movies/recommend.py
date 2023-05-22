@@ -5,7 +5,7 @@ from .models import Movie
 from ast import literal_eval
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-
+from cachetools import Cache, LRUCache
 import os
 dir, file = os.path.split(os.path.abspath(__file__))
 
@@ -53,8 +53,18 @@ features_sim = cosine_similarity(features_mat, features_mat)
 features_sim_sorted_ind = features_sim.argsort()[:, ::-1]
 # print(features_sim_sorted_ind[:1])
 
-# def find_sim_movie(df, sorted_ind, title_names, top_n=10):
+# 캐시 생성
+cache = LRUCache(maxsize=128)
+
 def find_sim_movie(movie_id, sorted_ind, top_n=10):
+
+     # 캐시 키 생성
+    cache_key = (movie_id, top_n)
+
+    # 캐시 확인
+    if cache_key in cache:
+        return cache[cache_key]
+    
     # movie_id에 해당하는 인덱스 추출
     movie_index = movies_df[movies_df['movie_id'] == movie_id].index.values
     # top_n의 2배에 해당하는 장르 유사성이 높은 인덱스 추출
@@ -66,6 +76,8 @@ def find_sim_movie(movie_id, sorted_ind, top_n=10):
 
     similar_movies = Movie.objects.filter(movie_id__in=movies_df.iloc[similar_indexes]['movie_id'])
 
+    # 캐시에 결과 저장
+    cache[cache_key] = similar_movies
     return similar_movies
 
 
