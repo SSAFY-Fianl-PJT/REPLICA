@@ -52,12 +52,16 @@ export default {
             this.user_test = res.data
         })  
 
-        await fetchUsrfollow({username}).then(res =>{
-            this.is_follow_test = res.data.is_followed
-        })
-        await fetchUsrfollow({username}).then(res =>{
-            this.is_follow_test = res.data.is_followed
-        })
+            try{
+                await fetchUsrfollow({username}).then(res =>{
+                    this.is_follow_test = res.data.is_followed
+                })
+                await fetchUsrfollow({username}).then(res =>{
+                    this.is_follow_test = res.data.is_followed
+                })
+            }catch{
+                console.log("본인이 접근했습니다.")
+            }
     },
     watch: {
         '$route.params.username': {
@@ -72,16 +76,20 @@ export default {
         this.$store.dispatch('get_profile', this.$route.params.username);
         },
         async isFollow(){
-            const username = this.user
-            const response = await fetchUsrfollow({username})
-            console.log("is_followed:", response.data.is_followed)
-            this.is_follow_test = !this.is_follow_test
-            if(this.is_follow_test) {
-                // if we just followed the user, increment the follower count
-                this.user_test.followers_count++
-            } else {
-                // if we just unfollowed the user, decrement the follower count
-                this.user_test.followers_count--
+            if (this.user !== this.$store.state.user.info.username){
+                const username = this.user
+                const response = await fetchUsrfollow({username})
+                console.log("is_followed:", response.data.is_followed)
+                this.is_follow_test = !this.is_follow_test
+                if(this.is_follow_test) {
+                    // if we just followed the user, increment the follower count
+                    this.user_test.followers_count++
+                } else {
+                    // if we just unfollowed the user, decrement the follower count
+                    this.user_test.followers_count--
+                }
+            }else{
+                console.log("자기자신을 팔로잉 할 수 없습니다.")
             }
         }, 
         
