@@ -1,4 +1,6 @@
 <template>
+  <div>
+  
   <div v-if="isLogin && get_username">
     <ProfileItem 
     :user="get_username"
@@ -7,7 +9,7 @@
   <div v-else>
     역기서 나가
   </div>
-
+</div>
 </template>
 
 <script>
@@ -17,12 +19,13 @@ export default {
     components:{
         ProfileItem
     },
-    deta(){
-
+    data(){
+      return{
+        user_name : null
+      }
     },
     created(){
-        this.$store.dispatch('get_usr_name');
-
+        this.user_name = this.$route.params.username
     },
 
     computed:{
@@ -30,10 +33,10 @@ export default {
           return this.$store.getters.isLogin // 로그인 여부
         },
         get_username() {
-            if (!this.$store.state.user.info) return false
-            return this.$store.state.user.info.username 
-        },
+          
+          return this.user_name
     }
+  }
 }
 </script>
 

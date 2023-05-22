@@ -54,7 +54,7 @@ const routes = [
     component: MovieViewTest
   },
   {
-    path : '/profile/',
+    path : '/profile/:username',
     name: 'ProfileView',
     component : ProfileView
   },

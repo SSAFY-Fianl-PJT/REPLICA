@@ -25,7 +25,7 @@ export default {
       }
   },
   async created(){
-    await this.$store.dispatch('getMovies')
+    // await this.$store.dispatch('getMovies')
     // console.log("무비랭킹",this.popularmovies) // 영화에 대한 정보 
   },
   computed:{

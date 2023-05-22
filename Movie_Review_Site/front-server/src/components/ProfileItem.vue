@@ -1,18 +1,18 @@
 <template>
-  <div class="usr-profile-container">
+  <div v-if="user_test" class="usr-profile-container">
     <div>렌덤 무비포스터 있으면 좋을듯</div>
     <div class="user-name-block">
-        <span class="user-nickname">{{get_usr.nickname}}</span>
-        <button>팔로우</button>
-        <button>팔로잉</button>
+        <span class="user-nickname">{{ user_test.nickname }}</span>
+            <button v-if="!is_follow" @click="isFollow()">팔로우</button>
+            <button v-else @click="isFollow()">팔로우 취소</button>
         <hr>
-        <span v-if="get_usr" class="user-nickname">팔로잉 : {{get_usr.followings_count}}</span>
-        <span v-if="get_usr" class="user-nickname">팔로워 : {{get_usr.followers_count}}</span>
+        <span v-if="get_usr" class="user-nickname">팔로잉 : {{user_test.followings_count}}</span>
+        <span v-if="get_usr" class="user-nickname">팔로워 : {{user_test.followers_count}}</span>
     </div>
     <div class="movie-lists-for-usr">
 
         <div class="users-wishlist">
-            <span v-if="get_usr" class="user-nickname">{{get_usr.nickname}} 의 찜 리스트</span>
+            <span v-if="get_usr" class="user-nickname">{{user_test.nickname}} 의 찜 리스트</span>
             <MovieContent  v-if="getWishlist  && getWishlist.length > 0" :items="getWishlist"/>
                 
         </div>
@@ -28,23 +28,62 @@
 
 <script>
 import MovieContent from '@/components/movie/MovieContent.vue';
+import {fetchUsrInfo, fetchUsrfollow} from '@/api/user'
 
 export default {
     name:'ProfileItem',
+    data(){
+        return{
+            user_test : null,
+            is_follow_test : null,
+        }
+    },
     props:{
-        user:String
+        user : String,
     },
     components:{
-        MovieContent
+        MovieContent,
     },
     async created(){
-        await this.$store.dispatch('getMovies')
-        this.$store.dispatch('get_profile', this.user)
+        const username = this.user
+        // console.log("살려줘",username)
+        fetchUsrInfo({username})
+        .then((res) =>{
+            this.user_test = res.data
+        })
+
+        await fetchUsrfollow({username}).then(res =>{
+            console.log("ㅅㅂ..",res.data.is_followed)
+            this.is_follow_test = res.data.is_followed
+        })
+        await fetchUsrfollow({username}).then(res =>{
+            console.log("ㅅㅂ..",res.data.is_followed)
+            this.is_follow_test = res.data.is_followed
+        })
     },
+    watch: {
+        '$route.params.username': {
+            immediate: true,
+            handler: 'fetchData'
+        }
+    },
+    methods: {
+    async fetchData() {
+        // 여기에 새로운 사용자 데이터를 불러오는 로직을 구현하세요.
+        console.log("fetching data for user:", this.$route.params.username);
+        this.$store.dispatch('get_profile', this.$route.params.username);
+        },
+    async isFollow(){
+        const username = this.user
+        const response = await fetchUsrfollow({username})
+        console.log("is_followed:", response.data.is_followed)
+        this.is_follow_test = response.data.is_followed
+        location.reload()
+        },
+    },  
     computed : {
         get_usr(){
             try {
-                
                 // console.log("이게 말이되나",this.$store.state.user.profile)
                 return this.$store.state.user.profile
             } catch(err) {
@@ -53,14 +92,18 @@ export default {
             }
         },
         getWishlist(){
-            console.log(this.get_usr.wishlist, "이거 되나?")
+            // console.log(this.get_usr.wishlist, "이거 되나?")
             // console.log("이건 무비리스트", this.items)
             return this.get_usr.wishlist
         },
         upcomingmovies(){
             return this.$store.state.movie.upcoming_movies.slice(0,5)
         },
-    }
+        is_follow(){
+
+            return this.is_follow_test
+        }
+    },
 }
 </script>
 

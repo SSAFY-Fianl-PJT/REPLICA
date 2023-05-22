@@ -1,6 +1,9 @@
 <template>
     <div class="give-movie">
 
+      
+
+
         <div class="handle left-handle" @click="handleClick('left')">
         <p>&#8249;</p></div>
         <div class="slider" :style="{ transform: sliderTransform }">
@@ -46,7 +49,7 @@ import MovieItem from '@/components/movie/MovieItem'
     },
     computed: {
         getItems(){
-            // console.log("이건 무비리스트", this.items)
+            console.log("이건 무비리스트", this.items)
             return this.items
         },
       sliderTransform() {

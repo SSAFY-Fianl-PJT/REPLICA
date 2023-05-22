@@ -25,7 +25,7 @@ export default {
         SAVE_USERINFO(state, info) {
             state.info = info
         },
-        SAVE_USER_Profile(state,prof){
+        SAVE_USER_Profile(state, prof){
             state.profile = prof
         }
     },
@@ -44,13 +44,13 @@ export default {
             })
         },
         async get_usr_name(context){
-            tk2Ur().then((res) => { 
+            await tk2Ur().then((res) => { 
                 context.commit('SAVE_USERINFO', res.data )
             })
         },
         async get_profile(context, username) {
             console.log(username)
-            fetchUsrInfo({username}).then((res) => { 
+            await fetchUsrInfo({username}).then((res) => { 
               console.log(res);
               context.commit('SAVE_USER_Profile', res.data);
             })

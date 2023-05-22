@@ -33,6 +33,7 @@ export default {
     return {
       title: null,
       content: null,
+
     }
   },
   props:{
@@ -43,7 +44,8 @@ export default {
       const title = this.title
       const content = this.content
       const movie_title = this.mv_title
-
+      const username = this.$store.state.user.info.username
+      console.log(username)
       if (!title) {
         alert('제목 입력해주세요')
         return
@@ -52,7 +54,7 @@ export default {
         return
       }
 
-      fetchCreate({ title, content, movie_title})
+      fetchCreate({ title, content, movie_title })
       .then(() => {
         // console.log(res)
         // this.$router.push({name: 'ArticleView'})

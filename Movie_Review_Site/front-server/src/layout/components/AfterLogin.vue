@@ -20,12 +20,12 @@
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              YOU
+              {{ usr_nickname }}
             </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu profile-text">
               <li>
-                <router-link class="dropdown-item" 
-                :to="{ name: 'ProfileView' }">프로필</router-link>
+                <router-link class="dropdown-item" :key="$route.fullPath"
+                :to="{ name: 'ProfileView', params: { username: usr_name } }">프로필</router-link>
               </li>
               <li><a class="dropdown-item disabled" href="#">설정</a></li>
               <li><hr class="dropdown-divider"></li>
@@ -53,8 +53,18 @@ export default {
   data(){
     return {
       LogoImg : LogoImg,
-      searchQuery: ''
+      searchQuery: '',
+      usr_nickname : null,
+      usr_name : null
     }
+  },
+  async created(){
+    await this.$store.dispatch('getMovies')
+    await this.$store.dispatch('get_usr_name')
+    // console.log("이거",this.$store.state.user.info.username)
+    this.$store.dispatch('get_profile', this.$store.state.user.info.username)   
+    this.usr_nickname = this.$store.state.user.info.nickname
+    this.usr_name = this.$store.state.user.info.username
   },
   methods:{
     logOut(){
@@ -77,13 +87,32 @@ export default {
       }
       this.searchQuery = ''
 
+    },
+  },
+  computed:{
+    get_usr(){
+            try {
+                
+                // console.log("이게 말이되나",this.$store.state.user.profile)
+                return this.$store.state.user.profile
+            } catch(err) {
+            console.log(err)
+            return "없습니다."
+            }
+    },
+    get_nickname(){
+      return this.get_usr.nickname || '...'
     }
   }
-
 }
 </script>
 
 <style scoped>
+.profile-text{
+  color: black;
+}
+
+
 .logo{
   width: 100px;
 }

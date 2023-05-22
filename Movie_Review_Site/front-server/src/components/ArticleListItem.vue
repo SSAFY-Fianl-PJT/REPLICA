@@ -1,6 +1,5 @@
 <template>
   <div class="Review-Tag-Info">
-    
     <div class="card" style="width: 18rem;">
       <div class="card-body">
         <div class="card-movie-title">
@@ -15,12 +14,16 @@
         <h6 class="card-subtitle mb-2 text-muted">{{ article?.movie_title }}</h6>
         <p class="card-text ellipsis">{{ article?.content }}</p>
         <div class="card-link">
-          <router-link :to="{
-            name: 'DetailView',
+          <router-link class="dropdown-item" 
+            :to="{ name: 'DetailView',
             params: {id: article?.id }}">
             [리뷰 상세]
           </router-link>
-          <a href="#" class="card-link">[프로필 대기중]</a>
+          
+          <router-link class="dropdown-item" 
+                :to="{ name: 'ProfileView', 
+                params: { username: article?.username } }">
+                [프로필]</router-link>
 
         </div>
 
@@ -48,6 +51,9 @@ export default {
   flex-wrap: wrap;
 }
 
+.dropdown-item{
+  text-align: center;
+}
 .card-link{
   display: flex;
   justify-content: space-around;

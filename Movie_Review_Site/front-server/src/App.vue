@@ -36,10 +36,10 @@ nav {
 
 nav a {
   font-weight: bold;
-  color: #5c9af1;
+  color: #c0d3e6;
 }
 
 nav a.router-link-exact-active {
-  color: #e0eefc;
+  color: #0080ff;
 }
 </style>
