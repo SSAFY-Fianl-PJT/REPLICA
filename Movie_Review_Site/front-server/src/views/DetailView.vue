@@ -14,9 +14,9 @@
         <p>제목: {{ article?.title }}</p>
         <p>내용: {{ article?.content }}</p>
       </div>
-      <button v-if="!isEditing" @click="startEditing">수정</button>
-      <button v-else @click="updateArticle">수정완료</button>
-      <button @click="deleteArticle">삭제</button>
+      <button v-if="!isEditing && isReviewAuthor" @click="startEditing">수정</button>
+      <button v-else-if="isEditing && isReviewAuthor" @click="updateArticle">수정완료</button>
+      <button v-if="isReviewAuthor" @click="deleteArticle">삭제</button>
     </div>
 
     <div v-if="movieDetail" class="reive-movie-inform">
@@ -47,6 +47,12 @@ export default {
   async created() {
     await this.getArticleDetail();
     await this.getMovieDetail();
+  },
+  computed: {
+    isReviewAuthor() {
+      const loggedInUser = this.$store.state.user.info.username; // 로그인한 사용자 정보를 가져와야 함
+      return this.article.username === loggedInUser;
+    },
   },
   methods: {
     async getArticleDetail() {

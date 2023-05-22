@@ -124,6 +124,27 @@ def movie_autocomplete(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
+# 리뷰 좋아요
+def movie_like(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    if request.user.is_authenticated:
+        person = request.user
+
+        if person in movie.like_users.all():
+            movie.like_users.remove(person)
+            message = '좋아요 취소'
+        else:
+            movie.like_users.add(person)
+            message = '좋아요'
+        
+        movie.like_users_count = movie.like_users.count()
+        serializer = MovieDetailSerializer(movie)
+
+        return Response({'message' : message, 'movie' : serializer.data})
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
 # 위시 리스트 추가/제거
 def movie_wishlist(request, movie_id):
     movie = get_object_or_404(Movie, movie_id=movie_id)

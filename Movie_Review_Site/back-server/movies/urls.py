@@ -10,6 +10,7 @@ urlpatterns = [
     #http://127.0.0.1:8000/movies/search/?title=앤트맨&year=2018 (검색 예시)
     path('search/autocomplete/', views.movie_autocomplete),
     # http://127.0.0.1:8000/movies/search/autocomplete/?word=앤 (예시)
+    path('<int:movie_id>/like/', views.movie_like), # 리뷰 좋아요
     path('<int:movie_id>/wishlist/', views.movie_wishlist), # 위시리스트 추가
     path('recommend/<username>/', views.movie_recommendation), # 위시리스트 기반 영화 추천
     path('recommend/', views.tfidf_recommend), # 입력 텍스트 기반 영화 추천
