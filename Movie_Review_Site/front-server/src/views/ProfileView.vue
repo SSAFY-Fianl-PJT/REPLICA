@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import ProfileItem from '@/components/ProfileItem'
+import ProfileItem from '@/components/community/ProfileItem'
 export default {
     name : 'ProfileView',
     components:{
