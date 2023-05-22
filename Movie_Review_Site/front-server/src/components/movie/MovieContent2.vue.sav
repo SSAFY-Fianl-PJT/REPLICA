@@ -5,20 +5,19 @@
       </div>
       <div class="slider" :style="{ transform: sliderTransform }">
           <div class="accountactions">
-              <div class="ModalGroup" v-for="(item) in items" :key="item.poster_path">
+              <div class="ModalGroup" v-for="(item, index) in items" :key="item.poster_path">
                   <figure>
-                      <ModalButton :target="squeeze(item.title)" :movie="item"  @open-modal="handleOpenModal"/>
+                      <ModalButton :target="squeeze(item.title)" :movie="item" @click="openModal(index)" />
                   </figure>
               </div>
+              <ModalDialog v-if="showModal" :target="squeeze(selectedItem.title)" :item="selectedItem" @close="showModal = false">
+                  <MovieItem :item="selectedItem"/>
+              </ModalDialog>
           </div>
       </div>
       <div class="handle right-handle" @click="handleClick('right')">
-        <p>&#8250;</p>
+          <p>&#8250;</p>
       </div>
-
-      <ModalDialog v-if="showModal" :target="squeeze(selectedItem.title)" :item="selectedItem">
-          <MovieItem :item="selectedItem"/>
-      </ModalDialog>
 
   </div>
 </template>
@@ -43,7 +42,6 @@ import MovieItem from '@/components/movie/MovieItem'
         sliderIndex: 0,
         showModal: false,
         selectedItem: null,
-        
       };
     },
     methods: {
@@ -55,9 +53,8 @@ import MovieItem from '@/components/movie/MovieItem'
           this.sliderIndex = this.sliderIndex >= maxIndex ? 0 : this.sliderIndex + 1;
         }
       },
-      handleOpenModal(movie) {
-        this.selectedItem = movie;
-        console.log("열여라 참깨",movie)
+      openModal(index) {
+        this.selectedItem = this.items[index];
         this.showModal = true;
       },
       squeeze(data){

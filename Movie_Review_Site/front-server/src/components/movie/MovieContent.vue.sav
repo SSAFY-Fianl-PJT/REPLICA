@@ -1,6 +1,9 @@
 <template>
     <div class="give-movie">
 
+      
+
+
         <div class="handle left-handle" @click="handleClick('left')">
         <p>&#8249;</p></div>
         <div class="slider" :style="{ transform: sliderTransform }">

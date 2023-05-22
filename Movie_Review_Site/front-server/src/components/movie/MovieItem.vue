@@ -3,20 +3,26 @@
       <hr>
       <hr>
       <div class="image-container"  ref="imageContainer">
-        <img :src="MoviePoster" alt="영화포스터">
+        <div class="poster-img">
+          <img :src="getPoster" alt="영화포스터">
+        </div>
 
         <div class="information-block">
+          
           <div class="movie-title-reldate">
             <div class="movie-title">
-              {{ item.title }}
+              {{ item.title }}  
+              <button v-if="isZZIMM" class="ZZIM" @click="wantThisMovie()">영화 찜 취소</button>
+              <button v-else class="ZZIM" @click="wantThisMovie()">영화 찜하기</button>
             </div>
+            
             <div >
               {{ item.release_date }}
             </div>
           </div>
 
           <div class="movie-summary">
-              <div class="summary">
+              <div class="summary"  style="max-height: 200px; overflow: hidden;">
                 <span>
                   {{ item.overview }}
                 </span>
@@ -35,17 +41,21 @@
                 <tr>
                   <th>출연진</th>
                   <td>
+                    <div style="max-height: 60px; overflow: hidden;">
                     <span v-for="(actor, idx) in item.actors" :key="idx">
                       {{ actor }}{{ idx !== item.actors.length - 1 ? ' |' : '' }}
                     </span>
+                    </div>
                   </td>
                 </tr>
                 <tr>
                   <th>장르</th>
                   <td>
-                    <span v-for="(genre, idx) in item.genres" :key="idx">
-                      {{ genre.genre_name }}{{ idx !== item.genres.length - 1 ? ' |' : '' }}
-                    </span>
+                    <div style="max-height: 60px; overflow: hidden;">
+                      <span v-for="(genre, idx) in item.genres" :key="idx">
+                        {{ genre.genre_name }}{{ idx !== item.genres.length - 1 ? ' |' : '' }}
+                      </span>
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -77,7 +87,7 @@
 <script>
 import ReviewView from '@/views/ReviewView.vue'
 import CreateView from '@/views/CreateView.vue'
-
+import {WishList} from '@/api/movie'
 const MOVIE_URL = 'https://image.tmdb.org/t/p/w500'
 
 export default {
@@ -88,7 +98,8 @@ export default {
   data(){
     return {
       MoviePoster : null,
-      movie_item : null
+      movie_item : null,
+      isLiked : false
     }
   },
   components:{
@@ -96,17 +107,32 @@ export default {
     CreateView
   },
   methods: {
-  },
+    async wantThisMovie(){
+      const movie_id = this.item.id
+
+      await WishList({movie_id}).then(res=>{
+        console.log(res.data.message)
+        if(res.data.message.includes('찜 목록에서 제거했습니다')) {
+          this.isLiked = false;
+        } else {
+          this.isLiked = true;
+        }
+      })
+    },
+},
   async created(){
-    // console.log(this.item)
-    this.MoviePoster = this.getPoster
+
     this.movie_item = this.item
+
   },
   computed:{
     getPoster(){
       return MOVIE_URL + this.item.poster_path
     },
-
+    isZZIMM(){
+      console.log("이거",this.isLiked)
+      return this.isLiked
+    },
 
     backgroundImageStyle(){
       return {
@@ -133,6 +159,9 @@ export default {
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.541);
 }
+.image-container{
+  flex:1;
+}
 .image-container {
 
 
@@ -153,7 +182,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
+  flex: 1;
 }
 .movie-title-reldate{
   margin-left: 10px;
@@ -185,5 +214,10 @@ export default {
 .table-text{
   display: flex;
   align-items: center;
+}
+
+.table td, .table th {
+  max-height: 60px;
+  overflow: hidden;
 }
 </style>
