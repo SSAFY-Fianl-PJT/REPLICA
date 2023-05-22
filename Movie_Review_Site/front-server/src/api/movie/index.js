@@ -19,4 +19,10 @@ const getMovie_Detail = async(params_id)=>{
     return api.get(`/movies/${params_id}/`)
 }
 
-export { fetchMovies, getMovie_Detail, fetchSearchMovies}
+const WishList = async({movie_id})=>{
+    console.log(movie_id)
+    return api.post(`/movies/${movie_id}/wishlist/`)
+}
+
+
+export { fetchMovies, getMovie_Detail, fetchSearchMovies, WishList}
