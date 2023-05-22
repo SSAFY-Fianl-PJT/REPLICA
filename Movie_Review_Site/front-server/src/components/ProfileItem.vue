@@ -47,17 +47,15 @@ export default {
     async created(){
         const username = this.user
         // console.log("살려줘",username)
-        fetchUsrInfo({username})
+        await fetchUsrInfo({username})
         .then((res) =>{
             this.user_test = res.data
-        })
+        })  
 
         await fetchUsrfollow({username}).then(res =>{
-            console.log("ㅅㅂ..",res.data.is_followed)
             this.is_follow_test = res.data.is_followed
         })
         await fetchUsrfollow({username}).then(res =>{
-            console.log("ㅅㅂ..",res.data.is_followed)
             this.is_follow_test = res.data.is_followed
         })
     },
@@ -73,13 +71,20 @@ export default {
         console.log("fetching data for user:", this.$route.params.username);
         this.$store.dispatch('get_profile', this.$route.params.username);
         },
-    async isFollow(){
-        const username = this.user
-        const response = await fetchUsrfollow({username})
-        console.log("is_followed:", response.data.is_followed)
-        this.is_follow_test = response.data.is_followed
-        location.reload()
-        },
+        async isFollow(){
+            const username = this.user
+            const response = await fetchUsrfollow({username})
+            console.log("is_followed:", response.data.is_followed)
+            this.is_follow_test = !this.is_follow_test
+            if(this.is_follow_test) {
+                // if we just followed the user, increment the follower count
+                this.user_test.followers_count++
+            } else {
+                // if we just unfollowed the user, decrement the follower count
+                this.user_test.followers_count--
+            }
+        }, 
+        
     },  
     computed : {
         get_usr(){
@@ -108,9 +113,6 @@ export default {
 </script>
 
 <style scoped>
-
-
-
 .user-nickname{
     font-size : 30px;
     margin: 0 0 15;

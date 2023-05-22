@@ -1,6 +1,6 @@
 <template>
     <div id="inform-movie-modal">          
-        <div class="SignPageBtn" @click="handleclick()" data-bs-toggle="modal" :data-bs-target="item">
+        <div class="SignPageBtn" @click="handleclick" data-bs-backdrop="true" data-bs-toggle="modal" :data-bs-target="item">
             <div class="movie-carrier" v-if="movie">
                 <img class="movieimgthumbnail img-thumbnail" :src="movie_url" alt="" style = "border: 3px solid white">
             </div>
@@ -23,15 +23,17 @@ export default {
     },
     data(){
         return{
-            item : null
+            item : null,
         }
     },
-    created(){
+    mounted(){
         this.item = this.set_target
         // console.log(this.item)
     },
     methods:{
         handleclick(){
+            
+            this.$emit('open-modal', this.movie);
             return true
         }
     },
