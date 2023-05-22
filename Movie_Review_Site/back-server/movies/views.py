@@ -10,13 +10,16 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 
 from .serializers import MovieListSerializer, MovieDetailSerializer, MovieReviewSerializer
+from community.serializers import ReviewSerializer
 from .models import Movie
 from community.models import Review
 from community.serializers import ReviewSerializer
 from .recommend import find_sim_movie, movies, movies_df, features_sim_sorted_ind
 from .tfidf import calculate_tfidf
 
+import numpy as np
 from django.utils import timezone
+from django.views.decorators.cache import cache_page
 
 
 
@@ -145,6 +148,7 @@ def movie_wishlist(request, movie_id):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@cache_page(60 * 30)  # 30분 동안 캐시 유지
 # 위시리스트 기반 영화 추천
 def movie_recommendation(request, username):
 
@@ -178,6 +182,7 @@ def movie_recommendation(request, username):
         
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
+@cache_page(60 * 30)  # 30분 동안 캐시 유지
 # 키워드 기반 영화 추천
 def tfidf_recommend(request):
     keyword = request.GET.get('keyword')
