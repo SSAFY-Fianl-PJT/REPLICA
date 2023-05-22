@@ -12,6 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 from .serializers import MovieListSerializer, MovieDetailSerializer, MovieReviewSerializer
 from .models import Movie
 from community.models import Review
+from community.serializers import ReviewSerializer
 from .recommend import find_sim_movie, movies, movies_df, features_sim_sorted_ind
 from .tfidf import calculate_tfidf
 
@@ -67,7 +68,7 @@ def movie_review(request, movie_id):
         reviews = Review.objects.filter(movie_id=movie_id)
 
         if reviews.exists():
-            serializer = MovieReviewSerializer(reviews, many=True)
+            serializer = ReviewSerializer(reviews, many=True)
             return Response(serializer.data)
         # 리뷰 없는 경우
         else:

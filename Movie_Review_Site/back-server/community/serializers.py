@@ -19,7 +19,7 @@ class ReviewSerializer(serializers.ModelSerializer):
     comments = CommentSerializer(many=True, required=False)
     likes_count = serializers.SerializerMethodField()
     likes = serializers.PrimaryKeyRelatedField(many=True, queryset=get_user_model().objects.all(), required=False)
-    username = serializers.CharField()
+    username = serializers.CharField(required=False)
 
     class Meta:
         model = Review
