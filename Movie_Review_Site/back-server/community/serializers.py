@@ -12,13 +12,6 @@ class CommentSerializer(serializers.ModelSerializer):
         read_only_fields = ('review', 'comment_user', )
 
 
-# # 리뷰 좋아요
-# class ReviewLikeSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Review
-#         fields = ('likes',)
-
-
 # 리뷰
 class ReviewSerializer(serializers.ModelSerializer):
     # 영화 제목, 해당 리뷰의 댓글들 가져오기
@@ -26,11 +19,12 @@ class ReviewSerializer(serializers.ModelSerializer):
     comments = CommentSerializer(many=True, required=False)
     likes_count = serializers.SerializerMethodField()
     likes = serializers.PrimaryKeyRelatedField(many=True, queryset=get_user_model().objects.all(), required=False)
+    username = serializers.CharField()
 
     class Meta:
         model = Review
         fields = '__all__'
-        read_only_fields = ('user', 'movie')
+        read_only_fields = ('user', 'movie', 'username', )
 
     def get_likes_count(self, obj):
         return obj.likes.count()

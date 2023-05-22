@@ -52,4 +52,4 @@ def get_movie_datas():
     with open("movie_data.json", "w", encoding="utf-8") as w:
         json.dump(total_data, w, indent="\t", ensure_ascii=False)
 
-get_movie_datas()
+# get_movie_datas()

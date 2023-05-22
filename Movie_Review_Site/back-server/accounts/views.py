@@ -77,7 +77,7 @@ def user_wishlist(request, username):
     if request.method == 'GET':
         target_user = User.objects.get(username=username)
         wishlist = target_user.wishlist.all()
-        print(wishlist)
+        
         # 위시리스트에 영화가 있으면 반환
         if wishlist.exists():
             serializer = WishSerializer(wishlist, many=True)

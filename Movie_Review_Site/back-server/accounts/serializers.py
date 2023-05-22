@@ -29,16 +29,6 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_followers_count(self, obj):
         return obj.followers.count()
 
-# # 팔로우
-# class FollowSerializer(serializers.Serializer):
-#     follower = serializers.SlugRelatedField(slug_field='username', queryset=get_user_model().objects.all())
-#     following = serializers.SlugRelatedField(slug_field='username', queryset=get_user_model().objects.all())
-
-#     def create(self, validated_data):
-#         follower = validated_data['follower']
-#         following = validated_data['following']
-#         follower.followings.add(following)
-#         return follower
 
 # 위시리스트
 class WishSerializer(serializers.ModelSerializer):

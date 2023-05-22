@@ -1,23 +1,22 @@
 from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
-# from rest_framework.decorators import authentication_classes
+from django.contrib.auth import get_user_model
+from rest_framework import status
+from django.shortcuts import get_object_or_404, get_list_or_404
 
 # permission Decorators
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 
-from rest_framework import status
-from django.shortcuts import get_object_or_404, get_list_or_404
 from .serializers import MovieListSerializer, MovieDetailSerializer, MovieReviewSerializer
 from .models import Movie
 from community.models import Review
-# from django_filters import rest_framework as filters
+from .recommend import find_sim_movie, movies, movies_df, features_sim_sorted_ind
+from .tfidf import calculate_tfidf
+
 from django.utils import timezone
 
-from .recommend import find_sim_movie, movies, movies_df, features_sim_sorted_ind
-from django.contrib.auth import get_user_model
-from .tfidf import calculate_tfidf
 
 
 @api_view(['GET'])
@@ -73,17 +72,6 @@ def movie_review(request, movie_id):
         # 리뷰 없는 경우
         else:
             return Response({'message': '아직 리뷰가 없습니다. 리뷰를 남겨보세요!'})
-
-
-# # 검색 조건
-# class MovieFilter(filters.FilterSet):
-#     title = filters.CharFilter(lookup_expr='icontains')
-#     genres = filters.CharFilter(field_name='genres__name', lookup_expr='icontains')
-#     year = filters.NumberFilter(field_name='release_date', lookup_expr='year')
-
-#     class Meta:
-#         model = Movie
-#         fields = ['title', 'genres', 'year']
 
 
 @api_view(['GET'])
@@ -173,8 +161,7 @@ def movie_recommendation(request, username):
         # wishlist_titles = [movie.title for movie in wishlist_movies]
         # movies_df['features_sim'] = np.nan # features_sim 열 초기화
         # similar_movies = find_sim_movie(movies_df, features_sim_sorted_ind, wishlist_titles, 10)
-        # serializer = MovieListSerializer(similar_movies, many=True)
-        # return Response(serializer.data)
+
     # 없으면 인기도 상위 영화 추천
     else:
         popular_movies = Movie.objects.order_by('-popularity')[:10]
@@ -186,18 +173,11 @@ def movie_recommendation(request, username):
             'movies': serializer.data
         }
         return Response(response_data)
-        # movies = Movie.objects.order_by('-popularity')[:10]
-        # serializer = MovieListSerializer(movies, many=True)
-        # message = '위시리스트가 없습니다. 인기도 상위 영화를 추천합니다'
-        
-        # response_data = {
-        # 'message': message,
-        # 'movies': serializer.data
-        # }
-        # return Response(response_data)
-        
+
         
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
+# 키워드 기반 영화 추천
 def tfidf_recommend(request):
     keyword = request.GET.get('keyword')
 

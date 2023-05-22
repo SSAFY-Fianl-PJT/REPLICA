@@ -1,8 +1,7 @@
-from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 from django.views.decorators.http import require_safe, require_POST, require_http_methods
 from .models import Review, Comment
 from movies.models import Movie
-# from django.http import JsonResponse
 from .serializers import ReviewSerializer, CommentSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -35,7 +34,6 @@ def review_list(request):
 
         serializer = ReviewSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            # serializer.save()
             # 해당 영화에 리뷰 추가, 작성자 저장
             serializer.save(user=request.user, movie = movie)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -49,7 +47,6 @@ def review_detail(request, review_id):
     # 리뷰 조회
     if request.method == 'GET':
         serializer = ReviewSerializer(review)
-        print(serializer.data)
         return Response(serializer.data, status=status.HTTP_200_OK)
     # 리뷰 삭제
     elif request.method == 'DELETE':
