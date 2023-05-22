@@ -65,8 +65,6 @@ const routes = [
     component: DetailView,
   },
   
-
-  
   {
     path: '/create',
     name: 'CreateView',
