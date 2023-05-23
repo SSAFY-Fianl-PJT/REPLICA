@@ -81,7 +81,7 @@ export default {
   computed: {
     isReviewAuthor() {
       // console.log("이거 왜 초장에 안나오냐",this.$store.state.user.info.username)
-      const loggedInUser = this.article.username; // 로그인한 사용자 정보를 가져와야 함
+      const loggedInUser = this.$store.state.user.info.username; // 로그인한 사용자 정보를 가져와야 함
       return this.article.username === loggedInUser;
     },
   },

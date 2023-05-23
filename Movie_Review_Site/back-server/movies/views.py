@@ -192,10 +192,8 @@ def movie_recommendation(request, username):
     else:
         popular_movies = Movie.objects.order_by('-popularity')[:20]
         serializer = MovieListSerializer(popular_movies, many=True)
-        message = '위시리스트가 없습니다. 인기도 상위 영화를 추천합니다'
         
         response_data = {
-            'message': message,
             'movies': serializer.data
         }
         return Response(response_data)

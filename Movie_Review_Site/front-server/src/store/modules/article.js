@@ -3,7 +3,7 @@ import { fetchArticles, fetchReviews } from '@/api/article'
 export default {
     state : {
         articles: [],
-        reviews: []
+        reviews: [],
     },
     mutations:{
         GET_ARTICLES(state, articles) {
