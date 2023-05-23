@@ -4,14 +4,11 @@ const fetchMovies = async ()=>{
     return api.get('/movies/')
 }
 
-const fetchSearchMovies = async ({title})=>{
-
+const fetchSearchMovies = async (searchParams) => {
     return api({
-        method:'get',
-        url:'/movies/search/',
-        params:{
-            title : title, 
-        }
+        method: 'get',
+        url: '/movies/search/',
+        params: searchParams
     })
 }
 
@@ -25,7 +22,12 @@ const WishList = async({movie_id})=>{
 }
 
 const MyWishList = async({user_name}) => {
-    console.log("에효",user_name)
     return api.get(`/accounts/my_wishlist/${user_name}/`)
 }
-export { fetchMovies, getMovie_Detail, fetchSearchMovies, WishList, MyWishList}
+const fetchRecommend = async({username}) => {
+    return api.get(`/movies/recommend/${username}/`)
+}
+
+export { fetchMovies, getMovie_Detail, 
+    fetchSearchMovies, fetchRecommend, 
+    WishList, MyWishList}
