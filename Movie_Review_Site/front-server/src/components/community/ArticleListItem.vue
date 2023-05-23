@@ -21,9 +21,9 @@
           </router-link>
           
           <router-link class="dropdown-item" 
-                :to="{ name: 'ProfileView', 
-                params: { username: article?.username } }">
-                [프로필]</router-link>
+            :to="{ name: 'ProfileView', 
+            params: { username: article?.username } }">
+            [프로필]</router-link>
 
         </div>
 
@@ -38,6 +38,8 @@ export default {
   name: 'ArticleListItem',
   props: {
     article: Object,
+  },
+  methods:{
   }
 }
 </script>

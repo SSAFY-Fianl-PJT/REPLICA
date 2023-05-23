@@ -7,13 +7,12 @@
     />
   </div>
   <div v-else>
-    역기서 나가
   </div>
 </div>
 </template>
 
 <script>
-import ProfileItem from '@/components/ProfileItem'
+import ProfileItem from '@/components/community/ProfileItem'
 export default {
     name : 'ProfileView',
     components:{
@@ -25,7 +24,11 @@ export default {
       }
     },
     created(){
-        this.user_name = this.$route.params.username
+      let backdrop = document.querySelector('.modal-backdrop');
+      if (backdrop) backdrop.parentNode.removeChild(backdrop);
+      this.$store.dispatch('closeModal');
+      
+      this.user_name = this.$route.params.username
     },
 
     computed:{

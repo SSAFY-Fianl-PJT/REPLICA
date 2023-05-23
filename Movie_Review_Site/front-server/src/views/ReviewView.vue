@@ -5,20 +5,20 @@
     </div>
     <hr>
     
-    <div v-if="Array.isArray(reviews) && reviews.length > 0">
+    <div v-if="Array.isArray(get_review) && get_review.length > 0">
       <!-- 리뷰가 있을 때에만 표시되는 내용 -->
-      <ArticleList :articles="reviews"/>
+      <ArticleList :articles="get_review"/>
     </div>
     <div v-else>
       <!-- 리뷰가 없을 때에만 표시되는 내용 -->
-      {{ reviews.message }}
+      {{ get_review.message }}
     </div>
 
   </div>
 </template>
 
 <script>
-import ArticleList from '@/components/ArticleList.vue'
+import ArticleList from '@/components/community/ArticleList.vue'
 
 export default {
   name: 'ArticleView',
@@ -41,8 +41,8 @@ export default {
       return this.$store.getters.isLogin // 로그인 여부
     },
     get_review(){
-      let data = this.$store.state.article.reviews
-      return data
+      // let data = this.$store.state.article.reviews
+      return this.reviews
     }
   },
   async created() {
@@ -63,9 +63,6 @@ export default {
         this.$router.push({ name: 'MainView' })
       }
 
-
-      // 로그인이 되어 있으면 getArticles action 실행
-      // 로그인 X라면 login 페이지로 이동
     }
   },
 

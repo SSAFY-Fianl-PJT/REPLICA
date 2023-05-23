@@ -1,22 +1,45 @@
 <template>
   <div class="review-information">
-    <div v-if="article" class="review-datail-container">
-      <h1>Detail</h1>
-      {{ article.username }}
-      <p>글 번호: {{ article?.id }}</p>
-      <p>영화: {{ article?.movie_title }}</p>
-      <p>작성시간: {{ formatDate(article?.updated_at) }} <span v-if="article?.created_at !== article?.updated_at">(수정됨)</span></p>
-      <div v-if="isEditing" @keyup.enter="updateArticle">
-        제목 : <input v-model="editTitle" type="text"><br>
-        내용 : <textarea v-model="editContent"></textarea>
+    <div v-if="article" class="review-container">
+      <div class="review-detail-block">
+        <div class="review-title-block">
+          <div v-if="isEditing" @keyup.enter="updateArticle">
+          제목 : <input v-model="editTitle" type="text"><br>
+          </div>
+          <div v-else>
+            <h1>제목: {{ article?.title }}</h1>
+          </div>
+          <div>
+            <p>{{ article.username }}</p>
+          </div>
+          <hr>
+        </div>
+        
+        <div class="review-movie-inform-block">
+          <p>영화: {{ article?.movie_title }}</p>
+          <p>작성시간: {{ formatDate(article?.updated_at) }} <span v-if="article?.created_at !== article?.updated_at">(수정됨)</span></p>
+        </div>
+        <div class="review-content-block">
+          <div v-if="isEditing" @keyup.enter="updateArticle">
+            Content : <textarea v-model="editContent"></textarea>
+          </div>
+          <div v-else>
+            <p>내용: {{ article?.content }}</p>
+          </div>
+        </div>
+        <div class="review-ud-btns">
+          <button v-if="!isEditing && isReviewAuthor" @click="startEditing">수정</button>
+          <button v-else-if="isEditing && isReviewAuthor" @click="updateArticle">수정완료</button>
+          <button v-if="isReviewAuthor" @click="deleteArticle">삭제</button>
+        </div>
       </div>
-      <div v-else>
-        <p>제목: {{ article?.title }}</p>
-        <p>내용: {{ article?.content }}</p>
+      <hr>
+      <div class="review-comments-blocks">
+        <CommentingBox :review_id="article.id" @comment-added="handleCommentAdded"/>
+        <hr>
+        <CommentsList :review_id="article.id" :refresh="refresh"/> 
+        
       </div>
-      <button v-if="!isEditing && isReviewAuthor" @click="startEditing">수정</button>
-      <button v-else-if="isEditing && isReviewAuthor" @click="updateArticle">수정완료</button>
-      <button v-if="isReviewAuthor" @click="deleteArticle">삭제</button>
     </div>
 
     <div v-if="movieDetail" class="reive-movie-inform">
@@ -30,6 +53,9 @@ import { getDetail, updateArticle, deleteArticle } from '@/api/article';
 import { getMovie_Detail } from '@/api/movie';
 import MovieItem from '@/components/movie/MovieItem.vue';
 
+import CommentingBox from '@/components/community/CommentingBox'
+import CommentsList from '@/components/community/CommentsList'
+
 export default {
   name: 'DetailView',
   data() {
@@ -39,12 +65,18 @@ export default {
       isEditing: false,
       editTitle: '',
       editContent: '',
+      refresh: false,
     };
   },
   components: {
     MovieItem,
+    CommentingBox,
+    CommentsList 
   },
   async created() {
+    let backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) backdrop.parentNode.removeChild(backdrop);
+    this.$store.dispatch('closeModal');
     await this.getArticleDetail();
     await this.getMovieDetail();
     console.log("아티클 확인",this.article)
@@ -52,7 +84,7 @@ export default {
   computed: {
     isReviewAuthor() {
       // console.log("이거 왜 초장에 안나오냐",this.$store.state.user.info.username)
-      const loggedInUser = this.article.username; // 로그인한 사용자 정보를 가져와야 함
+      const loggedInUser = this.$store.state.user.info.username; // 로그인한 사용자 정보를 가져와야 함
       return this.article.username === loggedInUser;
     },
   },
@@ -106,11 +138,57 @@ export default {
         console.error(error);
       }
     },
+    handleCommentAdded() {
+        this.refresh = !this.refresh;
+    },
   },
 };
 </script>
 
 <style scoped>
+.review-detail-block{
+  margin: 10px;
+  text-align: left;
+  flex: 1;
+  border: 3px solid whitesmoke;
+  border-radius: 1rem;
+}
+
+.review-detail-block > .review-title-block
+{
+  display: flex;
+  flex-direction: column;
+  margin: 8px;
+  text-align: left;
+}
+.review-title-block * {
+  margin: 0;
+  align-content: end;
+}
+.review-detail-block > .review-movie-inform-block
+{
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  text-align: left;
+}
+.review-detail-block > .review-content-block {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px; 
+  margin-bottom: 10px; 
+  text-align: left;
+}
+.review-movie-inform-block * {
+  margin: 0;
+  align-content: end;
+}
+
+.review-ud-btns{
+  margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
 .review-information {
   display: flex;
 }

@@ -20,12 +20,28 @@ export default new Vuex.Store({
       paths:['user.token']
     }),
   ],
+  state:{
+    isModalOpen: false,
+  },
   getters:{
-    getData(state){
-      return (key) =>{
-        return state[key]
-      }
-    }
+  },
+  mutations:{
+    CLOSE_MODAL(state) {
+      state.isModalOpen = false;
+    },
+    OPEN_MODAL(state) {
+      state.isModalOpen = true;
+    },
+  },
+  actions:{
+    closeModal(context) {
+      console.log("두과자")
+      context.commit('CLOSE_MODAL');
+    },
+    openModal(context) {
+      console.log("드루와")
+      context.commit('OPEN_MODAL');
+    },
   },
   modules: {
     user: userModule,

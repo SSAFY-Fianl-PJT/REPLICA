@@ -6,7 +6,7 @@
       />
     </div>
     <div class="movie-list-at-community">
-      하위
+      
     </div>
 
   </div>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import ArticleListItem from '@/components/ArticleListItem'
+import ArticleListItem from '@/components/community/ArticleListItem'
 
 export default {
   name: 'ArticleList',

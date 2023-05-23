@@ -40,5 +40,13 @@ const fetchUsrfollow = ({username}) =>{
     return api.post(`/accounts/${username}/follow/`)
 }
 
+const fetchReviews = () =>{
+    return api.get(`/community/`)
+}
 
-export { fetchLogin, fetchLogout, fetchSignup, fetchUsrInfo, tk2Ur,fetchUsrfollow }
+const fetchUsrdelete = ({user_id}) =>{
+    console.log('z')
+    return api.post(`/accounts/user-delete/${user_id}/`)
+}
+
+export { fetchLogin, fetchLogout, fetchSignup, fetchUsrInfo, tk2Ur,fetchUsrfollow, fetchReviews, fetchUsrdelete }
