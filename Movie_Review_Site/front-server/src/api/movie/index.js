@@ -27,6 +27,10 @@ const fetchRecommend = async({username}) => {
     return api.get(`/movies/recommend/${username}/`)
 }
 
+const fetchRecommendByKeyword = async(keyword) =>{
+    return api.get(`/movies/recommend/?keyword=${keyword}`)
+}
+
 export { fetchMovies, getMovie_Detail, 
-    fetchSearchMovies, fetchRecommend, 
+    fetchSearchMovies, fetchRecommend, fetchRecommendByKeyword,
     WishList, MyWishList}

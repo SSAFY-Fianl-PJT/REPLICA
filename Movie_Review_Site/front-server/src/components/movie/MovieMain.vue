@@ -1,6 +1,6 @@
 <template>
   <div class="SSAFILX-MainPage">
-    <movie-main-video></movie-main-video>
+    <movie-main-video :items=[]></movie-main-video>
     <movie-list></movie-list>
   </div>
 

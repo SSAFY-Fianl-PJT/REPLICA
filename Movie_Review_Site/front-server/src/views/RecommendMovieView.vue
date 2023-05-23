@@ -2,6 +2,7 @@
   <div>
     <div class="users-show-movie">
       이 영화 어떠신가요?
+      <movie-main-video :items="recommendedMovieList"></movie-main-video>
     </div>
     <div class="users-recommended-movie">
       
@@ -13,14 +14,14 @@
 
 <script>
 import RecommendMovie from '@/components/movie/RecommendMovie.vue';
-// import MovieContent from '@/components/movie/MovieContent.vue'
+import MovieMainVideo from '@/components/movie/MovieMainVideo.vue'
 import {fetchRecommend} from '@/api/movie'
 
 export default {
   name:'RecommendMovieView',
   components:{
     RecommendMovie,
-    // MovieContent
+    MovieMainVideo
   },
   data(){
     return {

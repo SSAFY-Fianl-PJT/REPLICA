@@ -1,15 +1,20 @@
 <template>
   <div class="movie-poster">
-    <div class="image-container"  
+    <div class="movie-container"  
       @mouseover="showVideo = true"
       @mouseout="showVideo = false">
 
-      <div v-if="randomMovie"
-            v-show="!showVideo">
+      <div class="image-container" 
+        v-if="randomMovie"
+
+        :style="{ opacity: showVideo ? 0 : 1 }">
         <img class="poster" :src="moviePoster" alt="">
       </div>
       
-      <div class="video-container" v-show="showVideo" v-if="randomMovie">
+      <div class="video-container" 
+          v-if="randomMovie"
+
+          :style="{ opacity: showVideo ? 1 : 0 }">
         <iframe 
           class="video-iframe"
           :src="'https://www.youtube.com/embed/'+ randVideo + '?controls=0&autoplay=1&fs=0&showinfo=0&modestbranding=1&rel=0&enablejsapi=1'"
@@ -20,6 +25,22 @@
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
           >
         </iframe>
+      </div>
+      <div class="inform-container">
+        <h3>{{randMovie.title}}</h3>
+        <div class="mv_genres-container">
+          <div v-for="(mv_gener, idx) in randMovie.genres" :key='idx'>
+            {{mv_gener.genre_name}}
+          </div>
+        </div>
+        <div class="overview-container">
+          <span v-if="randMovie.overview" >
+            {{randMovie.overview}}
+          </span>
+          <span v-else> 영화를 보고 리뷰를 남겨주세요! </span>
+        </div>
+
+        이건 뭐 어떻게 돌아가는거냐
       </div>
     </div>
   </div>
@@ -44,6 +65,9 @@ export default {
       randVideo : '',
       showVideo: false,
     }
+  },
+  props:{
+    items:Array,
   },
   async created(){
     // const data = {
@@ -80,17 +104,31 @@ export default {
   watch: {
     showVideo(newVal) {
       if (newVal) {
-        this.$el.querySelector('.video-container').style.opacity = '2';
-        this.$el.querySelector('.poster-container').style.opacity = '0';
+        try{
+          this.$el.querySelector('.video-container').style.opacity = '2';
+        }catch{
+          this.$el.querySelector('.poster-container').style.opacity = '0';
+        }
       } else {
-        this.$el.querySelector('.video-container').style.opacity = '0';
-        this.$el.querySelector('.poster-container').style.opacity = '2';
+        try{
+          this.$el.querySelector('.video-container').style.opacity = '0';
+        }catch{
+          this.$el.querySelector('.poster-container').style.opacity = '2';
+        }
       }
     },
   },
   computed:{
     randomMovie(){
-      let randmv =  _.sample(this.$store.state.movie.popular_movies)
+      console.log("이거 돌아가냐")
+      let randmv = null
+      if (!this.items || this.items.length == 0){
+        randmv =  _.sample(this.$store.state.movie.popular_movies)
+      }
+      else{
+        
+        randmv = _.sample(this.items)
+      }
       if (randmv){
         console.log(randmv)
         this.get_movie_teaser(randmv)
@@ -110,37 +148,52 @@ export default {
 
 <style scoped>
 .movie-poster{
-  width: auto;
-}
-.image-container {
-  position: relative;
-  width: auto; /*원하는 이미지 컨테이너의 너비 설정*/
-  height: 700px; /*원하는 이미지 컨테이너의 최대 높이 설정*/
-   /* 넘치는 이미지 부분을 숨기기 위해 overflow 속성 사용 */
   display: flex;
+  width: 100%;
   justify-content: center;
   align-items: center;
+}
+.movie-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 700px;
   overflow: hidden;
-}
-
-.poster-container {
   position: relative;
-  z-index: 1;
-  transition: opacity 2s ease-in-out; /* Add transition effect */
+}
+.inform-container{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+  /* Additional style */
+  width: 600px;
+  padding: 20px;
+  padding-left : 50px;
+  color: #fff;
+  
 }
 
-.video-container {
+.image-container, .video-container {
+  display: flex;
   position: absolute;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 0;
-  opacity: 0; /* Start hidden */
-  transition: opacity 2s ease-in-out; /* Add transition effect */
+  transition: opacity 1s ease-in-out;
 }
+
+
+.movie-container:hover .image-container {
+  opacity: 0;
+}
+.movie-container:hover .video-container {
+  opacity: 1;
+}
+
 .video-iframe {
   width: 100%;
   height: 100%;
