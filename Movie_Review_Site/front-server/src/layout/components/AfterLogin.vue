@@ -62,7 +62,6 @@ export default {
     await this.$store.dispatch('getMovies')
     await this.$store.dispatch('get_usr_name')
     await this.$store.dispatch('get_profile', this.$store.state.user.info.username)
-    console.log("이게뭐양 ㅠㅠ",this.$store.state.user.info)
    this.usr_name = this.$store.state.user.info.username
    this.usr_nickname = this.$store.state.user.info.nickname
   },

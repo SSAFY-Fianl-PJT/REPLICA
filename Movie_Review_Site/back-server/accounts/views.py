@@ -85,3 +85,12 @@ def user_wishlist(request, username):
         else:
             return Response({'message' : '아직 위시리스트가 없습니다. 영화를 찜해보세요!'})
     
+
+@api_view(['POST'])
+# 회원탈퇴
+# @permission_classes([IsAuthenticated])
+def user_delete(request, user_id):
+    if request.method == 'POST':
+        user = get_object_or_404(get_user_model(), pk=user_id)
+        user.delete()
+        return JsonResponse({'message': '회원 탈퇴 되었습니다ㅠㅠ'})

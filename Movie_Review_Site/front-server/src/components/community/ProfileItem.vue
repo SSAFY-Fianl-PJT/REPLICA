@@ -15,11 +15,16 @@
         <div class="users-wishlist">
             <span v-if="get_usr" class="user-nickname">{{user_test.nickname}} 의 찜 리스트</span>
             <MovieContent  v-if="getWishlist  && getWishlist.length > 0" :items="getWishlist"/>
+                <p v-else>찜한 영화가 없습니다.</p>
         </div>
         <div class="users-reviews">
             <span v-if="get_usr" class="user-nickname">{{user_test.nickname}}의 리뷰</span>
             <ArticleList v-if="getUserReviews && getUserReviews.length > 0" :articles="getUserReviews" />
+                <p v-else>작성한 리뷰가 없습니다.</p>
         </div>
+    </div>
+    <div class="delete-btn-container" v-if="isCurrentUser">
+      <button class="delete-btn" @click="confirmDeleteUser">회원탈퇴</button>
     </div>
   </div>
 </template>
@@ -27,7 +32,7 @@
 <script>
 import MovieContent from '@/components/movie/MovieContent.vue';
 import ArticleList from '@/components/community/ArticleList.vue'
-import {fetchUsrInfo, fetchUsrfollow, fetchReviews } from '@/api/user'
+import {fetchUsrInfo, fetchUsrfollow, fetchReviews, fetchUsrdelete } from '@/api/user'
 
 export default {
     name:'ProfileItem',
@@ -104,9 +109,27 @@ export default {
             }
         }else{
             console.log("자기자신을 팔로잉 할 수 없습니다.")
+            alert('자기자신을 팔로잉 할 수 없습니다.')
         }
     }, 
-        
+        confirmDeleteUser() {
+            if (confirm("정말로 회원탈퇴하시겠습니까?")) {
+                this.fetchUsrdelete();
+            }
+        },
+        async fetchUsrdelete() {
+            const user_id = this.user_test.id;
+            try {
+                await fetchUsrdelete({user_id}); // 회원 탈퇴 요청
+                localStorage.removeItem('vuex'); // 토큰 삭제
+                alert("회원 탈퇴되었습니다.");
+                this.$router.push({ name: 'MainView' });
+
+            } catch (error) {
+                console.error(error);
+
+            }
+        },
     },  
     computed : {
         get_usr(){
@@ -126,6 +149,12 @@ export default {
         getUserReviews() {
             return this.userReviews;
         },
+        isCurrentUser() {
+            const loggedInUser = this.$store.state.user.info.username;
+            console.log(loggedInUser)
+            console.log(this.user)
+            return loggedInUser === this.user;
+  },
     },
 }
 </script>
@@ -134,5 +163,21 @@ export default {
 .user-nickname{
     font-size : 30px;
     margin: 0 0 15;
+}
+
+.delete-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.delete-btn {
+  font-size: 12px;
+  padding: 6px 12px;
+  background-color: rgb(233, 81, 81);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 </style>
