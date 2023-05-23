@@ -52,7 +52,7 @@ export default {
     },
     watch: {
         refresh() {
-            console.log("이거 오나?")
+            
             this.getCommentList();
         },
     },

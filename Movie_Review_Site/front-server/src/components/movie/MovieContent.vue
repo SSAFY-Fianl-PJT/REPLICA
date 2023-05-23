@@ -16,8 +16,8 @@
         <p>&#8250;</p>
       </div>
 
-      <ModalDialog v-if="showModal" :target="squeeze(selectedItem.title)" :item="selectedItem">
-          <MovieItem :item="selectedItem"/>
+      <ModalDialog v-if="showModal" :target="squeeze(currentSelectedItem.title)" :item="currentSelectedItem" @close="handleCloseModal">
+          <MovieItem :item="currentSelectedItem"/>
       </ModalDialog>
 
   </div>
@@ -57,8 +57,10 @@ import MovieItem from '@/components/movie/MovieItem'
       },
       handleOpenModal(movie) {
         this.selectedItem = movie;
-        console.log("열여라 참깨",movie)
         this.showModal = true;
+      },
+      handleCloseModal(){
+        this.showModal = false;
       },
       squeeze(data){
         let squeezed_data = data.replace(/\s/g, "")
@@ -66,12 +68,14 @@ import MovieItem from '@/components/movie/MovieItem'
       },
     },
     computed: {
-        getItems(){
-            console.log("이건 무비리스트", this.items)
-            return this.items
-        },
+      getItems(){
+        return this.items
+      },
       sliderTransform() {
         return `translateX(-${this.sliderIndex * 50}%)`;
+      },
+      currentSelectedItem() {
+        return this.selectedItem;
       },
     }
   };

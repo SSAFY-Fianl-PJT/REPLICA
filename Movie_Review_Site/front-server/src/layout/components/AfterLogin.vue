@@ -13,10 +13,10 @@
             <router-link :to="{ name: 'MainView' }">홈</router-link>
           </li>
           <li class="nav-item drop-down">
-            <router-link :to="{ name: 'ArticleView' }">영화</router-link>
+            <router-link :to="{ name: 'RecommendMovieView' }">영화 추천</router-link>
           </li>
           <li class="nav-item drop-down">
-            <router-link :to="{ name: 'MovieViewTest' }">영화모달 테스트페이지</router-link>
+            <router-link :to="{ name: 'ArticleView' }">커뮤니티 페이지</router-link>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -61,10 +61,10 @@ export default {
   async created(){
     await this.$store.dispatch('getMovies')
     await this.$store.dispatch('get_usr_name')
-    // console.log("이거",this.$store.state.user.info.username)
-    this.$store.dispatch('get_profile', this.$store.state.user.info.username)   
-    this.usr_nickname = this.$store.state.user.info.nickname
-    this.usr_name = this.$store.state.user.info.username
+    await this.$store.dispatch('get_profile', this.$store.state.user.info.username)
+    console.log("이게뭐양 ㅠㅠ",this.$store.state.user.info)
+   this.usr_name = this.$store.state.user.info.username
+   this.usr_nickname = this.$store.state.user.info.nickname
   },
   methods:{
     logOut(){
@@ -74,14 +74,14 @@ export default {
     },
     searchMovies() {
       // 검색 기능 구현을 위한 로직을 작성합니다.
-      // 검색어는 this.searchQuery를 사용하여 접근할 수 있습니다.
+      // push 한 다음에 검색할 수 있도록 작업하는게 더 좋지 않을까
       if (this.searchQuery){
-        this.$store.dispatch('searchMovies', this.searchQuery).then(()=>{
-          this.$router.push({ name: 'SearchView'})
-          .catch((err) => {
-            console.warn(err)
-          });
-        })
+        
+        this.$router.push({ name: 'SearchView', query: { q: this.searchQuery }})
+        .catch((err) => {
+          console.warn(err)
+        });
+
       }else{
         alert('검색해주세요ㅕ')
       }

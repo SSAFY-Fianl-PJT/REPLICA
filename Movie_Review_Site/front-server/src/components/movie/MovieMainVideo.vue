@@ -1,7 +1,7 @@
 <template>
   <div class="movie-poster">
     <div class="image-container" >
-      <img class="poster" :src="TestPoster" alt="">
+      <img v-if="randomMovie" class="poster" :src="moviePoster" alt="">
     </div>
   </div>
 </template>
@@ -24,16 +24,12 @@ export default {
   methods:{
 
   },
-  async created(){
-    await this.$store.dispatch('getMovies')
-    this.randMovie = this.randomMovie
-    // console.log("이게뭐야",this.randMovie) // 영화에 대한 정보 
-    this.TestPoster = this.moviePoster
-  },
+
   computed:{
     randomMovie(){
-      
-      return _.sample(this.$store.state.movie.popular_movies)
+      let randmv = _.sample(this.$store.state.movie.popular_movies)
+      console.log(randmv)
+      return randmv
     },
 
     moviePoster(){

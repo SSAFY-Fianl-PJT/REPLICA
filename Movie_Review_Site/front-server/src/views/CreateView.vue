@@ -5,6 +5,7 @@
         <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="팝오버 내용">
         <h3>[리뷰 작성]</h3>
         <p>영화 리뷰를 작성해주세요</p>
+        <p>더블클릭하면 제목 창이 돌아갑니다.</p>
         </span>
       </header>
         <form @submit.prevent="createArticle" class="form-container">

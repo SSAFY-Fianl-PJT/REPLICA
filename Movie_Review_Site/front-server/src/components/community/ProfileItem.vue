@@ -46,6 +46,7 @@ export default {
         ArticleList,
     },
     async created(){
+        console.log("??뭐지",this.user)
         const username = this.user
         await fetchUsrInfo({username})
         .then((res) =>{
@@ -84,33 +85,32 @@ export default {
       }
     },
     async fetchData() {
-        // 여기에 새로운 사용자 데이터를 불러오는 로직을 구현하세요.
+        
         console.log("fetching data for user:", this.$route.params.username);
         this.$store.dispatch('get_profile', this.$route.params.username);
         },
-        async isFollow(){
-            if (this.user !== this.$store.state.user.info.username){
-                const username = this.user
-                const response = await fetchUsrfollow({username})
-                console.log("is_followed:", response.data.is_followed)
-                this.is_follow_test = !this.is_follow_test
-                if(this.is_follow_test) {
-                    // if we just followed the user, increment the follower count
-                    this.user_test.followers_count++
-                } else {
-                    // if we just unfollowed the user, decrement the follower count
-                    this.user_test.followers_count--
-                }
-            }else{
-                console.log("자기자신을 팔로잉 할 수 없습니다.")
+    async isFollow(){
+        if (this.user !== this.$store.state.user.info.username){
+            const username = this.user
+            const response = await fetchUsrfollow({username})
+            console.log("is_followed:", response.data.is_followed)
+            this.is_follow_test = !this.is_follow_test
+            if(this.is_follow_test) {
+                // if we just followed the user, increment the follower count
+                this.user_test.followers_count++
+            } else {
+                // if we just unfollowed the user, decrement the follower count
+                this.user_test.followers_count--
             }
-        }, 
+        }else{
+            console.log("자기자신을 팔로잉 할 수 없습니다.")
+        }
+    }, 
         
     },  
     computed : {
         get_usr(){
             try {
-                // console.log("이게 말이되나",this.$store.state.user.profile)
                 return this.$store.state.user.profile
             } catch(err) {
             console.log(err)
@@ -118,8 +118,6 @@ export default {
             }
         },
         getWishlist(){
-            // console.log(this.get_usr.wishlist, "이거 되나?")
-            // console.log("이건 무비리스트", this.items)
             return this.get_usr.wishlist
         },
         is_follow(){

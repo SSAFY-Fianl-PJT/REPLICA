@@ -50,13 +50,7 @@ export default {
 
 
 <style scoped>
-#inform-movie-modal {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
+
 
 /* #movie-carrier {
     position: absolute;
