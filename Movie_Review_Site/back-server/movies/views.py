@@ -29,14 +29,14 @@ from django.views.decorators.cache import cache_page
 def movie_list(request):
     if request.method == 'GET':
           # 상위 10개의 인기 영화 조회
-        movies = Movie.objects.order_by('-popularity')[:10]
+        movies = Movie.objects.order_by('-popularity')[:20]
         serializer = MovieListSerializer(movies, many=True)
         user = request.user
         # 찜한 영화 목록
         wishlist_movies = user.wishlist.all()
         wishlist_serializer = MovieDetailSerializer(wishlist_movies, many=True)
         # 개봉 예정 영화 목록
-        upcoming_movies = Movie.objects.filter(release_date__gte=timezone.now()).order_by('release_date')[:10]
+        upcoming_movies = Movie.objects.filter(release_date__gte=timezone.now()).order_by('release_date')[:20]
         upcoming_serializer = MovieListSerializer(upcoming_movies, many=True)
 
         data = {
@@ -179,7 +179,7 @@ def movie_recommendation(request, username):
     # 위시리스트 있으면 위시리스트 기반 추천
     if wishlist_movies.exists():
         wishlist_movie_ids = [movie.movie_id for movie in wishlist_movies]
-        similar_movies = find_sim_movie(wishlist_movie_ids[0], features_sim_sorted_ind, 10)
+        similar_movies = find_sim_movie(wishlist_movie_ids[0], features_sim_sorted_ind, 20)
         print(similar_movies)
         
         serializer = MovieListSerializer(similar_movies, many=True)
@@ -190,7 +190,7 @@ def movie_recommendation(request, username):
 
     # 없으면 인기도 상위 영화 추천
     else:
-        popular_movies = Movie.objects.order_by('-popularity')[:10]
+        popular_movies = Movie.objects.order_by('-popularity')[:20]
         serializer = MovieListSerializer(popular_movies, many=True)
         message = '위시리스트가 없습니다. 인기도 상위 영화를 추천합니다'
         
@@ -212,7 +212,7 @@ def tfidf_recommend(request):
         return Response({'message': '키워드를 입력해주세요.'}, status=400)
 
     recommendations = calculate_tfidf(keyword)
-    recommendations = recommendations[:10]
+    recommendations = recommendations[:20]
     movie_ids = [recommendation['fields']['movie_id'] for recommendation in recommendations]
     recommended_movies = Movie.objects.filter(movie_id__in=movie_ids)
     serializer = MovieListSerializer(recommended_movies, many=True)

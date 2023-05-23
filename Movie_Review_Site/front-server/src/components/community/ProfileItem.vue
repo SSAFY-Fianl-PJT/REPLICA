@@ -2,33 +2,32 @@
   <div v-if="user_test" class="usr-profile-container">
     <div>렌덤 무비포스터 있으면 좋을듯</div>
     <div class="user-name-block">
-        <span class="user-nickname">{{ user_test.nickname }}</span>
-            <button v-if="!is_follow" @click="isFollow()">팔로우</button>
+        <span class="user-nickname">{{ user_test.nickname }}  </span>
+            <button v-if="!is_follow" @click="isFollow()">   팔로우</button>
             <button v-else @click="isFollow()">팔로우 취소</button>
         <hr>
         <span v-if="get_usr" class="user-nickname">팔로잉 : {{user_test.followings_count}}</span>
         <span v-if="get_usr" class="user-nickname">팔로워 : {{user_test.followers_count}}</span>
+        <br><br>
     </div>
     <div class="movie-lists-for-usr">
 
         <div class="users-wishlist">
             <span v-if="get_usr" class="user-nickname">{{user_test.nickname}} 의 찜 리스트</span>
             <MovieContent  v-if="getWishlist  && getWishlist.length > 0" :items="getWishlist"/>
-                
         </div>
-        <div class="users-wishlist">
-            <span v-if="get_usr" class="user-nickname">개봉 예정작</span>
-            <MovieContent  v-if="upcomingmovies  && upcomingmovies.length > 0" :items="upcomingmovies"/>
+        <div class="users-reviews">
+            <span v-if="get_usr" class="user-nickname">{{user_test.nickname}}의 리뷰</span>
+            <ArticleList v-if="getUserReviews && getUserReviews.length > 0" :articles="getUserReviews" />
         </div>
     </div>
-
-    {{ get_usr }}
   </div>
 </template>
 
 <script>
 import MovieContent from '@/components/movie/MovieContent.vue';
-import {fetchUsrInfo, fetchUsrfollow} from '@/api/user'
+import ArticleList from '@/components/community/ArticleList.vue'
+import {fetchUsrInfo, fetchUsrfollow, fetchReviews } from '@/api/user'
 
 export default {
     name:'ProfileItem',
@@ -36,6 +35,7 @@ export default {
         return{
             user_test : null,
             is_follow_test : null,
+            userReviews: [],
         }
     },
     props:{
@@ -43,10 +43,10 @@ export default {
     },
     components:{
         MovieContent,
+        ArticleList,
     },
     async created(){
         const username = this.user
-        // console.log("살려줘",username)
         await fetchUsrInfo({username})
         .then((res) =>{
             this.user_test = res.data
@@ -62,6 +62,7 @@ export default {
         }catch{
             console.log("본인이 접근했습니다.")
         }
+        await this.fetchUserReviews();
     },
     watch: {
         '$route.params.username': {
@@ -70,6 +71,18 @@ export default {
         }
     },
     methods: {
+    async fetchUserReviews() {
+      try {
+        const response = await fetchReviews(); // 모든 리뷰 불러오기
+        const reviews = response.data;
+        console.log('리뷰', reviews)
+        // 현재 프로필의 사용자명과 리뷰의 사용자명을 비교하여 일치하는 리뷰만 추가
+        this.userReviews = reviews.filter(review => review.username === this.user);
+        console.log(this.userReviews)
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async fetchData() {
         // 여기에 새로운 사용자 데이터를 불러오는 로직을 구현하세요.
         console.log("fetching data for user:", this.$route.params.username);
@@ -109,13 +122,12 @@ export default {
             // console.log("이건 무비리스트", this.items)
             return this.get_usr.wishlist
         },
-        upcomingmovies(){
-            return this.$store.state.movie.upcoming_movies.slice(0,5)
-        },
         is_follow(){
-
             return this.is_follow_test
-        }
+        },
+        getUserReviews() {
+            return this.userReviews;
+        },
     },
 }
 </script>
