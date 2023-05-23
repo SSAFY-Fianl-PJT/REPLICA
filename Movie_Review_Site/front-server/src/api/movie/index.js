@@ -17,7 +17,6 @@ const getMovie_Detail = async(params_id)=>{
 }
 
 const WishList = async({movie_id})=>{
-    console.log(movie_id)
     return api.post(`/movies/${movie_id}/wishlist/`)
 }
 

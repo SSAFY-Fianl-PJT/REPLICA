@@ -113,7 +113,7 @@ def comments(request, review_id):
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
                 # 작성자 저장
-                serializer.save(review = review, comment_user = request.user)
+                serializer.save(review = review, comment_user = request.user, username=request.user.username)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
     
 

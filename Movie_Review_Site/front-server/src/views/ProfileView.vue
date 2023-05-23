@@ -7,7 +7,6 @@
     />
   </div>
   <div v-else>
-    역기서 나가
   </div>
 </div>
 </template>
