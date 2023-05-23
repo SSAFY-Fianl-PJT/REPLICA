@@ -57,9 +57,11 @@ import MovieItem from '@/components/movie/MovieItem'
       },
       handleOpenModal(movie) {
         this.selectedItem = movie;
+        this.$store.dispatch('openModal')
         this.showModal = true;
       },
       handleCloseModal(){
+        this.$store.dispatch('closeModal')
         this.showModal = false;
       },
       squeeze(data){

@@ -24,7 +24,11 @@ export default {
       }
     },
     created(){
-        this.user_name = this.$route.params.username
+      let backdrop = document.querySelector('.modal-backdrop');
+      if (backdrop) backdrop.parentNode.removeChild(backdrop);
+      this.$store.dispatch('closeModal');
+      
+      this.user_name = this.$route.params.username
     },
 
     computed:{

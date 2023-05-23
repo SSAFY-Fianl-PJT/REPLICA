@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" :id="set_target" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" :aria-labelledby="set_target" aria-hidden="true" >
+    <div v-if="modalCloseTrigger" class="modal fade" :id="set_target" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" :aria-labelledby="set_target" aria-hidden="true" >
         <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content modal-xl">
                 <div class="modal-header">
@@ -17,8 +17,9 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
-    name : 'ModalBtn',
+    name : 'ModalDialog',
     props:{
         target : String
     },
@@ -30,7 +31,14 @@ export default {
     },
     created(){
         this.item = this.set_target
-        console.log("에혀",this.item)
+    },
+    watch: {
+        modalCloseTrigger(newVal, oldVal) {
+            console.log(newVal, oldVal)
+            if (!newVal) {
+                this.handleCloseModal();
+            }
+        }
     },
     methods:{ 
         handleCloseModal(){
@@ -38,8 +46,13 @@ export default {
         }
     },
     computed:{
+        ...mapState(['isModalOpen']),
         set_target(){
             return `${this.target}`
+        },
+        modalCloseTrigger(){
+            console.log("제발 ㅠㅠ",this.isModalOpen)
+            return this.isModalOpen;
         },
     }
 }

@@ -16,15 +16,13 @@
         <div class="card-link">
           <router-link class="dropdown-item" 
             :to="{ name: 'DetailView',
-            params: {id: article?.id }}"
-            @click.native="handleCloseModal">
+            params: {id: article?.id }}">
             [리뷰 상세]
           </router-link>
           
           <router-link class="dropdown-item" 
             :to="{ name: 'ProfileView', 
-            params: { username: article?.username } }"
-            @click.native="handleCloseModal">
+            params: { username: article?.username } }">
             [프로필]</router-link>
 
         </div>
@@ -42,9 +40,6 @@ export default {
     article: Object,
   },
   methods:{
-    handleCloseModal() {
-      this.$store.dispatch('closeModal');
-    },
   }
 }
 </script>

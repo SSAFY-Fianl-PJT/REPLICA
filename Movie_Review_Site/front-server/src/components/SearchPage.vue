@@ -13,7 +13,8 @@
             <div class="ResultMovieTag">
               <ModalButton 
               :target="squeeze(item.title)"
-              :movie="item"/>
+              :movie="item"
+              @open-modal="handleOpenModal"/>
             </div>
       
             <ModalDialog :target="squeeze(item.title)">
@@ -73,6 +74,10 @@ export default {
           squeezed_data = data.replace(/\s/g, "");
       }
       return squeezed_data
+    },
+    handleOpenModal() {
+        this.$store.dispatch('openModal')
+        this.showModal = true;
     },
     async getSearchedList(){
       let search_lst = []

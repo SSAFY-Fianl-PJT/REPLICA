@@ -35,9 +35,11 @@ export default new Vuex.Store({
   },
   actions:{
     closeModal(context) {
+      console.log("두과자")
       context.commit('CLOSE_MODAL');
     },
     openModal(context) {
+      console.log("드루와")
       context.commit('OPEN_MODAL');
     },
   },

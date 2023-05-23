@@ -1,6 +1,6 @@
 <template>
   <div class="movie-list">
-    <p>무비 리스트를 보여줍니다...</p>
+
     <h3>💥현재 인기 영화💥</h3>
     <MovieContent  v-if="popularmovies  && popularmovies.length > 0" :items="popularmovies"/>
     <h3>개봉 예정 영화 Comming Soon</h3>
@@ -46,6 +46,6 @@ export default {
 <style scoped>
 .movie-list{
   width: auto;
-  
+  margin-top: 30px;
 }
 </style>

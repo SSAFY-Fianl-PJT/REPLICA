@@ -74,6 +74,9 @@ export default {
     CommentsList 
   },
   async created() {
+    let backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) backdrop.parentNode.removeChild(backdrop);
+    this.$store.dispatch('closeModal');
     await this.getArticleDetail();
     await this.getMovieDetail();
     console.log("아티클 확인",this.article)
