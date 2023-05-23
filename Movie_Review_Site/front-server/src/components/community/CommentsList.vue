@@ -72,15 +72,16 @@ export default {
             this.isEditingComment = true;
         },
         async updateComment(item) {
+            // const updatedComment = {
+            //     review_id : this.review_id,
+            //     comment_id: item.id,
+            //     editContent: this.editContent
+            //     }
             try {
-                const updatedComment = {
-                    review_id : this.review_id,
-                    comment_id: item.id,
-                    content: this.editContent
-                };
-                await updateComment(updatedComment);
+                await updateComment({ review_id: this.review_id, comment_id: item.id, editContent: this.editContent });
                 this.isEditingComment = false;
                 await this.getCommentList();
+                
             } catch (error) {
                 console.error(error);
             }

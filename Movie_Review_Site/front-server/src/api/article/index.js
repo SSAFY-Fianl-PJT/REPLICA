@@ -29,8 +29,8 @@ const deleteArticle = async (params_id) => {
     return api.delete(`/community/${params_id}/`);
 }
 
-const updateComment = async ({review_id, comment_id, updatedData}) => {
-    const response = await api.put(`/community/${review_id}/comments/${comment_id}/`, updatedData);
+const updateComment = async ({review_id, comment_id, editContent}) => {
+    const response = await api.put(`/community/${review_id}/comments/${comment_id}/`, editContent);
     return response.data;
   }
 
