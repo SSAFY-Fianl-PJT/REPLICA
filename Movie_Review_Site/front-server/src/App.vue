@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header-layout/>
-    <router-view/>
+    <router-view class="main-router"/>
     <footer-layout/>
   </div>
 </template>
@@ -21,6 +21,7 @@ export default{
 
 <style>
 #app {
+
   position: relative;
   background-color: rgb(0, 0, 0, 0.95);
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -28,6 +29,7 @@ export default{
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #c0d3e6;
+
 }
 
 nav {
@@ -41,5 +43,8 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #0080ff;
+}
+.main-router{
+  width: 100%;
 }
 </style>
