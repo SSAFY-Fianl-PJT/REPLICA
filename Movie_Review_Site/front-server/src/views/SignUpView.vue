@@ -42,7 +42,7 @@ export default {
     },
     passwordMessage() {
       if (!this.password1){
-        return '비밀번호를 입력해주세요'
+        return ''
       }
       return this.isPasswordMatch ? '비밀번호가 일치합니다.' : '비밀번호가 일치하지 않습니다.'
     }

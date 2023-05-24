@@ -101,7 +101,8 @@ body {
     left: 50%;
     top: 15%;
     background: transparent;
-    box-shadow: 0px 0px 100px rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 0px 50px  rgba(152, 174, 213, 0.7);
+  
     border-radius: 1rem;
     margin-right: 1.5rem;
     z-index: 3;
