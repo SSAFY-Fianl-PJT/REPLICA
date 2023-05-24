@@ -23,6 +23,9 @@
                 <p v-else>작성한 리뷰가 없습니다.</p>
         </div>
     </div>
+    <div class="password-btn-container" v-if="isCurrentUser">
+      <button class="password-btn" @click="confirmPasswordchange">비밀번호 변경</button>
+    </div>
     <div class="delete-btn-container" v-if="isCurrentUser">
       <button class="delete-btn" @click="confirmDeleteUser">회원탈퇴</button>
     </div>
@@ -130,6 +133,12 @@ export default {
 
             }
         },
+        confirmPasswordchange() {
+            if (confirm("비밀번호를 변경하시겠습니까?")) {
+                this.$refs.PasswordModal.show();
+            }
+        }
+ 
     },  
     computed : {
         get_usr(){

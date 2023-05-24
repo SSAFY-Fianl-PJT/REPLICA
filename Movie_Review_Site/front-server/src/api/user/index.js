@@ -45,8 +45,11 @@ const fetchReviews = () =>{
 }
 
 const fetchUsrdelete = ({user_id}) =>{
-    console.log('z')
     return api.post(`/accounts/user-delete/${user_id}/`)
 }
 
-export { fetchLogin, fetchLogout, fetchSignup, fetchUsrInfo, tk2Ur,fetchUsrfollow, fetchReviews, fetchUsrdelete }
+const fetchPasswordChange = (() => {
+    return api.post(`/accounts/password/change/`)
+})
+
+export { fetchLogin, fetchLogout, fetchSignup, fetchUsrInfo, tk2Ur,fetchUsrfollow, fetchReviews, fetchUsrdelete, fetchPasswordChange }
