@@ -1,33 +1,39 @@
 <template>
-    <div class="give-movie">
+  <div class="give-movie">
+      <div class="handle left-handle" @click="handleClick('left')">
+          <p>&#8249;</p>
+      </div>
+      <div class="slider" :style="{ transform: sliderTransform }">
+          <div class="accountactions">
+              <div class="ModalGroup" v-for="(item) in items" :key="item.poster_path">
+                  <figure>
+                      <ModalButton :target="squeeze(item.title)" :movie="item"  @open-modal="handleOpenModal"/>
+                  </figure>
+              </div>
+          </div>
+      </div>
+      <div class="handle right-handle" @click="handleClick('right')">
+        <p>&#8250;</p>
+      </div>
 
-      
+      <ModalDialog v-if="showModal" :target="squeeze(currentSelectedItem.title)" :item="currentSelectedItem" @close="handleCloseModal">
+          <MovieItem :item="currentSelectedItem"/>
+      </ModalDialog>
 
-
-        <div class="handle left-handle" @click="handleClick('left')">
-        <p>&#8249;</p></div>
-        <div class="slider" :style="{ transform: sliderTransform }">
-
-            <modal-form :Comps="getItems" targetSlot="Movie-Item">
-                <template v-slot:default="slotProps">
-                    <MovieItem :item="slotProps.item"/>
-                </template>
-            </modal-form>
-        </div>
-        <div class="handle right-handle" @click="handleClick('right')"><p>&#8250;</p></div>
-
-    </div>
+  </div>
 </template>
   
 <script>
-import ModalForm from '@/components/modal/ModalForm'
+import ModalButton from '@/components/modal/ModalButton'
+import ModalDialog from '@/components/modal/ModalDialog'
 import MovieItem from '@/components/movie/MovieItem'
 
   export default {
     name: 'MovieContents',
     components: {
       MovieItem,
-      ModalForm,
+      ModalButton,
+      ModalDialog,
     },
     props: {
       items: Array,
@@ -35,6 +41,9 @@ import MovieItem from '@/components/movie/MovieItem'
     data() {
       return {
         sliderIndex: 0,
+        showModal: false,
+        selectedItem: null,
+        
       };
     },
     methods: {
@@ -46,14 +55,29 @@ import MovieItem from '@/components/movie/MovieItem'
           this.sliderIndex = this.sliderIndex >= maxIndex ? 0 : this.sliderIndex + 1;
         }
       },
+      handleOpenModal(movie) {
+        this.selectedItem = movie;
+        this.$store.dispatch('openModal')
+        this.showModal = true;
+      },
+      handleCloseModal(){
+        this.$store.dispatch('closeModal')
+        this.showModal = false;
+      },
+      squeeze(data){
+        let squeezed_data = data.replace(/\s/g, "")
+        return squeezed_data
+      },
     },
     computed: {
-        getItems(){
-            console.log("이건 무비리스트", this.items)
-            return this.items
-        },
+      getItems(){
+        return this.items
+      },
       sliderTransform() {
         return `translateX(-${this.sliderIndex * 50}%)`;
+      },
+      currentSelectedItem() {
+        return this.selectedItem;
       },
     }
   };
@@ -112,4 +136,35 @@ import MovieItem from '@/components/movie/MovieItem'
     margin-bottom: 2.5rem;
   }
  
+
+  .accountactions{
+  display: flex;
+  justify-content: space-between;
+  /* aspect-ratio: 16/9; */
+  align-items:center;
+  max-height: 400px;
+}
+
+.ModalGroup{
+  flex: 0 0 25%;
+  margin: 1rem;
+  height: 100%;
+  width: 75%;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.accountactions > .ModalGroup > figure{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease-in-out;
+}
+
+.accountactions > .ModalGroup:hover > figure{
+  transform: scale(1.1);
+}
+
   </style>

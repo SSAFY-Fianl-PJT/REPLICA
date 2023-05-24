@@ -10,6 +10,7 @@
                       <ModalButton :target="squeeze(item.title)" :movie="item"  @open-modal="handleOpenModal"/>
                   </figure>
               </div>
+
           </div>
       </div>
       <div class="handle right-handle" @click="handleClick('right')">
@@ -43,8 +44,16 @@ import MovieItem from '@/components/movie/MovieItem'
         sliderIndex: 0,
         showModal: false,
         selectedItem: null,
-        
+        carouselItems : null,
+        carouselPosition: 0,
       };
+    },
+    created(){
+
+    },  
+    mounted(){
+      this.carouselItems = this.items; // items를 받아와서 carouselItems로 설정
+      this.cycleCarousel();
     },
     methods: {
       handleClick(direction) {
@@ -68,16 +77,35 @@ import MovieItem from '@/components/movie/MovieItem'
         let squeezed_data = data.replace(/\s/g, "")
         return squeezed_data
       },
+      cycleCarousel() {
+        let itemWidth = 300; // 한 항목의 너비. 실제 항목의 너비에 맞게 조정해야 합니다.
+        let scrollSpeed = (Math.random()*0.3 + 0.5) * 1000; // 스크롤 속도 (ms)
+
+        setInterval(() => {
+          if (this.carouselPosition <= -itemWidth * (this.carouselItems.length)) {
+            // 만약 모든 항목을 넘어서면 처음 항목으로 바로 이동하지 않고, 순환 리스트의 다음 항목으로 이동합니다.
+            
+            this.carouselPosition = 0; // 위치를 이동하지 않고 항목들만 순환시킵니다.
+          } else {
+            // 그렇지 않으면 carouselPosition을 갱신하여 다음 항목으로 이동합니다.
+            
+            this.carouselPosition -= itemWidth;
+          }
+        }, scrollSpeed);
+      },
     },
     computed: {
       getItems(){
         return this.items
       },
-      sliderTransform() {
-        return `translateX(-${this.sliderIndex * 50}%)`;
-      },
+      // sliderTransform() {
+      //   return `translateX(-${this.sliderIndex * 50}%)`;
+      // },
       currentSelectedItem() {
         return this.selectedItem;
+      },
+      sliderTransform() {
+        return `translateX(${this.carouselPosition}px)`;
       },
     }
   };

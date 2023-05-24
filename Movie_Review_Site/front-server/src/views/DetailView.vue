@@ -1,6 +1,6 @@
 <template>
-  <div class="review-information">
-    <div v-if="article" class="review-container">
+  <div class="review-information container">
+    <div v-if="article" class="review-container d-block">
       <div class="review-detail-block">
         <div class="review-title-block">
           <div v-if="isEditing" @keyup.enter="updateArticle">
@@ -42,7 +42,7 @@
       </div>
     </div>
 
-    <div v-if="movieDetail" class="reive-movie-inform">
+    <div v-if="movieDetail" class="reive-movie-inform d-none d-lg-block">
       <MovieItem :item="movieDetail" />
     </div>
   </div>
@@ -76,14 +76,17 @@ export default {
   async created() {
     let backdrop = document.querySelector('.modal-backdrop');
     if (backdrop) backdrop.parentNode.removeChild(backdrop);
+    await this.$store.dispatch('get_usr_name')
     this.$store.dispatch('closeModal');
     await this.getArticleDetail();
     await this.getMovieDetail();
-    console.log("아티클 확인",this.article)
+    this.usr_name = this.$store.state.user.info.username
   },
   computed: {
     isReviewAuthor() {
       // console.log("이거 왜 초장에 안나오냐",this.$store.state.user.info.username)
+      console.log(this.article.username)
+      console.log(this.$store.state.user.info)
       const loggedInUser = this.$store.state.user.info.username; // 로그인한 사용자 정보를 가져와야 함
       return this.article.username === loggedInUser;
     },
@@ -141,6 +144,8 @@ export default {
     handleCommentAdded() {
         this.refresh = !this.refresh;
     },
+
+
   },
 };
 </script>
@@ -153,7 +158,9 @@ export default {
   border: 3px solid whitesmoke;
   border-radius: 1rem;
 }
-
+.review-container{
+  width: auto;
+}
 .review-detail-block > .review-title-block
 {
   display: flex;
@@ -191,12 +198,20 @@ export default {
 
 .review-information {
   display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .review-datail-container {
   margin: 20px;
   text-align: left;
   flex: 1;
+}
+.review-comments-blocks{
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .reive-movie-inform {

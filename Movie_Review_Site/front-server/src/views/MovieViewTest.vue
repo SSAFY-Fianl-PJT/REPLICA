@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="getitem">
     <MovieItem :item="getitem">
 
     </MovieItem>
@@ -50,14 +50,20 @@ export default {
     }
   },
   async created(){
+    let backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) backdrop.parentNode.removeChild(backdrop);
     await this.$store.dispatch('getMV_Detail',this.$route.params.id)
   },
   computed:{
     getitem(){
-      console.log("테스트",this.$store.state.movie.movie_detail)
-      return this.$store.state.movie.movie_detail || this.item
+      let item = this.$store.state.movie.movie_detail
+      if (item){
+        console.log(item)
+        return item
+      }
+      return null
     }
-  }
+  },
 }
 </script>
 

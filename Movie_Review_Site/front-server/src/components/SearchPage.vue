@@ -35,7 +35,7 @@
 import ModalButton from '@/components/modal/ModalButton'
 import ModalDialog from '@/components/modal/ModalDialog'
 import MovieItem from '@/components/movie/MovieItem.vue'
-import {fetchSearchMovies} from '@/api/movie'
+import {fetchSearchMovies , fetchRecommendByKeyword} from '@/api/movie'
 
 
 export default {
@@ -109,7 +109,16 @@ export default {
           search_lst = [...search_lst, ...year_lst]
         }
       }
-      this.searched_lst = search_lst
+
+      // console.log("여기?")
+      const search_by_keyword = await fetchRecommendByKeyword(this.search_target)
+      // console.log("여기?", search_by_keyword.data)
+      const key_lst = search_by_keyword.data
+      if (Array.isArray(key_lst)){
+        search_lst = [...search_lst,...key_lst]
+      }
+
+      this.searched_lst = [...new Set(search_lst)]
       
     }
   },

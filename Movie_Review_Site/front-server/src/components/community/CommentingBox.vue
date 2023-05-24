@@ -1,17 +1,18 @@
 <template>
-  <div class="registration-form">
-    <header>
-      <h3>덧글 작성</h3>
-      <p>덧글을 작성해주세요</p>
-    </header>
-    <form @submit.prevent="submitForm">
-      <div class="input-section">
-        <input type="text" v-model="content" placeholder="Comments" required>
-        <button class="animated-button"><span>&#10225;</span></button>
-      </div>
-    </form>
 
-  </div>
+    <div class="registration-form">
+      <header>
+        <h3>덧글 작성</h3>
+        <p>덧글을 작성해주세요</p>
+      </header>
+      <form @submit.prevent="submitForm">
+        <div class="input-section">
+          <input type="text" v-model="content" placeholder="Comments" required>
+          <button class="animated-button"><span>&#10225;</span></button>
+        </div>
+      </form>
+  
+    </div>
 </template>
 
 <script>
@@ -50,6 +51,7 @@ export default {
 body {
   font-family: "Roboto";
 }
+
 /* Define the form's size, position, and background */
 .registration-form {
     width: 400px;
@@ -57,7 +59,7 @@ body {
     top: 15%;
     background: transparent;
     margin: 0.5rem;
-    box-shadow: 0px 0px 100px rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 0px 50px  rgba(152, 174, 213, 0.7);
 }
 
 /* Style the header of the form */

@@ -23,6 +23,11 @@
                 <p v-else>작성한 리뷰가 없습니다.</p>
         </div>
     </div>
+    <div class="password-btn-container" v-if="isCurrentUser">
+      <button class="password-btn" @click="confirmPasswordChange">비밀번호 변경</button>
+      <PasswordModal ref="passwordModal" />
+    </div>
+
     <div class="delete-btn-container" v-if="isCurrentUser">
       <button class="delete-btn" @click="confirmDeleteUser">회원탈퇴</button>
     </div>
@@ -32,6 +37,7 @@
 <script>
 import MovieContent from '@/components/movie/MovieContent.vue';
 import ArticleList from '@/components/community/ArticleList.vue'
+import PasswordModal from '@/components/modal/PasswordModal.vue'
 import {fetchUsrInfo, fetchUsrfollow, fetchReviews, fetchUsrdelete } from '@/api/user'
 
 export default {
@@ -49,6 +55,7 @@ export default {
     components:{
         MovieContent,
         ArticleList,
+        PasswordModal,
     },
     async created(){
         console.log("??뭐지",this.user)
@@ -92,7 +99,7 @@ export default {
     async fetchData() {
         
         console.log("fetching data for user:", this.$route.params.username);
-        this.$store.dispatch('get_profile', this.$route.params.username);
+        await this.$store.dispatch('get_profile', this.$route.params.username);
         },
     async isFollow(){
         if (this.user !== this.$store.state.user.info.username){
@@ -130,6 +137,12 @@ export default {
 
             }
         },
+        confirmPasswordchange() {
+            if (confirm("비밀번호를 변경하시겠습니까?")) {
+                this.$refs.passwordModal.showModal();
+            }
+        }
+ 
     },  
     computed : {
         get_usr(){

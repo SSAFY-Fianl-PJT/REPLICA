@@ -11,7 +11,6 @@ export default {
     search_target : null,
   },
   getters:{
-
   },
   mutations:{
     GET_MOVIES(state, movies) {

@@ -31,9 +31,10 @@ export default {
   background-color: rgb(0, 0, 0, 0.95);
   background: linear-gradient( 
   to bottom, 
-  rgb(81, 145, 219, 0.7) 0%, 
-  rgba(81, 145, 219, 0.55) 15%, 
-  rgba(81, 145, 219,0.35) 50%, 
+  
+  rgb(159, 148, 224, 0.7) 0%, 
+  rgba(159, 148, 224, 0.55) 15%, 
+  rgba(159, 148, 224,0.35) 50%, 
   rgba(81, 145, 219,0) 100%);
 
 }

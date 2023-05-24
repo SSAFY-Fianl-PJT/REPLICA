@@ -41,7 +41,11 @@ export default {
     };
   },
   props:{
-    movie_title: String
+    movie_title: String,
+    movie_id: {
+      type: Number, 
+      required: true 
+    }
   },
   methods: {
     onClick(inputRef) {
@@ -58,9 +62,8 @@ export default {
     // console.log(title, content, movie_title)
       fetchCreate({ title, content, movie_title })
       .then(() => {
-        // console.log(res)
-        // this.$router.push({name: 'ArticleView'})
-        this.refreshPage()
+        console.log("res, ", this.movie_id)
+        this.$router.push({name: 'MovieViewTest',params : {id:this.movie_id}})
       })
       .catch((err) => {
         console.log(err)
@@ -98,7 +101,8 @@ body {
     left: 50%;
     top: 15%;
     background: transparent;
-    box-shadow: 0px 0px 100px rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 0px 50px  rgba(152, 174, 213, 0.7);
+  
     border-radius: 1rem;
     margin-right: 1.5rem;
     z-index: 3;
