@@ -32,11 +32,12 @@ export default {
 <style scoped>
 .article-list-content{
   display: flex;
-  
+  min-height: 1111px;
 }
 
 .article-list {
   display: flex;
+  justify-content: space-around;
   flex-flow: wrap;
   text-align: start;
 }
