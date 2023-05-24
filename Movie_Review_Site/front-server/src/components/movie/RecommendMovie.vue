@@ -1,14 +1,5 @@
 <template>
   <div>
-    <div class="radio-checked">
-        <input class="radio-checked_input" type="radio" id="on" name="radio" value="on" v-model="checked" />
-        <label class="radio-checked_label radio-checked_label--on" for="on">ON</label>
-
-        <input class="radio-checked_input" type="radio" id="off" name="radio" value="off" v-model="checked" />
-        <label class="radio-checked_label radio-checked_label--off" for="off">OFF</label>
-
-        <div class="radio-checked_highlight"></div>
-    </div>
 
     <div class="searchresult-container">
         
@@ -81,6 +72,9 @@ export default {
         this.$store.dispatch('openModal')
         this.showModal = true;
       },
+    toggleChecked() {
+      this.checked = this.checked === 'on' ? 'off' : 'on';
+    }
   },
   computed:{
     getResult(){
@@ -171,110 +165,5 @@ export default {
 
   object-fit: cover;
 } */
-
-
-@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@600&display=swap");
-
-:root {
-  --highlight-left: 0;
-  --pagination-width: 0;
-}
-
-body {
-  font-family: sans-serif;
-  height: 100%;
-  margin: 0;
-  font-family: "Comfortaa", cursive;
-  background-color: #eef3f7;
-  user-select: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.radio-checked {
-  width: 250px;
-  position: relative;
-  font-size: 34px;
-  letter-spacing: 1px;
-  box-shadow: -5px -5px 10px 4px rgba(152, 174, 213, 0.5);
-  border-radius: 70px;
-}
-
-.radio-checked_input {
-  display: none;
-}
-
-.radio-checked_input:checked + .radio-checked_label {
-  color: #47cf73;
-  text-shadow: 0 0 7px rgba(71, 207, 115, 0.6);
-}
-
-.radio-checked_input:checked + .radio-checked_label--off {
-  color: #ff3c41;
-  text-shadow: 0 0 7px rgba(255, 60, 65, 0.6);
-}
-
-.radio-checked_input:checked + .radio-checked_label:before {
-  display: none;
-}
-
-.radio-checked_label {
-  cursor: pointer;
-  display: inline-block;
-  padding: 20px 25px 15px;
-  line-height: 1;
-  border-radius: 3rem;
-  color: #acb2c0;
-  transition: all 250ms ease-in-out;
-}
-
-.radio-checked_label:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  display: block;
-}
-
-.radio-checked_container {
-  position: relative;
-}
-
-.radio-checked_highlight {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 130px;
-  height: 100%;
-  border-radius: 70px;
-  box-shadow: -5px -5px 10px 4px rgba(152, 174, 213, 0.5);
-  background: #eef3f7;
-  transition: all 0.6s ease;
-  transform: translateX(var(--highlight-left));
-}
-
-.svg {
-  position: absolute;
-  top: -50%;
-  bottom: -50%;
-  pointer-events: none;
-}
-
-.svg_icon {
-  width: auto;
-  height: 100%;
-}
-
-.svg--right {
-  left: 100%;
-}
-
-.svg--left {
-  right: 100%;
-}
-
 
 </style>

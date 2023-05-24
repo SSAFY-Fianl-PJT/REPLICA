@@ -4,7 +4,6 @@
       <div class="card-overlay"></div>
       <div class="card-body">
         <div class="card-movie-title">
-          {{ article.movie }}
           <h5 class="card-title" style="font-weight: bold;">{{ article?.title }} : </h5>
           <router-link :to="{
             name: 'MovieViewTest',
@@ -78,6 +77,8 @@ export default {
 <style scoped>
 .Review-Tag-Info{
   margin: 30px;
+  max-height: 300px;
+  
 }
 .card-movie-title{
   display: flex;
@@ -101,6 +102,7 @@ export default {
 .card{
   color: white;
   box-shadow: 0px 0px 50px  rgba(152, 174, 213, 0.3);
+  border-radius: 15px;
 }
 .card-overlay {
   position: absolute;

@@ -1,10 +1,16 @@
 <template>
-  <div class="article-list">
-    <h3>Article List</h3>
-    <ArticleListItem 
-    v-for="(article, idx) in articles" :key="idx" :article="article"
-    />
+  <div class="article-list-content">
+    <div class="article-list">
+      <ArticleListItem 
+      v-for="(article) in articles" :key="article.created_at" :article="article"
+      />
+    </div>
+    <div class="movie-list-at-community">
+      
+    </div>
+
   </div>
+
 </template>
 
 <script>
@@ -16,19 +22,23 @@ export default {
     ArticleListItem,
   },
   props:{
-
+    articles : Array
   },
   computed: {
-    articles() {
-      console.log(reviews)
-      return this.$store.state.article.articles
-    }
   }
 }
 </script>
 
-<style>
+<style scoped>
+.article-list-content{
+  display: flex;
+  min-height: 1111px;
+}
+
 .article-list {
+  display: flex;
+  justify-content: space-around;
+  flex-flow: wrap;
   text-align: start;
 }
 </style>

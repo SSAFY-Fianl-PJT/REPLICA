@@ -21,7 +21,7 @@ export default{
 
 <style>
 #app {
-  min-height: 1111px;
+  min-height: 680px;
   position: relative;
   background-color: rgb(0, 0, 0, 0.95);
   font-family: Avenir, Helvetica, Arial, sans-serif;

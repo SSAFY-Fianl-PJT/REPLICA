@@ -79,7 +79,7 @@ import MovieItem from '@/components/movie/MovieItem'
       },
       cycleCarousel() {
         let itemWidth = 300; // 한 항목의 너비. 실제 항목의 너비에 맞게 조정해야 합니다.
-        let scrollSpeed = (Math.random()*0.3 + 0.5) * 1000; // 스크롤 속도 (ms)
+        let scrollSpeed = (Math.random()*0.3 + 0.5) * 2000; // 스크롤 속도 (ms)
 
         setInterval(() => {
           if (this.carouselPosition <= -itemWidth * (this.carouselItems.length)) {

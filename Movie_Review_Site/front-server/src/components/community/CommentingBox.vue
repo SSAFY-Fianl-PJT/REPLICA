@@ -1,4 +1,5 @@
 <template>
+  <div class="commentingbox-container">
 
     <div class="registration-form">
       <header>
@@ -13,6 +14,7 @@
       </form>
   
     </div>
+  </div>
 </template>
 
 <script>
@@ -48,8 +50,10 @@ export default {
 </script>
 <style scoped>
 /* Set global font family */
-body {
+.commentingbox-container {
+  display: flex;
   font-family: "Roboto";
+  justify-content: center;
 }
 
 /* Define the form's size, position, and background */
@@ -60,6 +64,7 @@ body {
     background: transparent;
     margin: 0.5rem;
     box-shadow: 0px 0px 50px  rgba(152, 174, 213, 0.7);
+    justify-content: center;
 }
 
 /* Style the header of the form */
