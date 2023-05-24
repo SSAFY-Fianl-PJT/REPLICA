@@ -24,6 +24,7 @@ const MyWishList = async({user_name}) => {
     return api.get(`/accounts/my_wishlist/${user_name}/`)
 }
 const fetchRecommend = async({username}) => {
+    console.log("ㅎㅇ",username)
     return api.get(`/movies/recommend/${username}/`)
 }
 

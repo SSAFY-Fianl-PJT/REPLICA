@@ -49,7 +49,7 @@ export default {
             })
         },
         async get_profile(context, username) {
-            console.log(username)
+            
             await fetchUsrInfo({username}).then((res) => { 
               console.log(res);
               context.commit('SAVE_USER_Profile', res.data);

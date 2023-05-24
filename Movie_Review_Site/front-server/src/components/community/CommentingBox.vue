@@ -59,7 +59,7 @@ body {
     top: 15%;
     background: transparent;
     margin: 0.5rem;
-    box-shadow: 0px 0px 100px rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 0px 50px  rgba(152, 174, 213, 0.7);
 }
 
 /* Style the header of the form */

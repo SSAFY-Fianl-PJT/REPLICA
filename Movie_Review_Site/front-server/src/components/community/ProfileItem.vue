@@ -99,7 +99,7 @@ export default {
     async fetchData() {
         
         console.log("fetching data for user:", this.$route.params.username);
-        this.$store.dispatch('get_profile', this.$route.params.username);
+        await this.$store.dispatch('get_profile', this.$route.params.username);
         },
     async isFollow(){
         if (this.user !== this.$store.state.user.info.username){

@@ -1,8 +1,10 @@
 <template>
   <div class="Review-Tag-Info">
-    <div class="card" style="width: 18rem;">
+    <div class="card" :style="backgroundImageStyle">
+      <div class="card-overlay"></div>
       <div class="card-body">
         <div class="card-movie-title">
+          {{ article.movie }}
           <h5 class="card-title" style="font-weight: bold;">{{ article?.title }} : </h5>
           <router-link :to="{
             name: 'MovieViewTest',
@@ -11,7 +13,7 @@
           </router-link>
           <hr>
         </div>
-        <h6 class="card-subtitle mb-2 text-muted">{{ article?.movie_title }}</h6>
+        <h6 class="card-subtitle mb-2 text-muted" style="color: white !important;">{{ article?.movie_title }}</h6>
         <p class="card-text ellipsis">{{ article?.content }}</p>
         <div class="card-link">
           <router-link class="dropdown-item" 
@@ -34,13 +36,42 @@
 </template>
 
 <script>
+import {getMovie_Detail} from '@/api/movie'
+const MOVIE_URL = 'https://image.tmdb.org/t/p/w500'
 export default {
   name: 'ArticleListItem',
+  data(){
+    return{
+      movie_poster : null
+    }
+  },
   props: {
     article: Object,
   },
+  async created(){
+    const res = await getMovie_Detail(this.article.movie)
+    this.movie_poster = res.data.poster_path
+  },
   methods:{
-  }
+  },
+  computed:{
+    backgroundImageStyle(){
+      return {
+        background: `linear-gradient(
+          to bottom,
+          rgba(0,0,0,0.75) 10%,
+          rgba(0,0,0,0.3) 25%,
+          rgba(0,0,0,0.5) 40%,
+          rgba(0,0,0,0.3) 75%,
+          rgba(0,0,0,0.75) 90%
+        ), url(${MOVIE_URL + this.movie_poster})`,
+        backgroundSize: `contain`,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        width: '18rem',
+      }
+    },
+  },
 }
 </script>
 
@@ -67,4 +98,19 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.card{
+  color: white;
+  box-shadow: 0px 0px 50px  rgba(152, 174, 213, 0.3);
+}
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);  /* Semi-transparent black overlay */
+  z-index: 1;  /* Make sure the overlay is on top of the background image */
+  pointer-events: none;
+}
+
 </style>

@@ -20,7 +20,7 @@
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{ usr_nickname }}
+              <img :src="TestprofileUrl" alt="프로필 이미지" style="width: 30px; height: 30px;">
             </a>
             <ul class="dropdown-menu profile-text">
               <li>
@@ -35,7 +35,7 @@
           <li class="nav-item">
             <div class="container-fluid">
               <form class="d-flex" role="search" @submit.prevent="searchMovies">
-                <input class="form-control me-2" type="search" v-model="searchQuery" placeholder="Search Movie" aria-label="Search">
+                <input class="form-control me-2" type="search" v-model="searchQuery" placeholder="Search Movie" aria-label="Search" required>
                 <button class="btn btn-outline-primary" type="submit">Search</button>
               </form>
             </div>
@@ -55,7 +55,8 @@ export default {
       LogoImg : LogoImg,
       searchQuery: '',
       usr_nickname : null,
-      usr_name : null
+      usr_name : null,
+      TestprofileUrl: require('@/assets/TestUsr.png'),
     }
   },
   async created(){
@@ -82,7 +83,7 @@ export default {
         });
 
       }else{
-        alert('검색해주세요ㅕ')
+        alert('검색해주세요')
       }
       this.searchQuery = ''
 
@@ -101,7 +102,8 @@ export default {
     },
     get_nickname(){
       return this.get_usr.nickname || '...'
-    }
+    },
+
   }
 }
 </script>

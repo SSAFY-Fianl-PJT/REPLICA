@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header-layout/>
-    <router-view class="main-router"/>
+    <router-view/>
     <footer-layout/>
   </div>
 </template>
@@ -21,7 +21,7 @@ export default{
 
 <style>
 #app {
-
+  min-height: 1111px;
   position: relative;
   background-color: rgb(0, 0, 0, 0.95);
   font-family: Avenir, Helvetica, Arial, sans-serif;

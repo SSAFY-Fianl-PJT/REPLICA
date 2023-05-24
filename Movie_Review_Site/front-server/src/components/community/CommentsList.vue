@@ -55,11 +55,11 @@ export default {
   },
   async created() {
     await this.$store.dispatch('get_usr_name');
-    this.getCommentList();
+    await this.getCommentList();
   },
   watch: {
-    refresh() {
-      this.getCommentList();
+    async refresh() {
+      await this.getCommentList();
     },
   },
   methods: {
