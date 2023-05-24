@@ -48,8 +48,9 @@ const fetchUsrdelete = ({user_id}) =>{
     return api.post(`/accounts/user-delete/${user_id}/`)
 }
 
-const fetchPasswordChange = (() => {
-    return api.post(`/accounts/password/change/`)
-})
+const fetchPasswordChange = async ({new_password1, new_password2}) => {
+    const response = await api.post(`/accounts/password/change/`, {new_password1: new_password1, new_password2: new_password2})
+    return response.data;
+}
 
 export { fetchLogin, fetchLogout, fetchSignup, fetchUsrInfo, tk2Ur,fetchUsrfollow, fetchReviews, fetchUsrdelete, fetchPasswordChange }

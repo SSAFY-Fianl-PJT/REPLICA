@@ -38,7 +38,6 @@ export default {
   methods:{
     async recommendMovie(){
       
-      
       const username = this.$store.state.user.info.username
       this.username = username
       console.log("하위 안녕하세뇨")

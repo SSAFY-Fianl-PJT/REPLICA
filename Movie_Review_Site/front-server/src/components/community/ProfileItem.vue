@@ -24,9 +24,14 @@
         </div>
     </div>
     <div class="password-btn-container" v-if="isCurrentUser">
-      <button class="password-btn" @click="confirmPasswordChange">비밀번호 변경</button>
-      <PasswordModal ref="passwordModal" />
+      <div id="inform-movie-modal">
+        <div class="delete-btn-container" @click="confirmPasswordChange" data-bs-backdrop="true" data-bs-toggle="modal"
+          :data-bs-target="modalTarget">
+          <button class="password-btn">비밀번호 변경</button>
+        </div>
+      </div>
     </div>
+    <PasswordModal ref="passwordModal" />
 
     <div class="delete-btn-container" v-if="isCurrentUser">
       <button class="delete-btn" @click="confirmDeleteUser">회원탈퇴</button>
@@ -47,6 +52,7 @@ export default {
             user_test : null,
             is_follow_test : null,
             userReviews: [],
+            modalTarget: '#password-modal',
         }
     },
     props:{
@@ -119,11 +125,12 @@ export default {
             alert('자기자신을 팔로잉 할 수 없습니다.')
         }
     }, 
-        confirmDeleteUser() {
-            if (confirm("정말로 회원탈퇴하시겠습니까?")) {
-                this.fetchUsrdelete();
-            }
-        },
+    confirmDeleteUser() {
+        console.log('확인')
+        if (confirm("정말로 회원탈퇴하시겠습니까?")) {
+            this.fetchUsrdelete();
+        }
+    },
         async fetchUsrdelete() {
             const user_id = this.user_test.id;
             try {
@@ -137,9 +144,13 @@ export default {
 
             }
         },
-        confirmPasswordchange() {
+        confirmPasswordChange() {
             if (confirm("비밀번호를 변경하시겠습니까?")) {
+                console.log('확인');
                 this.$refs.passwordModal.showModal();
+            } else {
+                console.log('취소');
+
             }
         }
  
@@ -184,10 +195,26 @@ export default {
   margin-top: 20px;
 }
 
+.password-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
 .delete-btn {
   font-size: 12px;
   padding: 6px 12px;
   background-color: rgb(233, 81, 81);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.password-btn {
+  font-size: 12px;
+  padding: 6px 12px;
+  background-color: rgb(41, 100, 189);
   color: white;
   border: none;
   border-radius: 4px;

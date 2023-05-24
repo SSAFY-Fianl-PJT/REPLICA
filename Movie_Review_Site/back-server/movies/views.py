@@ -178,6 +178,7 @@ def movie_recommendation(request, username):
 
     # 위시리스트 있으면 위시리스트 기반 추천
     if wishlist_movies.exists():
+        print('있다')
         wishlist_movie_ids = [movie.movie_id for movie in wishlist_movies]
         print(f'위시리스트 {wishlist_movie_ids}')
 
