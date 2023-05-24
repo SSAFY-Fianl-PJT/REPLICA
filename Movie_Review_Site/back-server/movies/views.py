@@ -9,17 +9,17 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 
-from .serializers import MovieListSerializer, MovieDetailSerializer, MovieReviewSerializer
+from .serializers import MovieListSerializer, MovieDetailSerializer
 from community.serializers import ReviewSerializer
 from .models import Movie
 from community.models import Review
 from community.serializers import ReviewSerializer
-from .recommend import features_sim_sorted_ind, find_sim_movies, movies_df, recommend_cache
+from .recommend import features_sim_sorted_ind, find_sim_movies, movies_df
 from .tfidf import calculate_tfidf
 
 from django.utils import timezone
 from django.views.decorators.cache import cache_page
-# from django.core.cache import cache
+
 
 
 
@@ -181,49 +181,16 @@ def movie_recommendation(request, username):
         wishlist_movie_ids = [movie.movie_id for movie in wishlist_movies]
         print(f'위시리스트 {wishlist_movie_ids}')
 
-        # # 캐시 키 생성
-        # cache_key = f"movie_recommendation:{username}"
-
-        # # 위시리스트 조회
-        # cached_wishlist = recommend_cache.get(cache_key)
-        # print(f'2{cached_wishlist}')
-        # # 위시리스트가 캐시에 있는 경우
-        # if cached_wishlist is not None:
-        #     print('key2', recommend_cache[cache_key])
-
-        #     # 캐시된 위시리스트와 현재 위시리스트를 비교하여 변경 여부 확인
-        #     if set(cached_wishlist) != set(wishlist_movie_ids):
-        #         print('다름')
-        #         # 캐시된 위시리스트를 사용하여 영화 추천 결과 반환
-        #         similar_movies = find_sim_movies(movies_df, features_sim_sorted_ind, cached_wishlist, 10)
-
-        #         print('movies2', similar_movies)
-        #         movies = []
-        #         for movieId in similar_movies:
-        #             movie = get_object_or_404(Movie, movie_id=movieId)
-        #             movies.append(movie)
-
-        #         if len(movies) > 30:
-        #             serializer = MovieListSerializer(movies[:30], many=True)
-        #         else:
-        #             serializer = MovieListSerializer(movies, many=True)
-        #         return Response(serializer.data)
-
-        # 위시리스트가 캐시에 없거나 변경된 경우
         # 위시리스트 기반 추천 계산
         similar_movies = find_sim_movies(movies_df, features_sim_sorted_ind, wishlist_movie_ids, 10)
-        # similar_movies = list(set(similar_movies))
-
-        # 캐시에 위시리스트 저장
-        # recommend_cache[cache_key] = wishlist_movie_ids
-        # print('캐시', recommend_cache)
-        # print('key', recommend_cache[cache_key])
         print('movies', similar_movies)
+
         movies = []
+        # 추천 영화의 인덱스에서 영화 찾아서 추가
         for movieId in similar_movies:
             movie = get_object_or_404(Movie, movie_id=movieId)
             movies.append(movie)
-
+        # 최대 30개만
         if len(movies) > 30:
             serializer = MovieListSerializer(movies[:30], many=True)
         else:
@@ -232,7 +199,7 @@ def movie_recommendation(request, username):
         return Response(serializer.data)
     # 없으면 인기도 상위 영화 추천
     else:
-        popular_movies = Movie.objects.order_by('-popularity')[:20]
+        popular_movies = Movie.objects.order_by('-popularity')[:30]
         serializer = MovieListSerializer(popular_movies, many=True)
         
         response_data = {
