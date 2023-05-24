@@ -1,8 +1,6 @@
 import pandas as pd
 import numpy as np
 import warnings; warnings.filterwarnings('ignore')
-from .models import Movie
-from ast import literal_eval
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from cachetools import LRUCache
@@ -56,7 +54,6 @@ print(features_sim_sorted_ind[:1])
 movies_df['features_sim'] = features_sim_sorted_ind.tolist()
 
 # 캐시 생성
-# recommend_cache = LRUCache(maxsize=128)
 movie_cache = LRUCache(maxsize=128)
 
 def find_sim_movies(movies_df, sorted_ind, movie_ids, top_n=10):
@@ -97,9 +94,7 @@ def find_sim_movies(movies_df, sorted_ind, movie_ids, top_n=10):
     similar_movies = movies_df.iloc[similar_indexes].sort_values(by='features_sim', ascending=False)['movie_id'].tolist()
     # 캐시 저장
     movie_cache[movie_cache_key] = similar_movies
-    print('캐시', movie_cache)
     print('캐시 값', movie_cache[movie_cache_key])
-    print(f'33{similar_movies}')
 
 
     return similar_movies
