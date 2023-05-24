@@ -26,21 +26,20 @@
           >
         </iframe>
       </div>
-      <div class="inform-container">
-        <h3>{{randMovie.title}}</h3>
+      <div class="inform-container d-none d-lg-block">
+        <h3 style="font-weight: bold; text-align: left;">{{randMovie.title}}</h3>
         <div class="mv_genres-container">
           <div v-for="(mv_gener, idx) in randMovie.genres" :key='idx'>
             {{mv_gener.genre_name}}
           </div>
         </div>
-        <div class="overview-container">
-          <span v-if="randMovie.overview" >
-            {{randMovie.overview}}
+        <div class="overview-container" style="text-align: left;" >
+          <span v-if="randMovie.overview" class="ellipsis">
+            {{slicedOverview}}
           </span>
           <span v-else> 영화를 보고 리뷰를 남겨주세요! </span>
         </div>
 
-        이건 뭐 어떻게 돌아가는거냐
       </div>
     </div>
   </div>
@@ -141,7 +140,14 @@ export default {
     },
     moviePoster(){
       return MOVIE_URL + this.randomMovie.poster_path
+    },
+    slicedOverview() {
+    if (this.randMovie.overview && this.randMovie.overview.length > 100) {
+      return this.randMovie.overview.slice(0, 150) + '...';
+    } else {
+      return this.randMovie.overview;
     }
+  }
   }
 }
 </script>
@@ -152,6 +158,13 @@ export default {
   width: 100%;
   justify-content: center;
   align-items: center;
+}
+.mv_genres-container{
+  display: flex;
+  flex-direction: row;
+}
+.mv_genres-container > div{
+  margin-right: 15px;
 }
 .movie-container {
   display: flex;
@@ -169,11 +182,18 @@ export default {
   left: 0;
   z-index: 3;
   /* Additional style */
-  width: 600px;
-  padding: 20px;
+  width: 550px;
+  padding-bottom: 20px;
   padding-left : 50px;
   color: #fff;
   
+}
+.ellipsis {
+  display: block;
+  overflow: hidden;
+  /* white-space: nowrap;  */
+  text-overflow: ellipsis; /* 텍스트가 너무 길면 ...으로 표시 */
+  width: 500px; /* 너비를 조정하면서 최적의 값을 찾아보세요 */
 }
 
 .image-container, .video-container {

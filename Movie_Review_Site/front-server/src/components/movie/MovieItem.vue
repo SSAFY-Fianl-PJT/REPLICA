@@ -73,9 +73,9 @@
 
     <div class="Movie-Review-Page" >
       {{ item.id }} {{ item.title }}
-      <review-view :movie_id="movie_item.id"/>
+      <review-view :movie_id="item.id"/>
       <hr>
-      <create-view :movie_title="movie_item.title"/>
+      <create-view :movie_title="item.title" :movie_id="item.id"/>
     </div>
 
     </div>
@@ -98,7 +98,6 @@ export default {
   data(){
     return {
       MoviePoster : null,
-      movie_item : null,
       isLiked : false,
       my_wish_list : []
     }
@@ -134,7 +133,6 @@ export default {
   },
   async created(){
     const user_name = this.$store.state.user.info.username
-    this.movie_item = this.item
     await this.searchMyWishList({user_name})
     await this.check_is_liked()
   },
@@ -166,16 +164,14 @@ export default {
 
 <style scoped>
 .movie-poster-container{
-
   display: flex;
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.541);
+  
 }
-.image-container{
-  flex:1;
-}
-.image-container {
 
+.image-container {
+  flex:1;
 
   min-height: 700px;
   height: auto;
@@ -187,6 +183,12 @@ export default {
   align-items: center;
   overflow: hidden;  
   object-position: 50% 0%; /* 이미지를 요소의 중앙에 위치 */
+  
+}
+
+.poster-img img{
+  
+  border-radius: 15px;
 }
 
 .information-block {
