@@ -105,7 +105,7 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-around;
   flex-wrap: wrap;
 
 }
@@ -198,7 +198,7 @@ body {
   position: relative;
   font-size: 34px;
   letter-spacing: 1px;
-  box-shadow: -6px -5px 14px 3px #fff, 7px 7px 12px 2px #d0d8e3;
+  box-shadow: -5px -5px 10px 4px rgba(152, 174, 213, 0.5);
   border-radius: 70px;
 }
 
@@ -251,7 +251,7 @@ body {
   width: 130px;
   height: 100%;
   border-radius: 70px;
-  box-shadow: inset -5px -5px 10px 4px #fff, inset -2px 6px 8px 6px #d0d8e3;
+  box-shadow: -5px -5px 10px 4px rgba(152, 174, 213, 0.5);
   background: #eef3f7;
   transition: all 0.6s ease;
   transform: translateX(var(--highlight-left));

@@ -1,9 +1,10 @@
 <template>
   <div class="movie-poster">
     <div class="movie-container"  
-      @mouseover="showVideo = true"
-      @mouseout="showVideo = false">
-
+    @mouseover="showVideo = true"
+    @mouseout="showVideo = false">
+    
+      <div class="gradient-overlay"></div>
       <div class="image-container" 
         v-if="randomMovie"
 
@@ -154,6 +155,7 @@ export default {
 
 <style scoped>
 .movie-poster{
+  position: relative;
   display: flex;
   width: 100%;
   justify-content: center;
@@ -168,14 +170,28 @@ export default {
 }
 .movie-container {
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 700px;
   overflow: hidden;
-  position: relative;
+  
+ 
 }
+
+.gradient-overlay{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgb(78, 92, 170, 0), rgb(13, 13, 13, 0.95)); 
+  z-index: 1;
+}
+
 .inform-container{
   position: absolute;
   bottom: 0;
@@ -218,4 +234,5 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 </style>

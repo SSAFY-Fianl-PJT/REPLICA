@@ -20,9 +20,7 @@ export default {
     MovieContent
   },
   methods:{
-      handler(){
-          console.log("하위",this.popularmovies)
-      }
+
   },
   async created(){
     // await this.$store.dispatch('getMovies')
@@ -30,13 +28,15 @@ export default {
   },
   computed:{
     popularmovies(){
-
+      console.log("유명")
       return this.$store.state.movie.popular_movies
     },
     upcomingmovies(){
+      console.log("개봉예정")
       return this.$store.state.movie.upcoming_movies
     },
     wishlist(){
+      console.log("위시")
       return this.$store.state.movie.wishlist
     },
   }
