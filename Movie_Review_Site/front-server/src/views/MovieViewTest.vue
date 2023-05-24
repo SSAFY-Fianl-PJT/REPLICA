@@ -50,7 +50,8 @@ export default {
     }
   },
   async created(){
-    console.log("음",this.$route.params)
+    let backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) backdrop.parentNode.removeChild(backdrop);
     await this.$store.dispatch('getMV_Detail',this.$route.params.id)
   },
   computed:{
