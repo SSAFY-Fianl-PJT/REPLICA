@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="users-show-movie">
-      <div class="recommend-tag">
+      <div class="recommend-tag d-none d-lg-block">
         <h2 style="font-weight: bold; text-align: left;">이 영화 어떠신가요?</h2>
       </div>
       <movie-main-video :items="recommendedMovieList"></movie-main-video>
@@ -57,28 +57,31 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .users-show-movie{
   display: flex;
   position: relative;
+  
 }
 .recommend-tag{
   display: inline-block;
   position: absolute;
   
-  margin-left: 20px;
+  margin-left:40px;
   margin-top: 20px;
+
+  
 }
 
 
-h2{
+.recommend-tag h2{
   color: #0080ffc0;
   border-bottom: 4px solid #a79600;
   padding-bottom: 5px;
   position: relative;
 }
 
-h2:before{
+.recommend-tag h2:before{
 /*     content: '';
     position: absolute;
     bottom: -20px;
@@ -98,7 +101,7 @@ h2:before{
   border-color: #a79600 transparent transparent #a79600;
 }
 
-h2:after{
+.recommend-tag h2:after{
 /*     content: '';
     position: absolute;
     bottom: -20px;

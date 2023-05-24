@@ -27,9 +27,13 @@
           >
         </iframe>
       </div>
-      <div class="inform-container d-none d-lg-block">
-        <h3 style="font-weight: bold; text-align: left;">{{randMovie.title}}</h3>
-        <div class="mv_genres-container">
+      
+      
+
+      <blockquote class="bluejeans inform-container d-none d-lg-block">
+        <h2><span class="Cbluejeans" style="font-weight:bolder;">{{randMovie.title}}</span><img class="information-img popover-img" :src="inforImg" alt="inform" style="width:30px;" @click="toMovieDetail"></h2>
+
+        <div class="mv_genres-container" style="font-size: 20px;">
           <div v-for="(mv_gener, idx) in randMovie.genres" :key='idx'>
             {{mv_gener.genre_name}}
           </div>
@@ -40,8 +44,7 @@
           </span>
           <span v-else> 영화를 보고 리뷰를 남겨주세요! </span>
         </div>
-
-      </div>
+      </blockquote>
     </div>
   </div>
 </template>
@@ -64,6 +67,7 @@ export default {
       randMovie : null,
       randVideo : '',
       showVideo: false,
+      inforImg: require('@/assets/inform.png'),
     }
   },
   props:{
@@ -99,6 +103,9 @@ export default {
       // rMJ8qLe6q3A
         this.randMovie = movie
         this.randVideo = 'i_XHHfr8yB0'
+    },
+    toMovieDetail(){
+      this.$router.push({name: 'MovieViewTest',params : {id:this.randMovie.id}})
     }
   },
   watch: {
@@ -154,6 +161,8 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Montez');
+@import url(https://fonts.googleapis.com/css?family=Francois+One);
 .movie-poster{
   position: relative;
   display: flex;
@@ -198,18 +207,106 @@ export default {
   left: 0;
   z-index: 3;
   /* Additional style */
-  width: 550px;
+  width: 580px;
   padding-bottom: 20px;
   padding-left : 50px;
   color: #fff;
-  
+  margin-left:40px;
 }
+
+
 .ellipsis {
   display: block;
   overflow: hidden;
   /* white-space: nowrap;  */
   text-overflow: ellipsis; /* 텍스트가 너무 길면 ...으로 표시 */
   width: 500px; /* 너비를 조정하면서 최적의 값을 찾아보세요 */
+}
+
+.overview-container{
+  margin-top: 10px;
+  font-family: 'Francois One', sans-serif;
+}
+blockquote{
+  display:block;
+  background: rgb(13, 13, 13, 0);
+  padding: 15px 20px 15px 45px;
+  margin: 0 0 20px;
+  position: relative;
+  
+  /*Font*/
+  font-family: Georgia, serif;
+  font-size: 14px;
+  line-height: 1.2;
+  color: #fff;
+
+  /*Box Shadow - (Optional)*/
+  -moz-box-shadow: 2px 2px 15px #ccc;
+  -webkit-box-shadow: 2px 2px 15px #ccc;
+  box-shadow: 2px 2px 15px #ccc;
+
+  /*Borders - (Optional)*/
+  border-left-style: solid;
+  border-left-width: 15px;
+  border-right-style: solid;
+  border-right-width: 2px;  
+  border-radius: 10px;  
+}
+
+blockquote::before{
+  content: "\201C"; /*Unicode for Left Double Quote*/
+  
+  /*Font*/
+  font-family: Georgia, serif;
+  font-size: 60px;
+  font-weight: bold;
+  color: #fff;
+  
+  /*Positioning*/
+  position: absolute;
+  left: 10px;
+  top:5px;
+  
+}
+
+blockquote::after{
+  /*Reset to make sure*/
+  content: "";
+}
+blockquote a{
+  text-decoration: none;
+  background: #eee;
+  cursor: pointer;
+  padding: 0 3px;
+  color: #c76c0c;
+}
+blockquote a:hover{
+ color: #666;
+}
+
+blockquote em{
+  font-style: italic;
+}
+blockquote.bluejeans{
+  border-left-color: #5e9de6;
+  border-right-color: #4b8ad6;
+}
+span.Cbluejeans{
+  color:#4b8ad6;
+}
+
+.heading{
+   font-family:Montez;
+   text-align:center;
+   font-size:30px;
+}
+
+
+
+blockquote h2{
+  text-align:left;
+  
+  font-family: 'Francois One', sans-serif;
 }
 
 .image-container, .video-container {
@@ -235,4 +332,33 @@ export default {
   height: 100%;
 }
 
+.information-img{
+  margin-left: 15px;
+}
+
+.popover-img {
+  position: relative;
+  overflow: visible;
+  z-index: 10;
+}
+
+
+.popover-img::after {
+  content: "example"; /* 띄울 텍스트 */
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.6); /* 배경색 */
+  color: #fff; /* 글자색 */
+  padding: 5px;
+  border-radius: 5px; /* 테두리 모서리 둥글게 */
+  bottom: 100%; /* 이미지 위에 위치 */
+  left: 50%; /* 가운데 위치 */
+  transform: translate(-50%, 10px); /* 위치 조정 */
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  opacity: 0; /* 처음에는 투명하게 */
+  transition: opacity 0.3s ease; /* 애니메이션 효과 */
+}
+
+.popover-img:hover::after {
+  opacity: 1; /* 마우스를 올리면 보이게 */
+}
 </style>

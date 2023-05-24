@@ -3,7 +3,7 @@
     <div class="Reive-page-title">
       <h3>영화 리뷰</h3>
     </div>
-    <hr>
+    <hr class="hr-1">
     
     <div v-if="Array.isArray(get_review) && get_review.length > 0">
       <!-- 리뷰가 있을 때에만 표시되는 내용 -->
@@ -74,5 +74,17 @@ export default {
   font-style: bold;
   text-align: left;
   margin: 10px;
+}
+
+hr {
+  background-color: #fff;
+  padding: 0;
+  margin: 10px;
+}
+
+hr.hr-1 {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(0, 0, 0, 0.75), rgba(255, 255, 255, 1));
 }
 </style>

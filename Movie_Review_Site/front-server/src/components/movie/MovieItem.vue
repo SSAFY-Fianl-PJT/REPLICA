@@ -1,6 +1,6 @@
 <template>
     <div class="movie-poster-container">
-      <hr>
+      <hr class="hr-1">
       <div class="image-container"  ref="imageContainer">
         <div class="poster-img">
           <img :src="getPoster" alt="영화포스터">
@@ -10,9 +10,15 @@
           
           <div class="movie-title-reldate">
             <div class="movie-title">
-              {{ item.title }}  
-              <button v-if="isZZIMM" class="ZZIM" @click="wantThisMovie()">영화 찜 취소</button>
-              <button v-else class="ZZIM" @click="wantThisMovie()">영화 찜하기</button>
+              {{ item.title }} 
+
+              <div class="liked-btn-container">
+                <div class="btn" :class="{ 'active': isZZIMM }" @click="wantThisMovie">
+                  <span v-if="isZZIMM">찜 취소</span>
+                  <span v-else>찜하기</span>
+                  <div class="dot"></div>
+                </div>
+              </div>
             </div>
             
             <div >
@@ -74,7 +80,7 @@
     <div class="Movie-Review-Page" >
       {{ item.id }} {{ item.title }}
       <review-view :movie_id="item.id"/>
-      <hr>
+      <hr class="hr-1">
       <create-view :movie_title="item.title" :movie_id="item.id"/>
     </div>
 
@@ -199,6 +205,7 @@ export default {
   flex: 1;
 }
 .movie-title-reldate{
+  position: relative;
   margin-left: 10px;
 
   text-align: left;
@@ -221,8 +228,6 @@ export default {
 }
 
 .movie-box{
-
-
   height: 350px;
 }
 .table-text{
@@ -233,5 +238,88 @@ export default {
 .table td, .table th {
   max-height: 60px;
   overflow: hidden;
+}
+hr {
+  background-color: #fff;
+  padding: 0;
+  margin: 10px;
+}
+
+hr.hr-1 {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(0, 0, 0, 0.75), rgba(255, 255, 255, 1));
+}
+
+
+
+.liked-btn-container {
+  position: absolute;
+  left: 0;
+  top: -65px;
+  box-sizing: border-box;
+  }
+.liked-btn-container:before, .liked-btn-container:after {box-sizing: border-box;}
+
+.liked-btn-container {
+  display: flex;
+  justify-content: flex-start;
+  
+  flex-flow: wrap;
+  font-size: 20px;
+  font-family: 'Titillium Web', sans-serif;
+}
+h1 {
+  color: #fff;
+  font-size: 2.5rem;
+  margin-top: 6rem; 
+}
+.btn {
+  position: relative;
+  margin: 0 auto;
+  width: 8em;
+  color: #78bcff;
+  border: .15em solid #78bcff;
+  border-radius: 5em;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 1em;
+  line-height: 2em;
+  cursor: pointer;  
+}
+.dot {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: calc(6em*.2);
+  height: 100%;
+  border-radius: 100%;
+  transition: all 300ms ease;
+  display: none;
+}
+.dot:after {
+  content: '';
+  position: absolute;
+  left: calc(50% - .2em);
+  top: -.4em;
+  height: .8em;
+  width: .8em;
+  background: #78bcff;
+  border-radius: 1em;
+  border: .25em solid #fff;
+  box-shadow: 0 0 .7em #fff,
+        0 0 2em #78bcff;
+}
+.btn.active .dot,
+.btn:focus .dot {
+  animation: atom 2s infinite linear;
+  display: block;
+}
+@keyframes atom {
+  0% {transform: translateX(0) rotate(0);}
+  30%{transform: translateX(calc(7em - calc(6.5em*.2))) rotate(0);}
+  50% {transform: translateX(calc(7em - calc(6.5em*.2))) rotate(180deg);}
+  80% {transform: translateX(0) rotate(180deg);}
+  100% {transform: translateX(0) rotate(360deg);}
 }
 </style>

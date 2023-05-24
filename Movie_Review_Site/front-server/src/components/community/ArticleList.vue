@@ -32,13 +32,17 @@ export default {
 <style scoped>
 .article-list-content{
   display: flex;
-  min-height: 1111px;
+  min-height: 680px;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .article-list {
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
+  align-content: flex-start;
   flex-flow: wrap;
   text-align: start;
+
 }
 </style>
