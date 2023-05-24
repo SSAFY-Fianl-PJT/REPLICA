@@ -1,20 +1,24 @@
 <template>
-
-  <div id="SignPage"  :style="backgroundImageStyle">
-    <div class="container" :class="{ 'right-panel-active': isActive }">
-      <div class="container__form container--signin">
-        <SignInView/>
+  <div class="Main-Login-Page">
+    <div id="SignPage"  :style="backgroundImageStyle">
+      <div id="Logo-IMG">
+        <img :src="LogoImageStyle" alt="">
       </div>
-      <div class="container__form container--signup">
-        <SignUpView/>
-      </div>
-      <div class="container__overlay">
-        <div class="overlay" :style="signupImageStyle">
-          <div class="overlay__panel overlay--left">
-            <button class="btn" @click="isActive = !isActive">Sign In</button>
-          </div>
-          <div class="overlay__panel overlay--right">
-            <button class="btn" @click="isActive = !isActive">Sign Up</button>
+      <div class="container" :class="{ 'right-panel-active': isActive }">
+        <div class="container__form container--signin">
+          <SignInView/>
+        </div>
+        <div class="container__form container--signup">
+          <SignUpView/>
+        </div>
+        <div class="container__overlay">
+          <div class="overlay" :style="backgroundImageStyle">
+            <div class="overlay__panel overlay--left">
+              <button class="btn" @click="isActive = !isActive">Sign In</button>
+            </div>
+            <div class="overlay__panel overlay--right">
+              <button class="btn" @click="isActive = !isActive">Sign Up</button>
+            </div>
           </div>
         </div>
       </div>
@@ -35,14 +39,7 @@ export default {
   data() {
     return {
       isActive: false,
-      signIn: {
-        username: "",
-        password: ""
-      },
-      signUp: {
-        username: "",
-        password: ""
-      }
+      LogoImageStyle: require('@/assets/Logo_.png')
     };
   },
   methods: {
@@ -71,29 +68,28 @@ export default {
         backgroundPosition: 'center',
       }
     },
-    signupImageStyle(){
-      return{
-        background: `url(${require('@/assets/Main_small.png')})`,
-        backgroundAttachment: 'fixed',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-      }
-    }
+
   }
 };
 </script>
 
 
 <style scoped>
+
 #SignPage{
-  min-height: 1111px;
+  
   height:auto;
+  min-height: 1111px;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  
 }
-
+#Logo-IMG{
+  position: absolute;
+  top: 200px;
+  left: 80px;
+}
 .form__title {
   font-weight: 300;
   margin: 0;
@@ -113,6 +109,7 @@ export default {
   box-shadow: 0 0.9rem 1.7rem rgba(0, 0, 0, 0.25),
     0 0.7rem 0.7rem rgba(0, 0, 0, 0.22);
   height: 420px;
+  min-width: 550px;
   max-width: 758px;
   overflow: hidden;
   position: relative; 
@@ -121,7 +118,7 @@ export default {
   flex-direction: column; 
   align-items: stretch; 
   justify-content: flex-start; 
-
+  margin-left: 5rem;
   border-radius: 10px;
 }
 
