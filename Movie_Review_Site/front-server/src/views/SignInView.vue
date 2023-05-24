@@ -55,7 +55,7 @@ export default {
 <style scoped>
 .btn {
   background-color: #0367a6;
-  background-image: linear-gradient(90deg, #0367a6 0%, #008997 74%);
+  background-image: linear-gradient(90deg, #008997 0%, #0367a6 74%);
   border-radius: 20px;
   border: 1px solid #0367a6;
   color: #e9e9e9;

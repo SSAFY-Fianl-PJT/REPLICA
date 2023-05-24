@@ -41,7 +41,11 @@ export default {
     };
   },
   props:{
-    movie_title: String
+    movie_title: String,
+    movie_id: {
+      type: Number, 
+      required: true 
+    }
   },
   methods: {
     onClick(inputRef) {
@@ -58,9 +62,8 @@ export default {
     // console.log(title, content, movie_title)
       fetchCreate({ title, content, movie_title })
       .then(() => {
-        // console.log(res)
-        // this.$router.push({name: 'ArticleView'})
-        this.refreshPage()
+        console.log("res, ", this.movie_id)
+        this.$router.push({name: 'MovieViewTest',params : {id:this.movie_id}})
       })
       .catch((err) => {
         console.log(err)
