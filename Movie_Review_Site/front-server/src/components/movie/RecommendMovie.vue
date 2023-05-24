@@ -84,7 +84,6 @@ export default {
   },
   computed:{
     getResult(){
-    
       return this.items
     },
     tgt(){

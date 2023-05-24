@@ -11,7 +11,7 @@ class GenreSerializer(serializers.ModelSerializer):
 
 # 영화 목록
 class MovieListSerializer(serializers.ModelSerializer):
-    genres = GenreSerializer(many=True)
+    genres = GenreSerializer(many=True, read_only=True)
 
     class Meta:
         model = Movie
