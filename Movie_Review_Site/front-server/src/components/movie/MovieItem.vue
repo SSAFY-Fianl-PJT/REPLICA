@@ -150,20 +150,6 @@ export default {
       return this.my_wish_list.some((movie) => movie.movie_id === this.item.id);
     },
 
-    backgroundImageStyle(){
-      return {
-        background: `linear-gradient(
-          to bottom,
-          rgba(255,255,255,0) 10%,
-          rgba(255,255,255,0.1) 25%,
-          rgba(255,255,255,0.2) 40%,
-          rgba(0,0,0,1) 50%
-        ), url(${MOVIE_URL + this.item.poster_path})`,
-        backgroundSize: `contain`,
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-      }
-    },
   }
 }
 </script>
