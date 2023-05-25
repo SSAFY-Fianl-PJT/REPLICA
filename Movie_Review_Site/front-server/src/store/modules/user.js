@@ -6,6 +6,7 @@ export default {
         token: null,
         info : null,
         profile : null,
+        profile4wishList: null
     },
     getters: {
         isLogin(state) {
@@ -27,6 +28,9 @@ export default {
         },
         SAVE_USER_Profile(state, prof){
             state.profile = prof
+        },
+        SAVE_USER_Profile4wishList(state,prof){
+            state.profile4wishList = prof
         }
     },
     actions:{
@@ -55,7 +59,12 @@ export default {
               context.commit('SAVE_USER_Profile', res.data);
             })
           },
-
+        async get_profile4wishList(context, username){
+            await fetchUsrInfo({username}).then((res) => { 
+                console.log(res);
+                context.commit('SAVE_USER_Profile4wishList', res.data);
+              })
+        },
         async login(context, payload) {
             const username = payload.username
             const password = payload.password

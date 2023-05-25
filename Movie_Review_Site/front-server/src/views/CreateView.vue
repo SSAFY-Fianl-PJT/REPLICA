@@ -1,4 +1,12 @@
 <template>
+  <div class="create-view-template">
+
+  
+  <div class="speech">
+    <div class="speech-bubble">
+      <p> 더블 클릭 시 글 적는 부분이 변경됩니다.</p>
+    </div>
+  </div>
   <div class="create-review-container">
     <div class="registration-form">
       <header>
@@ -54,6 +62,7 @@
         </form>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -126,6 +135,11 @@ body {
   font-family: "Roboto";
 }
 
+.create-view-template{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 .create-review-container{
   display: flex;
   flex-direction: column;
@@ -326,5 +340,48 @@ body {
 .starpoint_box .star_radio:nth-of-type(10):checked ~ .starpoint_bg{width:100%;}
 
 .blind{position:absolute;clip:rect(0 0 0 0);margin:-1px;width:1px;height: 1px;overflow:hidden;}
+
+
+.speech{
+  position: relative;
+  width: 200px;
+  height: 100px;
+  
+  margin-right: 30px;
+  
+}
+
+.speech-bubble {
+  display: flex;
+    position: absolute;
+    left: 0;
+    width: 200px;
+    height: 100px;
+    background: #917dd9;
+    border-radius: .4em;
+    bottom: -100px;
+    text-align: start;
+    justify-content: center;
+    align-items: center;
+    
+}
+.speech-bubble p {
+  font-size: 20px;
+  margin-left: 4px;
+}
+.speech-bubble:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 44px solid transparent;
+    border-left-color: #917dd9;
+    border-right: 0;
+    border-top: 0;
+    margin-top: -10px;
+    margin-right: -30px;
+}
 
 </style>

@@ -84,7 +84,67 @@
       <create-view :movie_title="item.title" :movie_id="item.id"/>
     </div>
 
+    <hr class="hr-1">
+    <div class="Related-movie-Page">
+      {{ item.related_movies}}
+
+      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+      
+      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" 
+          v-for="(movie, index) in item.related_movies" 
+          :key="movie.id" data-bs-target="#carouselExampleIndicators" :data-bs-slide-to="index" 
+          :class="{active : index === 0}" :aria-current="index === 0" :aria-label="'Slide ' + (index + 1)"></button>
+        </div>
+        <div class="carousel-inner">
+          <div v-for="(movie, index) in item.related_movies" 
+          :key="movie.id" class="carousel-item" :class="{active : index === 0}">
+            <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" class="d-block w-100" :alt="movie.title">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>{{movie.title}}</h5>
+              <p>{{movie.overview}}</p>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
     </div>
+  </div>
 
 
 

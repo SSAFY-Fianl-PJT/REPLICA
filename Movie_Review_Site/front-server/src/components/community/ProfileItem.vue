@@ -89,7 +89,7 @@ export default {
     async created(){
 
         
-        console.log("왜 안됨",this.user)
+        // console.log("왜 안됨",this.user)
         
         const username = this.user
         await fetchUsrInfo({username})
@@ -121,10 +121,10 @@ export default {
       try {
         const response = await fetchReviews(); // 모든 리뷰 불러오기
         const reviews = response.data;
-        console.log('리뷰', reviews)
+        // console.log('리뷰', reviews)
         // 현재 프로필의 사용자명과 리뷰의 사용자명을 비교하여 일치하는 리뷰만 추가
         this.userReviews = reviews.filter(review => review.username === this.user);
-        console.log(this.userReviews)
+        // console.log("유저 리뷰",this.userReviews)
       } catch (error) {
         console.log(error);
       }
@@ -132,7 +132,7 @@ export default {
     async fetchData() {
         
         console.log("fetching data for user:", this.$route.params.username);
-        await this.$store.dispatch('get_profile', this.$route.params.username);
+        await this.$store.dispatch('get_profile4wishList', this.$route.params.username);
         },
     async isFollow(){
         if (this.user !== this.$store.state.user.info.username){
@@ -186,7 +186,8 @@ export default {
         },
         get_usr(){
             try {
-                return this.$store.state.user.profile
+                // console.log("찾는사람은",this.user_test.username)
+                return this.$store.state.user.profile4wishList
             } catch(err) {
             console.log(err)
             return "없습니다."
@@ -194,6 +195,7 @@ export default {
         },
         getWishlist(){
             
+            console.log("위시리스트",this.get_usr.wishlist)
             return this.get_usr.wishlist
         },
         is_follow(){

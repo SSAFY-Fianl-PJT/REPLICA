@@ -209,10 +209,10 @@ object-fit: cover;
 /* 3D회전 */
 
 .give-movie-3D {
-
-max-height: 400px;
-display: flex;
-justify-content: center;
+  width: 100%;
+  max-height: 400px;
+  display: flex;
+  justify-content: center;
 
 }
 
