@@ -87,9 +87,6 @@ docs/_build/
 .pybuilder/
 target/
 
-# Django migrations
-**/migrations/
-
 # Jupyter Notebook
 .ipynb_checkpoints
 
@@ -231,4 +228,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+**/migrations/
 # End of https://www.toptal.com/developers/gitignore/api/django,venv,windows,visualstudiocode
