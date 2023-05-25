@@ -5,8 +5,34 @@
         <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="팝오버 내용">
         <h3>[리뷰 작성]</h3>
         <p>영화 리뷰를 작성해주세요</p>
-        <p>더블클릭하면 제목 창이 돌아갑니다.</p>
         </span>
+        <div class="starpoint_wrap">
+          <div class="starpoint_box">
+            <label for="starpoint_1" class="label_star" @mouseover="showScore"   @click="clickScore" title="1"><span class="blind">1점</span></label>
+            <label for="starpoint_2" class="label_star" @mouseover="showScore"   @click="clickScore" title="2"><span class="blind">2점</span></label>
+            <label for="starpoint_3" class="label_star" @mouseover="showScore"   @click="clickScore" title="3"><span class="blind">3점</span></label>
+            <label for="starpoint_4" class="label_star" @mouseover="showScore"   @click="clickScore" title="4"><span class="blind">4점</span></label>
+            <label for="starpoint_5" class="label_star" @mouseover="showScore"   @click="clickScore" title="5"><span class="blind">5점</span></label>
+            <label for="starpoint_6" class="label_star" @mouseover="showScore"   @click="clickScore" title="6"><span class="blind">6점</span></label>
+            <label for="starpoint_7" class="label_star" @mouseover="showScore"   @click="clickScore" title="7"><span class="blind">7점</span></label>
+            <label for="starpoint_8" class="label_star" @mouseover="showScore"   @click="clickScore" title="8"><span class="blind">8점</span></label>
+            <label for="starpoint_9" class="label_star" @mouseover="showScore"   @click="clickScore" title="9"><span class="blind">9점</span></label>
+            <label for="starpoint_10" class="label_star" @mouseover="showScore" @click="clickScore"  title="10"><span class="blind">10점</span></label>
+            <input type="radio" name="starpoint" id="starpoint_1" class="star_radio">
+            <input type="radio" name="starpoint" id="starpoint_2" class="star_radio">
+            <input type="radio" name="starpoint" id="starpoint_3" class="star_radio">
+            <input type="radio" name="starpoint" id="starpoint_4" class="star_radio">
+            <input type="radio" name="starpoint" id="starpoint_5" class="star_radio">
+            <input type="radio" name="starpoint" id="starpoint_6" class="star_radio">
+            <input type="radio" name="starpoint" id="starpoint_7" class="star_radio">
+            <input type="radio" name="starpoint" id="starpoint_8" class="star_radio">
+            <input type="radio" name="starpoint" id="starpoint_9" class="star_radio">
+            <input type="radio" name="starpoint" id="starpoint_10" class="star_radio">
+            <span class="starpoint_bg"></span>
+          </div>
+          <div class="score_display" v-if="score">{{ score }}점</div>
+          <div class="score_display" v-else>0점</div>
+        </div>
       </header>
         <form @submit.prevent="createArticle" class="form-container">
           
@@ -38,6 +64,8 @@ export default {
       title: '',
       content: '',
       contentEntry: false,
+      scoreSelected: false,
+      score:null
     };
   },
   props:{
@@ -47,7 +75,17 @@ export default {
       required: true 
     }
   },
+
   methods: {
+    showScore(event) {
+      if (!this.scoreSelected) {
+        this.score = event.target.title;
+      }
+    },
+
+    clickScore() {
+      this.scoreSelected = !this.scoreSelected;
+    },
     onClick(inputRef) {
       this.contentEntry = !this.contentEntry;
       this.$nextTick(() => {
@@ -58,9 +96,10 @@ export default {
       const title = this.title
       const content = this.content
       const movie_title = this.mv_title
-
+      const rating = this.score
+      console.log(rating)
     // console.log(title, content, movie_title)
-      fetchCreate({ title, content, movie_title })
+      fetchCreate({ title, content, movie_title, rating })
       .then(() => {
         console.log("res, ", this.movie_id)
         this.$router.push({name: 'MovieViewTest',params : {id:this.movie_id}})
@@ -110,6 +149,7 @@ body {
 }
 
 .registration-form header {
+
   z-index: 4;
   background: rgb(255, 255, 255);
   padding: 10px 40px;
@@ -239,5 +279,52 @@ body {
   transform: rotateX(90deg);
 }
 
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  justify-content: space-around;
+  padding: 0 0.2em;
+  text-align: center;
+  width: 5em;
+}
+ 
+.score_display {
+  margin-left: 10px; /* starpoint_box와 score_display 사이의 간격 조절 */
+}
+.starpoint_wrap {
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+}
+.starpoint_box, .score_display {
+  display: inline-block;
+}
+.starpoint_box{position:relative;background:url(https://ido-archive.github.io/svc/etc/element/img/sp_star.png) 0 0 no-repeat;font-size:0;}
+.starpoint_box .starpoint_bg{display:block;position:absolute;top:0;left:0;height:18px;background:url(https://ido-archive.github.io/svc/etc/element/img/sp_star.png) 0 -20px no-repeat;pointer-events:none;}
+.starpoint_box .label_star{display:inline-block;width:10px;height:18px;box-sizing:border-box;}
+.starpoint_box .star_radio{opacity:0;width:0;height:0;position:absolute;}
+.starpoint_box .star_radio:nth-of-type(1):hover ~ .starpoint_bg,
+.starpoint_box .star_radio:nth-of-type(1):checked ~ .starpoint_bg{width:10%;}
+.starpoint_box .star_radio:nth-of-type(2):hover ~ .starpoint_bg,
+.starpoint_box .star_radio:nth-of-type(2):checked ~ .starpoint_bg{width:20%;}
+.starpoint_box .star_radio:nth-of-type(3):hover ~ .starpoint_bg,
+.starpoint_box .star_radio:nth-of-type(3):checked ~ .starpoint_bg{width:30%;}
+.starpoint_box .star_radio:nth-of-type(4):hover ~ .starpoint_bg,
+.starpoint_box .star_radio:nth-of-type(4):checked ~ .starpoint_bg{width:40%;}
+.starpoint_box .star_radio:nth-of-type(5):hover ~ .starpoint_bg,
+.starpoint_box .star_radio:nth-of-type(5):checked ~ .starpoint_bg{width:50%;}
+.starpoint_box .star_radio:nth-of-type(6):hover ~ .starpoint_bg,
+.starpoint_box .star_radio:nth-of-type(6):checked ~ .starpoint_bg{width:60%;}
+.starpoint_box .star_radio:nth-of-type(7):hover ~ .starpoint_bg,
+.starpoint_box .star_radio:nth-of-type(7):checked ~ .starpoint_bg{width:70%;}
+.starpoint_box .star_radio:nth-of-type(8):hover ~ .starpoint_bg,
+.starpoint_box .star_radio:nth-of-type(8):checked ~ .starpoint_bg{width:80%;}
+.starpoint_box .star_radio:nth-of-type(9):hover ~ .starpoint_bg,
+.starpoint_box .star_radio:nth-of-type(9):checked ~ .starpoint_bg{width:90%;}
+.starpoint_box .star_radio:nth-of-type(10):hover ~ .starpoint_bg,
+.starpoint_box .star_radio:nth-of-type(10):checked ~ .starpoint_bg{width:100%;}
+
+.blind{position:absolute;clip:rect(0 0 0 0);margin:-1px;width:1px;height: 1px;overflow:hidden;}
 
 </style>

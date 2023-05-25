@@ -9,7 +9,8 @@
             <p style="text-align:left;">영화 : {{ article?.movie_title }}</p>
           </div>
           <div v-else>
-            <h2><span class="Clavander">{{ article?.title }}</span></h2>  
+            <h2><span class="Clavander">{{ article?.title }}</span> -
+              <img v-if="article" :src="require('@/assets/STAR' + Math.floor(article.rating) + '.png')" style="margin-left: 5px;" :alt="`${Math.floor(article.rating)}`"></h2>  
             <p style="text-align:left;">영화 : {{ article?.movie_title }}</p>
           </div>
         <code>

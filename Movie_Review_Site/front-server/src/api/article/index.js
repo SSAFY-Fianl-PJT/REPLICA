@@ -8,11 +8,11 @@ const fetchReviews = async (mv_number)=>{
     return api.get(`/movies/${mv_number}/reviews/`)
 }
 
-const fetchCreate = async ({title, content, movie_title})=>{
+const fetchCreate = async ({title, content, movie_title,rating})=>{
     return api({
         method: 'post',
         url: '/community/',
-        data: {title, content, movie_title},
+        data: {title, content, movie_title, rating},
       })
 }
 
