@@ -170,10 +170,12 @@ export default {
     },
     async searchMyWishList({ user_name }) {
       const res = await MyWishList({ user_name });
+      console.log("찜",res.data)
       this.my_wish_list = res.data;
       this.check_is_liked();
     },
     async check_is_liked() {
+      console.log( "이것의 결과", this.my_wish_list.some((movie) => movie.movie_id === this.item.id))
       this.isLiked = this.my_wish_list.some((movie) => movie.movie_id === this.item.id);
     }
   },
@@ -187,8 +189,13 @@ export default {
       return MOVIE_URL + this.item.poster_path
     },
     isZZIMM() {
-      return this.my_wish_list.some((movie) => movie.movie_id === this.item.id);
+      try{
+        return this.my_wish_list.some((movie) => movie.movie_id === this.item.id);
+      }catch{
+        return false
+      }
     },
+
 
   }
 }
@@ -300,7 +307,7 @@ h1 {
   font-size: 2.5rem;
   margin-top: 6rem; 
 }
-.btn {
+.liked-btn-container .btn {
   position: relative;
   margin: 0 auto;
   width: 8em;
@@ -323,7 +330,7 @@ h1 {
   transition: all 300ms ease;
   display: none;
 }
-.dot:after {
+.liked-btn-container .dot:after {
   content: '';
   position: absolute;
   left: calc(50% - .2em);
@@ -336,8 +343,8 @@ h1 {
   box-shadow: 0 0 .7em #fff,
         0 0 2em #78bcff;
 }
-.btn.active .dot,
-.btn:focus .dot {
+.liked-btn-container .btn.active .dot,
+.liked-btn-container .btn:focus .dot {
   animation: atom 2s infinite linear;
   display: block;
 }
