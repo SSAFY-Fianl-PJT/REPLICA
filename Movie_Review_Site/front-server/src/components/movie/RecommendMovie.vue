@@ -48,6 +48,7 @@ export default {
     items : Array
   },
   created(){
+    console.log("이거뭐냐",this.items)
     this.search_target = this.$store.state.movie.search_target
   },
   mounted() {

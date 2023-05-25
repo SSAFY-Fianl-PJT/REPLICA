@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import LogoImg from '@/assets/Logo_.png'
+import LogoImg from '@/assets/REPLICA.png'
 export default {
   name:"Nav_B",
   data(){
@@ -24,7 +24,7 @@ export default {
 <style scoped>
 .logo{
   /* background-color: #e3f2fd;   */
-  width: 100px;
+  width: 150px;
 }
 .nav-item{
   padding-top: 5px;

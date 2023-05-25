@@ -52,7 +52,7 @@
 <script>
 // import TestPoster from '@/assets/TestPoster.png'
 import _ from 'lodash'
-// import api from '@/api/utubeapi'
+import api from '@/api/utubeapi'
 // https://image.tmdb.org/t/p/w500
 // const MOVIE_URL = process.env.VUE_APP_IMG_URL
 // const YTB_API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
@@ -76,21 +76,21 @@ export default {
   methods:{
     async get_movie_teaser(movie){
       let title = movie.title
-      // const data = {
-      //     q:`${title} 티저`,
-      //     part : 'snippet',
-      //     type : 'video',
-      //     regionCode:"KR",
-      //     maxResults: 1,
-      //   }
-      // const res = await api.get('',{params: data})
+      const data = {
+          q:`${title} 티저`,
+          part : 'snippet',
+          type : 'video',
+          regionCode:"KR",
+          maxResults: 1,
+        }
+      const res = await api.get('',{params: data})
       // console.log(res.data.items[0].id.videoId)
       // i_XHHfr8yB0
       // rMJ8qLe6q3A
       console.log(title)
-        this.randVideo = 'iGc7BzHnEMk'
+        // this.randVideo = 'iGc7BzHnEMk'
         this.randMovie = movie
-        // this.randVideo = res.data.items[0].id.videoId
+        this.randVideo = res.data.items[0].id.videoId
     },
     toMovieDetail(){
       this.$router.push({name: 'MovieViewTest',params : {id:this.randMovie.id}})

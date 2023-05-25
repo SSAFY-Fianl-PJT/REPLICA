@@ -40,10 +40,9 @@ export default {
       
       const username = this.$store.state.user.info.username
       this.username = username
-      console.log("하위 안녕하세뇨")
       const res = await fetchRecommend({username})
       console.log("resdata",res.data)
-      this.recommended = res.data
+      this.recommended = res.data.movies
 
 
     }

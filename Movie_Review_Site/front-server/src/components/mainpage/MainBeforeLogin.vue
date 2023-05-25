@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       isActive: false,
-      LogoImageStyle: require('@/assets/Logo_.png')
+      LogoImageStyle: require('@/assets/REPLICA.png')
     };
   },
   methods: {
@@ -87,8 +87,8 @@ export default {
 }
 #Logo-IMG{
   position: absolute;
-  top: 200px;
-  left: 80px;
+  top: 260px;
+  left: 60px;
 }
 .form__title {
   font-weight: 300;

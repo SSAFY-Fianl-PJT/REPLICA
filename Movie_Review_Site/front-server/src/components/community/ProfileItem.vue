@@ -9,7 +9,7 @@
                 <span class="user-nickname"> {{ user_test.nickname }}  </span>
 
                 <div class="follow-btn-container" v-if="!is_yourSelf">
-                    <div class="btn" :class="{ 'active': is_follow }" @click="isFollow">
+                    <div class="btn" :class="{ 'active': is_over }" @click="isFollow"  @mouseover="is_over = true" @mouseleave="is_over = false">
                         <span v-if="is_follow">팔로우 취소</span>
                         <span v-else>팔로우</span>
                     <div class="dot"></div>
@@ -89,7 +89,7 @@ export default {
     async created(){
 
         
-        // console.log("왜 안됨",this.user)
+        console.log("왜 안됨",this.user)
         
         const username = this.user
         await fetchUsrInfo({username})
@@ -396,6 +396,7 @@ h1 {
 }
 
 
+
 .liked-btn-container {
   position: relative;
   left: 0;
@@ -412,11 +413,7 @@ h1 {
   font-size: 20px;
   font-family: 'Titillium Web', sans-serif;
 }
-h1 {
-  color: #fff;
-  font-size: 2.5rem;
-  margin-top: 2rem; 
-}
+
 
 .no-review {
     margin-bottom: 5rem;
@@ -459,7 +456,7 @@ h1 {
   box-shadow: 0 0 .7em #fff,
         0 0 2em #78bcff;
 }
-.btn.active .dot,
+.btn:hover .dot,
 .btn:focus .dot {
   animation: atom 2s infinite linear;
   display: block;
@@ -472,5 +469,32 @@ h1 {
   100% {transform: translateX(0) rotate(360deg);}
 }
 
+
+@keyframes glowh1 {
+  0%{text-shadow: 0 0 8px #43a1ff;}
+  50%{text-shadow: 0 0 20px #43a1ff;}
+  100%{text-shadow: 0 0 8px #43a1ff;}
+}
+
+@-webkit-keyframes glowh1 {
+  0%{text-shadow: 0 0 8px #43a1ff;}
+  50%{text-shadow: 0 0 20px #43a1ff;}
+  100%{text-shadow: 0 0 8px #43a1ff;}
+}
+
+@keyframes blin {
+  0%{transform:translate(-2px, -10px);}
+  2%{transform:translate(0px, 0px);}
+  40%{transform:translateY(4px) skew(10deg);}
+  52%{transform:translateY(0px) skew(0deg);}
+}
+
+@-webkit-keyframes blin {
+  0%{transform:translate(-2px, -10px);}
+  2%{transform:translate(0px, 0px);}
+  40%{transform:translateY(4px) skew(10deg);}
+  52%{transform:translateY(0px) skew(0deg);}
+  100%{transform:translateY(0px) skey(0deg);}
+}
 
 </style>
