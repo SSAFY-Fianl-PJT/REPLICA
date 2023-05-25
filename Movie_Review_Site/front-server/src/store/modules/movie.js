@@ -4,7 +4,7 @@ export default {
   state : {
     popular_movies: [],
     upcoming_movies: [],
-    wishList: [],
+    wishlist: [],
     
     movie_detail : null,
     search_results : [],

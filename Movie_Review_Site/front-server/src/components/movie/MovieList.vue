@@ -6,7 +6,7 @@
     <h3>개봉 예정 영화 Comming Soon</h3>
     <MovieContent  v-if="upcomingmovies  && upcomingmovies.length > 0" :items="upcomingmovies"/>
     <h3>🙆‍♀️내가 찜한 영화🙆‍♂️</h3>
-    <MovieContent  v-if="wishlist  && wishlist.length > 0" :items="wishlist"/>
+    <MovieContent  v-if="wishlist && wishlist.length > 0" :items="wishlist"/>
   </div>
 </template>
 
