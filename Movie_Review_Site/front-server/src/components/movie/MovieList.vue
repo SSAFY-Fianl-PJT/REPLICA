@@ -37,7 +37,8 @@ export default {
     },
     wishlist(){
       console.log("위시")
-      return this.$store.state.movie.wishlist
+      console.log(this.$store.state.movie.wishList)
+      return this.$store.state.movie.wishList
     },
   }
 }

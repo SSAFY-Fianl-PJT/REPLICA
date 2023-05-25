@@ -15,10 +15,10 @@ export default {
   mutations:{
     GET_MOVIES(state, movies) {
       const {popular_movies, upcoming_movies, wishlist} = movies
-      console.log(movies)
       state.popular_movies = popular_movies
       state.upcoming_movies = upcoming_movies
-      state.wishlist = wishlist
+      console.log(movies)
+      state.wishList = wishlist
     },
     SET_WISHLIST(state, wishList) {
       state.wishList = wishList
@@ -45,7 +45,7 @@ export default {
         })
     },
     async searchMovies(context, items){
-      console.log("찾는중 슈댕..",items)
+      // console.log("찾는중 슈댕..",items)
       const search_results =  await fetchSearchMovies({title: items})
       context.commit('SEARCH_RESULT', search_results)
       context.commit('SEARCHING', items)

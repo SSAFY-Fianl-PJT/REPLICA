@@ -45,8 +45,31 @@
 
         <div class="users-wishlist">
             <h1><span v-if="get_usr" class="user-nickname" style="font-size:50px;">{{user_test.nickname}} 의 찜 리스트</span></h1>
-            <MovieContent  v-if="getWishlist  && getWishlist.length > 0" :items="getWishlist"/>
-                <h1 v-else>찜한 영화가 없습니다.</h1>
+
+
+
+  
+        <div class="searchresult-container">
+          
+          <div class="search-result-found" v-if="Array.isArray(getWishlist)">
+            <div class="SearchedMovieGroup" v-for="(item) in getWishlist" :key=item.poster_path>
+              <div class="ResultMovieTag">
+                <ModalButton 
+                :target="squeeze(item.title)"
+                :movie="item"
+                @open-modal="handleOpenModal"/>
+              </div>
+        
+              <ModalDialog :target="squeeze(item.title)">
+                <MovieItem :item="item" />
+              </ModalDialog>
+            </div>
+          </div>
+          <div class="search-result-not-found" v-else>
+            <h1 >찜한 영화가 없습니다.</h1>
+          </div>
+        </div>
+        
         </div>
         <div class="users-reviews">
             <h1><span v-if="get_usr" class="user-nickname" style="font-size:50px;">{{user_test.nickname}}의 리뷰</span></h1>
@@ -60,9 +83,13 @@
 </template>
 
 <script>
-import MovieContent from '@/components/movie/MovieContent.vue';
 import ArticleList from '@/components/community/ArticleList.vue'
 import PasswordModal from '@/components/modal/PasswordModal.vue'
+
+import ModalButton from '@/components/modal/ModalButton'
+import ModalDialog from '@/components/modal/ModalDialog'
+import MovieItem from '@/components/movie/MovieItem.vue'
+
 import {fetchUsrInfo, fetchUsrfollow, fetchReviews, fetchUsrdelete } from '@/api/user'
 import _ from 'lodash'
 const MOVIE_URL = 'https://image.tmdb.org/t/p/w500'
@@ -82,9 +109,11 @@ export default {
         user : String,
     },
     components:{
-        MovieContent,
         ArticleList,
         PasswordModal,
+        ModalButton,
+        ModalDialog, 
+        MovieItem,
     },
     async created(){
 
@@ -117,6 +146,10 @@ export default {
         }
     },
     methods: {
+    squeeze(data){
+      let squeezed_data = data.replace(/\s/g, "")
+      return squeezed_data
+    },
     async fetchUserReviews() {
       try {
         const response = await fetchReviews(); // 모든 리뷰 불러오기
@@ -175,14 +208,21 @@ export default {
             
             this.$refs.passwordModal.showPasswordModal();
 
-        }
- 
+        },
+     handleOpenModal() {
+        this.$store.dispatch('openModal')
+        this.showModal = true;
+    },
     }, 
 
     computed : {
         is_yourSelf(){
-            
-           return (this.user === this.$store.state.user.info.username)
+          if(this.$store.state.user.info && this.user === this.$store.state.user.info.username){
+            return true 
+          }
+          else{
+            return false
+          }
         },
         get_usr(){
             try {
@@ -333,36 +373,6 @@ export default {
   font-family: ruluko;
 }
 
-
-
-/* hr {
-  width: auto;
-  margin-top: 30px;
-  margin-left: 5%;
-  margin-right: 5%;
-  border: 10px solid #43a1ff;
-  color: black;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #43a1ff;
-  padding: 0;
-  animation: glow 1.5s ease-in-out infinite;
-  -webkit-animation: glow 1.5s ease-in-out infinite;
-}
-
-hr::after {
-  content: '';
-  position: absolute;
-  border: 4px solid rgb(34, 34, 34);
-  width: 80%;
-  margin-top: -2px;
-  margin-left: 4%;
-  margin-right: 25%;
-  border-radius: 2px;
-  box-shadow: 0 0 3px black;
-  animation: glowMinr 2s ease-in-out;
-  -webkit-animation: glowMinor 2s ease-in-out infinite 
-} */
-
 @keyframes glow {
   0%{box-shadow: 0 0 2px #43a1ff;}
   50%{box-shadow: 0 0 8px #43a1ff;}
@@ -495,6 +505,23 @@ h1 {
   40%{transform:translateY(4px) skew(10deg);}
   52%{transform:translateY(0px) skew(0deg);}
   100%{transform:translateY(0px) skey(0deg);}
+}
+
+.search-result-found{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.SearchedMovieGroup{
+  /* width: 20%; */
+  margin: 20px;
+  object-fit: cover;
+} 
+.searchresult-container{
+  width: 100%;
 }
 
 </style>
