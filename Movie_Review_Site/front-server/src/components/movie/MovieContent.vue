@@ -1,25 +1,5 @@
 <template>
   <div>
-
-  <!-- <div class="give-movie">
-
-      <div class="slider" :style="{ transform: sliderTransform }">
-          <div class="accountactions">
-              <div class="ModalGroup" v-for="(item) in items" :key="item.poster_path">
-                  <figure>
-                      <ModalButton :target="squeeze(item.title)" :movie="item"  @open-modal="handleOpenModal"/>
-                  </figure>
-              </div>
-          </div>
-      </div>
-
-
-      <ModalDialog v-if="showModal" :target="squeeze(currentSelectedItem.title)" :item="currentSelectedItem" @close="handleCloseModal">
-          <MovieItem :item="currentSelectedItem"/>
-      </ModalDialog>
-
-  </div> -->
-
   <div class="give-movie-3D">
 
       <div class="scene">

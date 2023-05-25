@@ -51,7 +51,7 @@ export default {
             return `${this.target}`
         },
         modalCloseTrigger(){
-            console.log("제발 ㅠㅠ",this.isModalOpen)
+            // console.log("제발 ㅠㅠ",this.isModalOpen)
             return this.isModalOpen;
         },
     }

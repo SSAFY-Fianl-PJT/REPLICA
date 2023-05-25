@@ -30,7 +30,7 @@
       
       
 
-      <blockquote class="bluejeans inform-container d-none d-lg-block">
+      <blockquote class="bluejeans inform-container d-none d-lg-block" v-if="randMovie">
         <h2><span class="Cbluejeans" style="font-weight:bolder;">{{randMovie.title}}</span><img class="information-img popover-img" :src="inforImg" alt="inform" style="width:30px;" @click="toMovieDetail"></h2>
 
         <div class="mv_genres-container" style="font-size: 20px;">
@@ -56,7 +56,7 @@ import _ from 'lodash'
 // https://image.tmdb.org/t/p/w500
 // const MOVIE_URL = process.env.VUE_APP_IMG_URL
 // const YTB_API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
-// const YOUTUBE_API_KEY = 'AIzaSyBlNSqg-9WQraWKrdqLdMqh-L0umq_73eA'
+
 const MOVIE_URL = 'https://image.tmdb.org/t/p/w500'
 
 export default {
@@ -73,36 +73,24 @@ export default {
   props:{
     items:Array,
   },
-  async created(){
-    // const data = {
-    //   q:"코코몽",
-    //   part : 'snippet',
-    //   type : 'video',
-    //   regionCode:"KR",
-    //   maxResults: 5,
-    // }
-    // const res = await api.get('',{params: data})
-    // console.log(res.data)
-    // 유튜브 영상 바로실행 https://www.youtube.com/watch?v=rdbNfNAWtQo
-  },
-
   methods:{
     async get_movie_teaser(movie){
       let title = movie.title
-      const data = {
-          q:`${title} 티저`,
-          part : 'snippet',
-          type : 'video',
-          regionCode:"KR",
-          maxResults: 1,
-        }
-      console.log(data)
+      // const data = {
+      //     q:`${title} 티저`,
+      //     part : 'snippet',
+      //     type : 'video',
+      //     regionCode:"KR",
+      //     maxResults: 1,
+      //   }
       // const res = await api.get('',{params: data})
       // console.log(res.data.items[0].id.videoId)
       // i_XHHfr8yB0
       // rMJ8qLe6q3A
+      console.log(title)
+        this.randVideo = 'iGc7BzHnEMk'
         this.randMovie = movie
-        this.randVideo = 'i_XHHfr8yB0'
+        // this.randVideo = res.data.items[0].id.videoId
     },
     toMovieDetail(){
       this.$router.push({name: 'MovieViewTest',params : {id:this.randMovie.id}})
@@ -131,11 +119,13 @@ export default {
       let randmv = null
       if (!this.items || this.items.length == 0){
         randmv =  _.sample(this.$store.state.movie.popular_movies)
+        
       }
       else{
         
         randmv = _.sample(this.items)
       }
+      console.log(randmv)
       if (randmv){
         console.log(randmv)
         this.get_movie_teaser(randmv)
@@ -187,7 +177,6 @@ export default {
   height: 700px;
   overflow: hidden;
   
- 
 }
 
 .gradient-overlay{
