@@ -110,8 +110,16 @@ export default {
     // console.log(title, content, movie_title)
       fetchCreate({ title, content, movie_title, rating })
       .then(() => {
-        console.log("res, ", this.movie_id)
-        this.$router.push({name: 'MovieViewTest',params : {id:this.movie_id}})
+        // console.log("res, ", this.movie_id)
+        // console.log(this.$route.params.id )
+        if(this.$route.params.id && this.movie_id == this.$route.params.id ){
+          this.$router.go()
+        }
+        else{
+          this.$router.push({name: 'MovieViewTest',params : {id:this.movie_id}})
+          .then(() => window.location.reload());
+        }
+      
       })
       .catch((err) => {
         console.log(err)

@@ -1,7 +1,9 @@
 <template>
   <div class="review-information">
     <div v-if="article" class="review-container d-block">
-
+      <div class="close-review-btn" style="font-size:48px;" @click="gotoDetail">
+        &#10008;
+      </div>
     <div class="review-block-container">
       <div class="lavander review-block">
           <div v-if="isEditing" @keyup.enter="updateArticle" style="text-align:left; ">
@@ -99,6 +101,10 @@ export default {
     },
   },
   methods: {
+    gotoDetail(){
+      // console.log(this.article)
+      this.$router.push({name:'MovieViewTest', params:{id:this.article.movie}})
+    },
     reNew(){
       this.$router.go();
     },
@@ -184,8 +190,15 @@ hr.hr-1 {
   border-radius: 1rem;
 }
 .review-container{
+  position: relative; 
   width: auto;
 }
+
+.close-review-btn{
+  position: absolute;
+  right: 0;
+}
+
 .sample3 > .review-title-block
 {
   display: flex;
