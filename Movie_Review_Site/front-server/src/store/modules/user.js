@@ -55,7 +55,7 @@ export default {
         async get_profile(context, username) {
             
             await fetchUsrInfo({username}).then((res) => { 
-              console.log(res);
+              console.log("찾았나",res);
               context.commit('SAVE_USER_Profile', res.data);
             })
           },

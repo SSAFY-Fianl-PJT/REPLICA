@@ -46,5 +46,9 @@ const createComments = async (review_id, {content}) =>{
     return api.post(`/community/${review_id}/comments/`,{content})
 }
 
+const giveLike = async (review_id) =>{
+    return api.post(`/community/${review_id}/like/`)
+}
+
 export { fetchArticles, fetchCreate, getDetail, fetchReviews, updateArticle, deleteArticle, 
-    getComments, createComments, updateComment, deleteComment }
+    getComments, createComments, updateComment, deleteComment, giveLike }

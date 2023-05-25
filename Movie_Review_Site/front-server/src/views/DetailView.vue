@@ -4,6 +4,7 @@
       <div class="close-review-btn" style="font-size:48px;" @click="gotoDetail">
         &#10008;
       </div>
+      
     <div class="review-block-container">
       <div class="lavander review-block">
           <div v-if="isEditing" @keyup.enter="updateArticle" style="text-align:left; ">
@@ -11,8 +12,12 @@
             <p style="text-align:left;">영화 : {{ article?.movie_title }}</p>
           </div>
           <div v-else>
+
             <h2><span class="Clavander">{{ article?.title }}</span> -
-              <img v-if="article" :src="require('@/assets/STAR' + Math.floor(article.rating) + '.png')" style="margin-left: 5px;" :alt="`${Math.floor(article.rating)}`"></h2>  
+              <img v-if="article" :src="require('@/assets/STAR' + Math.floor(article.rating) + '.png')" style="margin-left: 5px;" :alt="`${Math.floor(article.rating)}`">
+              <span class="like-btn" v-if="!check_isLiked"  @click="give_Like">♡</span>
+              <span class="like-btn" v-if="check_isLiked" @click="give_Like" style="color:red;">♥</span><span class="like-btn"> {{article.likes_count}} </span>
+            </h2>  
             <p style="text-align:left;">영화 : {{ article?.movie_title }}</p>
           </div>
         <code>
@@ -50,7 +55,7 @@
 </template>
 
 <script>
-import { getDetail, updateArticle, deleteArticle } from '@/api/article';
+import { getDetail, updateArticle, deleteArticle, giveLike } from '@/api/article';
 import { getMovie_Detail } from '@/api/movie';
 import MovieItem from '@/components/movie/MovieItem.vue';
 
@@ -95,12 +100,38 @@ export default {
     isReviewAuthor() {
       // console.log("이거 왜 초장에 안나오냐",this.$store.state.user.info.username)
       console.log(this.article.username)
-      console.log(this.$store.state.user.info)
+      
       const loggedInUser = this.$store.state.user.info.username; // 로그인한 사용자 정보를 가져와야 함
       return this.article.username === loggedInUser;
     },
+    getUSR(){
+      return this.$store.state.user.profile.id
+    },
+    check_isLiked(){
+      
+      if(this.article.likes){
+        console.log(this.article.likes.some((usrs => usrs === this.getUSR)))
+        return this.article.likes.some((usrs => usrs === this.getUSR))
+      }
+      else{
+        return false
+      }
+    }
   },
   methods: {
+    async give_Like(){
+      if (this.article.likes && this.check_isLiked){
+        await giveLike(this.article.id)
+        this.article.likes = this.article.likes.filter(user => user !== this.getUSR); 
+        this.article.likes_count--;
+        return false
+      }else{
+        await giveLike(this.article.id)
+        this.article.likes.push(this.getUSR);
+        this.article.likes_count++;
+        return true
+      }
+    },
     gotoDetail(){
       // console.log(this.article)
       this.$router.push({name:'MovieViewTest', params:{id:this.article.movie}})
@@ -140,7 +171,7 @@ export default {
       const { id } = this.article;
       const { editTitle, editContent } = this;
       try {
-        await updateArticle(id, { movie_title: this.article.movie_title ,title: editTitle, content: editContent });
+        await updateArticle(id, { movie_title: this.article.movie_title ,title: editTitle, content: editContent, rating: this.article.rating });
         this.isEditing = false;
         await this.getArticleDetail();
       } catch (error) {
@@ -430,5 +461,9 @@ code{
   color:#270d2e;
   font-size:16px;
   font-family: Avenir, Helvetica, Arial, sans-serif;
+}
+.like-btn{
+  text-align: end;
+  float: right;
 }
 </style>
