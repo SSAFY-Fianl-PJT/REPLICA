@@ -42,8 +42,7 @@ export default {
       this.username = username
       const res = await fetchRecommend({username})
       console.log("resdata",res.data)
-      this.recommended = res.data.movies
-
+      this.recommended = res.data
 
     }
   },
