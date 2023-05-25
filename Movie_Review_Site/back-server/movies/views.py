@@ -28,7 +28,7 @@ from django.views.decorators.cache import cache_page
 # 메인 영화 조회
 def movie_list(request):
     if request.method == 'GET':
-          # 상위 10개의 인기 영화 조회
+          # 상위 20개의 인기 영화 조회
         movies = Movie.objects.order_by('-popularity')[:20]
         serializer = MovieListSerializer(movies, many=True)
         user = request.user

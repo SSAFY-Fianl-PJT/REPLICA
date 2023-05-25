@@ -51,7 +51,7 @@
         <div class="users-reviews">
             <h1><span v-if="get_usr" class="user-nickname" style="font-size:50px;">{{user_test.nickname}}의 리뷰</span></h1>
             <ArticleList v-if="getUserReviews && getUserReviews.length > 0" :articles="getUserReviews" />
-                <h1 v-else>작성한 리뷰가 없습니다.</h1>
+                <h1 class="no-review" v-else>작성한 리뷰가 없습니다.</h1>
         </div>
     </div>
 
@@ -413,8 +413,13 @@ h1 {
 h1 {
   color: #fff;
   font-size: 2.5rem;
-  margin-top: 6rem; 
+  margin-top: 2rem; 
 }
+
+.no-review {
+    margin-bottom: 5rem;
+}
+
 .btn {
   position: relative;
   margin: 0 auto;
@@ -464,5 +469,6 @@ h1 {
   80% {transform: translateX(0) rotate(180deg);}
   100% {transform: translateX(0) rotate(360deg);}
 }
+
 
 </style>
