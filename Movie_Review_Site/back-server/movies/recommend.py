@@ -68,7 +68,7 @@ def find_sim_movies(movies_df, sorted_ind, movie_ids, top_n=10):
     cached_movielist = movie_cache.get(movie_cache_key)
     # 해당 영화조합에 대한 추천 영화가 캐시에 있는 경우 그대로 반환
     if cached_movielist is not None:
-        print('key2', movie_cache[movie_cache_key])
+        print('캐시', movie_cache[movie_cache_key])
         return movie_cache[movie_cache_key]
     
     for movie_id in movie_ids:

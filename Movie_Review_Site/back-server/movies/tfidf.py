@@ -31,17 +31,15 @@ def calculate_tfidf(keyword):
     # 코사인 유사도 계산
     similarity_scores = cosine_similarity(input_tfidf, tfidf_matrix)
     print('유사도', similarity_scores)
-    if sum(similarity_scores[0]) == 0:
-        return recommendations
 
     # 유사도가 높은 순으로 추천 영화 선정
-    similar_indices = similarity_scores.argsort().flatten()[::-1]
+    similar_indices = [i for i in similarity_scores.argsort().flatten()[::-1] if similarity_scores[0, i] > 0]
     print('tfidi', similar_indices)
     for idx in similar_indices:
         recommendations.append(movie_data[idx])
     # print(recommendations[:20])
 
+    cache_info = calculate_tfidf.cache_info()
+    print(cache_info)
+    
     return recommendations[:20]
-
-cache_info = calculate_tfidf.cache_info()
-print(cache_info)

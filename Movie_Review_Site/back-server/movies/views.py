@@ -56,6 +56,7 @@ def movie_detail(request, movie_id):
         serializer = MovieDetailSerializer(movie)
         # 비슷한 장르 중 인기도 상위 5개 (현재 영화 제외)
         related_movies = Movie.objects.filter(genres__in=movie.genres.all()).exclude(pk=movie_id).order_by('-popularity')[:5]
+        related_movies = list(set(related_movies))
         related_serializer = MovieListSerializer(related_movies, many=True)
         data = serializer.data
         # 연관 영화 함께 반환
@@ -226,9 +227,11 @@ def tfidf_recommend(request):
         return Response({'message': '키워드를 입력해주세요.'}, status=400)
 
     recommendations = calculate_tfidf(keyword)
-    print(recommendations)
-
-    movie_ids = [recommendation['fields']['movie_id'] for recommendation in recommendations]
-    recommended_movies = Movie.objects.filter(movie_id__in=movie_ids)
+    print('키워드 결과', recommendations)
+    if recommendations:
+        movie_ids = [recommendation['fields']['movie_id'] for recommendation in recommendations]
+        recommended_movies = Movie.objects.filter(movie_id__in=movie_ids)
+    else:
+        recommended_movies = []
     serializer = MovieListSerializer(recommended_movies, many=True)
     return Response(serializer.data)
