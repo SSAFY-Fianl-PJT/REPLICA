@@ -1,7 +1,7 @@
 <template>
   <div>
   <div class="give-movie-3D">
-
+      
       <div class="scene">
         <div class="carousel" ref="carouselRef" :style="{ 'transition': transitionStyle }">
           
@@ -158,23 +158,8 @@ justify-content: space-between;
 }
 
 
-.slider {
 
-display: flex;
-flex: 1;
-box-sizing: border-box;
-align-items: center;
-transform: translateX(0);
-transition: transform 0.5s ease-in-out;
-}
 
-.accountactions{
-display: flex;
-justify-content: space-between;
-/* aspect-ratio: 16/9; */
-align-items:center;
-max-height: 400px;
-}
 
 .ModalGroup{
 flex: 0 0 25%;
