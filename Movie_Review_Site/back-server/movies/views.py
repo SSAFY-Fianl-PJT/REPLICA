@@ -189,14 +189,20 @@ def movie_recommendation(request, username):
         movies = []
         # 추천 영화의 인덱스에서 영화 찾아서 추가
         for movieId in similar_movies:
-            movie = get_object_or_404(Movie, movie_id=movieId)
-            movies.append(movie)
+            try:
+                movie = Movie.objects.get(movie_id=movieId)
+            except Movie.DoesNotExist:
+                movie = None
+            if movie:
+                movies.append(movie)
+        
         # 최대 30개만
         if len(movies) > 30:
             serializer = MovieListSerializer(movies[:30], many=True)
         else:
             serializer = MovieListSerializer(movies, many=True)
-
+        print(movies)
+        # print(serializer.data)
         return Response(serializer.data)
     # 없으면 인기도 상위 영화 추천
     else:
@@ -220,10 +226,9 @@ def tfidf_recommend(request):
         return Response({'message': '키워드를 입력해주세요.'}, status=400)
 
     recommendations = calculate_tfidf(keyword)
-    if recommendations:
-        movie_ids = [recommendation['fields']['movie_id'] for recommendation in recommendations]
-        recommended_movies = Movie.objects.filter(movie_id__in=movie_ids)
-        serializer = MovieListSerializer(recommended_movies, many=True)
-        return Response(serializer.data)
-    else:
-        return Response({'message': '검색결과가 없습니다.'}, status=400)
+    print(recommendations)
+
+    movie_ids = [recommendation['fields']['movie_id'] for recommendation in recommendations]
+    recommended_movies = Movie.objects.filter(movie_id__in=movie_ids)
+    serializer = MovieListSerializer(recommended_movies, many=True)
+    return Response(serializer.data)
