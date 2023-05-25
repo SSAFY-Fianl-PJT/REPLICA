@@ -178,14 +178,14 @@ $ npm run serve
 
 ## 3. 웹 사이트 예시 📺
 
-### 시작 페이지
+### **시작 페이지**
 ![image](https://github.com/SSAFY-Fianl-PJT/SSAFY-Final-PJT/assets/115714519/451bd058-0f6f-4de2-a37d-a4d561670218)
 > 슬라이딩 효과를 통해 로그인 / 회원가입 폼 전환<br>
 회원 가입 시 username, nickname, password 입력
 
 <br>
 
-### 메인 페이지
+### **메인 페이지**
 ![image](https://github.com/SSAFY-Fianl-PJT/SSAFY-Final-PJT/assets/115714519/8bb90f08-af2f-48d0-a21d-b0b9643dfe40)
 > Navbar를 통한 페이지 이동<br>
 마우스 위치에 따라 포스터와 영상 출력
@@ -196,7 +196,7 @@ $ npm run serve
 
 <br>
 
-### 영화 상세 모달
+### **영화 상세 모달**
 ![image](https://github.com/SSAFY-Fianl-PJT/SSAFY-Final-PJT/assets/115714519/f016c48d-2b5d-45d2-82fd-58cbc403bd41)
 > 포스터와 함께 영화 상제 정보 표시<br>
 찜하기 버튼으로 찜 리스트에 추가 가능<br>
@@ -208,7 +208,7 @@ $ npm run serve
 
 <br>
 
-### 영화 상세 페이지
+### **영화 상세 페이지**
 ![image](https://github.com/SSAFY-Fianl-PJT/SSAFY-Final-PJT/assets/115714519/e7cdb9fb-986f-42b7-9f77-f263d9ff57e8)
 > 영화 상세 정보와 해당 영화에 작성된 리뷰 나열
 
@@ -217,14 +217,14 @@ $ npm run serve
 
 <br>
 
-### 커뮤니티 페이지
+### **커뮤니티 페이지**
 ![image](https://github.com/SSAFY-Fianl-PJT/SSAFY-Final-PJT/assets/115714519/c4d9f79b-36cf-4d73-9ba9-17145786bb53)
 > 모든 리뷰 조회<br>
 각 리뷰 카드의 링크를 통해 영화 상세, 리뷰 상세, 작성자 프로필로 이동 가능
 
 <br>
 
-### 리뷰 상세 페이지
+### **리뷰 상세 페이지**
 ![image](https://github.com/SSAFY-Fianl-PJT/SSAFY-Final-PJT/assets/115714519/8aa73542-6727-4592-975c-a2330802b0b9)
 > 리뷰 내용과 해당 리뷰의 댓글들 표시<br>
 댓글 작성 시 비동기적으로 처리되어 새로고침하지 않아도 됨<br> 
@@ -233,7 +233,7 @@ $ npm run serve
 
 <br>
 
-### 유저 프로필
+### **유저 프로필**
 ![image](https://github.com/SSAFY-Fianl-PJT/SSAFY-Final-PJT/assets/115714519/332d8d31-7afd-475e-9a07-225a9222789c)
 > 본인 프로필일 경우 비밀번호 변경 / 회원 탈퇴 활성화<br>
 > 해당 유저의 찜 리스트와 작성한 리뷰 조회 가능
@@ -243,7 +243,7 @@ $ npm run serve
 
 <br>
 
-### 영화 추천 페이지
+### **영화 추천 페이지**
 <현재 찜 리스트: 아바타2, 분노의 질주: 라이드 오어 다이, 가디언즈 오브 갤럭시2, 피터팬&웬디>
 ![image](https://github.com/SSAFY-Fianl-PJT/SSAFY-Final-PJT/assets/115714519/0de3918f-d7f8-43de-91d3-d1c6c3b89329)
 ![image](https://github.com/SSAFY-Fianl-PJT/SSAFY-Final-PJT/assets/115714519/c699873d-73d9-4d55-8228-0ae2085eced6)
@@ -253,7 +253,7 @@ $ npm run serve
 
 <br>
 
-### 영화 검색 페이지
+### **영화 검색 페이지**
 
 <특정 제목 검색했을 경우>
 ![image](https://github.com/SSAFY-Fianl-PJT/SSAFY-Final-PJT/assets/115714519/4af59b8c-c8a6-49f7-abc7-88430ffd056d)
@@ -283,4 +283,4 @@ TF-IDF란 ?<br>
 | | |
 |:---:|:---|
 |느낀점 | - Django 서버 구현<br> - 영화 리뷰에 대한 데이터 베이스 관리<br> - 사용자의 캐시데이터 기반의 영화 추천 알고리즘 제작 <br> - 코사인유사도를 활용한 영화 추천 알고리즘 제작|
-|배운점| - 사용자와 관련된 CRUD 서비스 구현<br> - 댓글 페이지 및 댓글창 구현|
+|배운점| 알고리즘 풀 때 `모로가도 서울로 가면 된다` 라는 말을 들은 적이 잇다. <br> 이 말은 백엔드 보다 프론트에게 더욱 적절하게 적용할 수 있을 것 같다. <br> 1. 데이터의 접근 방식 부터 API를 활용하냐 서버를 활용하냐 의 차이<br> 2. 서버를 활용할 때 SSR를 사용하냐 CSR를 사용하냐의 차이<br> 3. CSS를 활용, 하나의 디자인에 여러 방식이 적용 되는 것 까지, <br> 알고리즘 푸는 것 보다 멘탈이 더욱 갈렸고 <br> 역시 나는 백엔드가 적성에 맞다는 것을 다시 한번 배웠다.|
