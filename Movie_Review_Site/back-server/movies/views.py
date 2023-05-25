@@ -220,8 +220,10 @@ def tfidf_recommend(request):
         return Response({'message': '키워드를 입력해주세요.'}, status=400)
 
     recommendations = calculate_tfidf(keyword)
-    recommendations = recommendations[:20]
-    movie_ids = [recommendation['fields']['movie_id'] for recommendation in recommendations]
-    recommended_movies = Movie.objects.filter(movie_id__in=movie_ids)
-    serializer = MovieListSerializer(recommended_movies, many=True)
-    return Response(serializer.data)
+    if recommendations:
+        movie_ids = [recommendation['fields']['movie_id'] for recommendation in recommendations]
+        recommended_movies = Movie.objects.filter(movie_id__in=movie_ids)
+        serializer = MovieListSerializer(recommended_movies, many=True)
+        return Response(serializer.data)
+    else:
+        return Response({'message': '검색결과가 없습니다.'}, status=400)
