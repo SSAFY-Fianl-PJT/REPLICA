@@ -4,7 +4,7 @@
     @mouseover="showVideo = true"
     @mouseout="showVideo = false">
     
-      <div class="gradient-overlay"></div>
+      <div class="gradient-overlay" ></div>
       <div class="image-container" 
         v-if="randomMovie"
 
@@ -155,7 +155,7 @@ export default {
     } else {
       return this.randMovie.overview;
     }
-  }
+    },
   }
 }
 </script>
@@ -197,8 +197,8 @@ export default {
   bottom: 0;
   left: 0;
   pointer-events: none;
-  background: linear-gradient(to bottom, rgb(78, 92, 170, 0), rgb(13, 13, 13, 0.95)); 
-  z-index: 1;
+  background: linear-gradient(to left, rgb(13, 13, 13, 0.5) 30%, rgb(13, 13, 13, 0.5) 50%,  rgb(13, 13, 13, 0) 100%) ; 
+  z-index: 100;
 }
 
 .inform-container{

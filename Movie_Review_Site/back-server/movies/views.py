@@ -28,7 +28,7 @@ from django.views.decorators.cache import cache_page
 # 메인 영화 조회
 def movie_list(request):
     if request.method == 'GET':
-          # 상위 10개의 인기 영화 조회
+          # 상위 20개의 인기 영화 조회
         movies = Movie.objects.order_by('-popularity')[:20]
         serializer = MovieListSerializer(movies, many=True)
         user = request.user
@@ -189,14 +189,20 @@ def movie_recommendation(request, username):
         movies = []
         # 추천 영화의 인덱스에서 영화 찾아서 추가
         for movieId in similar_movies:
-            movie = get_object_or_404(Movie, movie_id=movieId)
-            movies.append(movie)
+            try:
+                movie = Movie.objects.get(movie_id=movieId)
+            except Movie.DoesNotExist:
+                movie = None
+            if movie:
+                movies.append(movie)
+        
         # 최대 30개만
         if len(movies) > 30:
             serializer = MovieListSerializer(movies[:30], many=True)
         else:
             serializer = MovieListSerializer(movies, many=True)
-
+        print(movies)
+        # print(serializer.data)
         return Response(serializer.data)
     # 없으면 인기도 상위 영화 추천
     else:
@@ -220,7 +226,8 @@ def tfidf_recommend(request):
         return Response({'message': '키워드를 입력해주세요.'}, status=400)
 
     recommendations = calculate_tfidf(keyword)
-    recommendations = recommendations[:20]
+    print(recommendations)
+
     movie_ids = [recommendation['fields']['movie_id'] for recommendation in recommendations]
     recommended_movies = Movie.objects.filter(movie_id__in=movie_ids)
     serializer = MovieListSerializer(recommended_movies, many=True)

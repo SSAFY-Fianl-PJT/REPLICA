@@ -12,6 +12,7 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_reviews', blank=True)
+    rating = models.IntegerField()
     
     @property
     def username(self):

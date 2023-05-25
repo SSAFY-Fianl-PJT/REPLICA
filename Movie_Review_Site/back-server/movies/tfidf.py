@@ -16,6 +16,9 @@ def calculate_tfidf(keyword):
     with open(movie_data_file, "r", encoding='utf-8') as json_file:
         movie_data = json.load(json_file)
 
+    # 추천 영화 목록 생성
+    recommendations = []
+
     # TF-IDF 벡터화
     corpus = [movie['fields']['overview'] for movie in movie_data]
     vectorizer = TfidfVectorizer()
@@ -23,19 +26,22 @@ def calculate_tfidf(keyword):
 
     # 입력값에 대한 TF-IDF 벡터 계산
     input_tfidf = vectorizer.transform([keyword])
+    print('입력', input_tfidf)
 
     # 코사인 유사도 계산
     similarity_scores = cosine_similarity(input_tfidf, tfidf_matrix)
-
-    # 추천 영화 목록 생성
-    recommendations = []
+    print('유사도', similarity_scores)
+    if sum(similarity_scores[0]) == 0:
+        return recommendations
 
     # 유사도가 높은 순으로 추천 영화 선정
     similar_indices = similarity_scores.argsort().flatten()[::-1]
+    print('tfidi', similar_indices)
     for idx in similar_indices:
         recommendations.append(movie_data[idx])
+    # print(recommendations[:20])
 
-    return recommendations
+    return recommendations[:20]
 
 cache_info = calculate_tfidf.cache_info()
 print(cache_info)
